@@ -176,8 +176,8 @@ for item in items:
 # this requires a second-pass since some protos import from others
 exclusions = ["Database.proto"]  # todo: the protobuf file is broken. skipping
 for item in items:
+    fname, hash, _ = item
     if fname in exclusions:
         continue
-    fname, hash, _ = item
     # compile_if_newer(hash, fname)
     compile_protobuf(fname)
