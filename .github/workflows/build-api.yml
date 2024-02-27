@@ -1,0 +1,46 @@
+name: Manual Maven Build
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to build'
+        required: true
+        default: 'main'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        ref: ${{ github.event.inputs.branch }}
+    - name: Set up JDK  21
+      uses: actions/setup-java@v3
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+        cache: 'maven' # This caches Maven dependencies
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+    - name: Clone and build
+      run: |
+        git clone https://github.com/signalapp/Signal-Server.git --depth=1 server
+        cd server
+        mvn clean build
+    - name: Update API stub
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cp -r server/api-doc/target/openapi/signal-server-openapi.yaml server/
+          python3 parse_spec.py
+          git config user.email "actions@users.noreply.github.com"
+          git config user.name "API Updater"
+          git diff --quiet || git commit -a -m "Updating server API"
+          git push origin main -q
