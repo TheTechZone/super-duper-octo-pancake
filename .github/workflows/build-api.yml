@@ -25,6 +25,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install pyyaml
+        pip install black
     - name: Clone and build
       run: |
         git clone https://github.com/signalapp/Signal-Server.git --depth=1 server
@@ -45,7 +46,9 @@ jobs:
       run: |
         cp -r api-doc/target/openapi/signal-server-openapi.yaml $(pwd)
         python3 parse_spec.py
+        black server_proto.py
         git config user.email "actions@users.noreply.github.com"
         git config user.name "API Updater"
-        git diff --quiet || git commit -a -m "Updating server API"
+        git add server_proto.py
+        git diff --quiet || git commit -m "Updating server API"
         git push origin ${{ github.event.inputs.branch }} -q

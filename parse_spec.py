@@ -102,7 +102,7 @@ def get_route_args(path: str) -> list[str]:
 
 def main():
     # Step  1: Parse the OpenAPI YAML file
-    spec = parse_openapi_spec("server/signal-server-openapi.yaml")
+    spec = parse_openapi_spec("signal-server-openapi.yaml")
 
     # Step  2: Generate Python code
     python_code = generate_python_code(spec)
