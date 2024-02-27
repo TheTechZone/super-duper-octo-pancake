@@ -35,12 +35,12 @@ jobs:
         cd server
         mvn clean build
     - name: Update API stub
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          cp -r server/api-doc/target/openapi/signal-server-openapi.yaml server/
-          python3 parse_spec.py
-          git config user.email "actions@users.noreply.github.com"
-          git config user.name "API Updater"
-          git diff --quiet || git commit -a -m "Updating server API"
-          git push origin main -q
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        cp -r server/api-doc/target/openapi/signal-server-openapi.yaml server/
+        python3 parse_spec.py
+        git config user.email "actions@users.noreply.github.com"
+        git config user.name "API Updater"
+        git diff --quiet || git commit -a -m "Updating server API"
+        git push origin main -q
