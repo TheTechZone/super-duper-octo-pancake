@@ -37,5 +37,6 @@ jobs:
         git config user.email "actions@users.noreply.github.com"
         git config user.name "Protobuf Updater"
         git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
-        git diff --quiet || git commit -am "Updating protocol buffers"
+        git add protos
+        git diff --quiet || git commit -m "Updating protocol buffers"
         git push origin ${{ github.event.inputs.branch }} -q
