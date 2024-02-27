@@ -35,8 +35,7 @@ jobs:
         mkdir -p protos/gen
         GITHUB_ACCESS_TOKEN=${{ secrets.GH_TOKEN }} python3 fetch_protos.py
         git config user.email "actions@users.noreply.github.com"
-        git config user.name "API Updater"
+        git config user.name "Protobuf Updater"
         git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
-        git add protos/
-        git diff --quiet || git commit -m "Updating protocol buffers"
+        git diff --quiet || git commit -am "Updating protocol buffers"
         git push origin ${{ github.event.inputs.branch }} -q
