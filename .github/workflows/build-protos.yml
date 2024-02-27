@@ -17,6 +17,8 @@ jobs:
     - uses: actions/checkout@v4
       with:
         ref: ${{ github.event.inputs.branch }}
+    - name: Install Protoc
+      uses: arduino/setup-protoc@v3
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
