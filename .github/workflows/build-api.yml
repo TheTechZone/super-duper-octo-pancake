@@ -49,9 +49,7 @@ jobs:
         black server_proto.py
         git config user.email "actions@users.noreply.github.com"
         git config user.name "API Updater"
-        git config pull.ff only
         git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
         git add server_proto.py
-        git pull # dunno why I need this
         git diff --quiet || git commit -m "Updating server API"
-        git push origin ${{ github.event.inputs.branch }} -q  
+        git push origin ${{ github.event.inputs.branch }} -q -f 
