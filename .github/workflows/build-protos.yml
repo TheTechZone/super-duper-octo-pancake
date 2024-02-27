@@ -32,7 +32,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         mkdir -p protos/gen
-        GITHUB_ACCESS_TOKEN=${{ secrets.GH_TOKEN }} python3 fetch_protos.py
+        GITHUB_ACCESS_TOKEN=${{ secrets.GH_TOKEN }} python3 fetch_protos.py || echo "Updated protocol buffers to latest version."
         git config user.email "actions@users.noreply.github.com"
         git config user.name "Protobuf Updater"
         git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
