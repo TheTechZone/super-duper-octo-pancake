@@ -24,6 +24,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
+        pip install pyyaml
     - name: Clone and build
       run: |
         git clone https://github.com/signalapp/Signal-Server.git --depth=1 server
