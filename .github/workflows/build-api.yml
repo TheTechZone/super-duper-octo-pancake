@@ -31,7 +31,7 @@ jobs:
         git clone https://github.com/signalapp/Signal-Server.git --depth=1 server
         cp -r server/. $(pwd)
     - name: Set up JDK  21
-      uses: actions/setup-java@5ffc13f4174014e2d4d4572b3d74c3fa61aeb2c2 # v3.11.0
+      uses: actions/setup-java@4
       with:
         java-version: '21'
         distribution: 'temurin'
@@ -49,6 +49,7 @@ jobs:
         black server_proto.py
         git config user.email "actions@users.noreply.github.com"
         git config user.name "API Updater"
+        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
         git add server_proto.py
         git diff --quiet || git commit -m "Updating server API"
-        git push origin ${{ github.event.inputs.branch }} -q
+        git push origin ${{ github.event.inputs.branch }} -q  
