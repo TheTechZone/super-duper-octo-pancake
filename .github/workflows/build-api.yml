@@ -42,7 +42,7 @@ jobs:
         # GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        cp -r server/api-doc/target/openapi/signal-server-openapi.yaml server/
+        cp -r api-doc/target/openapi/signal-server-openapi.yaml $(pwd)
         python3 parse_spec.py
         git config user.email "actions@users.noreply.github.com"
         git config user.name "API Updater"
