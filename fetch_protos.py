@@ -16,7 +16,7 @@ query_params = {
 }
 
 # Your personal access token
-if os.environ.get('GITHUB_ACCESS_TOKEN') is None:
+if os.environ.get("GITHUB_ACCESS_TOKEN") is None:
     exit("NO Github PAT provided")
 token = os.environ.get("GITHUB_ACCESS_TOKEN")
 
@@ -123,7 +123,9 @@ def update_if_newer(hash: str, fname: str, url: str):
         # with fpath.open("rb") as f:
         fhash = git_hash(fpath.read_bytes())
         if fhash == hash:
-            print(f"The file {fname} currently exists (same hash). Skipping re-download.")
+            print(
+                f"The file {fname} currently exists (same hash). Skipping re-download."
+            )
             return
 
     download(github_to_raw(url), fname)
@@ -148,7 +150,8 @@ def compile_protobuf(proto_file, src_dir="protos", dst_dir="protos/gen", zipped=
     except subprocess.CalledProcessError as e:
         print(f"Failed to compile {proto_file}. Error: {e}")
 
-def compile_if_newer(hash: str, fname:str):
+
+def compile_if_newer(hash: str, fname: str):
     fpath = (proto_dir / fname).resolve()
     if fpath.is_file():
         # file exists, check hash
@@ -171,9 +174,10 @@ for item in items:
     update_if_newer(hash, fname, url)
 
 # this requires a second-pass since some protos import from others
-exclusions = ["Database.proto"] # todo: the protobuf file is broken. skipping
+exclusions = ["Database.proto"]  # todo: the protobuf file is broken. skipping
 for item in items:
     if fname in exclusions:
         continue
-    fname, hash, _= item
-    compile_if_newer(hash, fname)
+    fname, hash, _ = item
+    # compile_if_newer(hash, fname)
+    compile_protobuf(fname)

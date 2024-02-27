@@ -36,5 +36,5 @@ jobs:
         git config user.name "API Updater"
         git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
         git add protos/
-        git diff --quiet || git commit -m "Updating server API"
+        git diff --quiet || git commit -m "Updating protocol buffers"
         git push origin ${{ github.event.inputs.branch }} -q
