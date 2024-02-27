@@ -51,5 +51,6 @@ jobs:
         git config user.name "API Updater"
         git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
         git add server_proto.py
+        git pull # dunno why I need this
         git diff --quiet || git commit -m "Updating server API"
         git push origin ${{ github.event.inputs.branch }} -q  
