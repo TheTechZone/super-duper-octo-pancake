@@ -36,7 +36,7 @@ jobs:
         mvn clean build
     - name: Update API stub
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
       run: |
         cp -r server/api-doc/target/openapi/signal-server-openapi.yaml server/
         python3 parse_spec.py
