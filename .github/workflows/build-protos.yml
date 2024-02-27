@@ -29,7 +29,6 @@ jobs:
         pip install requests
     - name: Build ProtoBufs and update spec
       env:
-        # GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         mkdir -p protos/gen
