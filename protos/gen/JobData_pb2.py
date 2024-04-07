@@ -14,7 +14,7 @@ _sym_db = _symbol_database.Default()
 import ResumableUploads_pb2 as ResumableUploads__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\rJobData.proto\x12\x06signal\x1a\x16ResumableUploads.proto\"e\n\x16\x43\x61llSyncEventJobRecord\x12\x13\n\x0brecipientId\x18\x01 \x01(\x04\x12\x0e\n\x06\x63\x61llId\x18\x03 \x01(\x04\x12\x11\n\tdirection\x18\x04 \x01(\r\x12\r\n\x05\x65vent\x18\x05 \x01(\rJ\x04\x08\x02\x10\x03\"G\n\x14\x43\x61llSyncEventJobData\x12/\n\x07records\x18\x01 \x03(\x0b\x32\x1e.signal.CallSyncEventJobRecord\"9\n$CallLinkRefreshSinceTimestampJobData\x12\x11\n\ttimestamp\x18\x01 \x01(\x04\"/\n\x17\x43\x61llLogEventSendJobData\x12\x14\n\x0c\x63\x61llLogEvent\x18\x01 \x01(\x0c\"3\n\x19\x43\x61llLinkUpdateSendJobData\x12\x16\n\x0e\x63\x61llLinkRoomId\x18\x01 \x01(\t\"o\n\x17\x41ttachmentUploadJobData\x12\x14\n\x0c\x61ttachmentId\x18\x01 \x01(\x04\x12)\n\nuploadSpec\x18\x03 \x01(\x0b\x32\x10.ResumableUploadH\x00\x88\x01\x01\x42\r\n\x0b_uploadSpecJ\x04\x08\x02\x10\x03\"3\n\x12PreKeysSyncJobData\x12\x1d\n\x15\x66orceRefreshRequested\x18\x01 \x01(\x08\x42*\n&org.thoughtcrime.securesms.jobs.protosP\x01\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\rJobData.proto\x12\x06signal\x1a\x16ResumableUploads.proto\"e\n\x16\x43\x61llSyncEventJobRecord\x12\x13\n\x0brecipientId\x18\x01 \x01(\x04\x12\x0e\n\x06\x63\x61llId\x18\x03 \x01(\x04\x12\x11\n\tdirection\x18\x04 \x01(\r\x12\r\n\x05\x65vent\x18\x05 \x01(\rJ\x04\x08\x02\x10\x03\"G\n\x14\x43\x61llSyncEventJobData\x12/\n\x07records\x18\x01 \x03(\x0b\x32\x1e.signal.CallSyncEventJobRecord\"9\n$CallLinkRefreshSinceTimestampJobData\x12\x11\n\ttimestamp\x18\x01 \x01(\x04\"/\n\x17\x43\x61llLogEventSendJobData\x12\x14\n\x0c\x63\x61llLogEvent\x18\x01 \x01(\x0c\"\x97\x01\n\x19\x43\x61llLinkUpdateSendJobData\x12\x16\n\x0e\x63\x61llLinkRoomId\x18\x01 \x01(\t\x12\x39\n\x04type\x18\x02 \x01(\x0e\x32&.signal.CallLinkUpdateSendJobData.TypeH\x00\x88\x01\x01\"\x1e\n\x04Type\x12\n\n\x06UPDATE\x10\x00\x12\n\n\x06\x44\x45LETE\x10\x01\x42\x07\n\x05_type\"o\n\x17\x41ttachmentUploadJobData\x12\x14\n\x0c\x61ttachmentId\x18\x01 \x01(\x04\x12)\n\nuploadSpec\x18\x03 \x01(\x0b\x32\x10.ResumableUploadH\x00\x88\x01\x01\x42\r\n\x0b_uploadSpecJ\x04\x08\x02\x10\x03\"3\n\x12PreKeysSyncJobData\x12\x1d\n\x15\x66orceRefreshRequested\x18\x01 \x01(\x08\x42*\n&org.thoughtcrime.securesms.jobs.protosP\x01\x62\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -31,10 +31,12 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _globals['_CALLLINKREFRESHSINCETIMESTAMPJOBDATA']._serialized_end=282
   _globals['_CALLLOGEVENTSENDJOBDATA']._serialized_start=284
   _globals['_CALLLOGEVENTSENDJOBDATA']._serialized_end=331
-  _globals['_CALLLINKUPDATESENDJOBDATA']._serialized_start=333
-  _globals['_CALLLINKUPDATESENDJOBDATA']._serialized_end=384
-  _globals['_ATTACHMENTUPLOADJOBDATA']._serialized_start=386
-  _globals['_ATTACHMENTUPLOADJOBDATA']._serialized_end=497
-  _globals['_PREKEYSSYNCJOBDATA']._serialized_start=499
-  _globals['_PREKEYSSYNCJOBDATA']._serialized_end=550
+  _globals['_CALLLINKUPDATESENDJOBDATA']._serialized_start=334
+  _globals['_CALLLINKUPDATESENDJOBDATA']._serialized_end=485
+  _globals['_CALLLINKUPDATESENDJOBDATA_TYPE']._serialized_start=446
+  _globals['_CALLLINKUPDATESENDJOBDATA_TYPE']._serialized_end=476
+  _globals['_ATTACHMENTUPLOADJOBDATA']._serialized_start=487
+  _globals['_ATTACHMENTUPLOADJOBDATA']._serialized_end=598
+  _globals['_PREKEYSSYNCJOBDATA']._serialized_start=600
+  _globals['_PREKEYSSYNCJOBDATA']._serialized_end=651
 # @@protoc_insertion_point(module_scope)
