@@ -52,4 +52,8 @@ jobs:
         git config user.name "API Updater"
         git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
         git add server_proto.py
-        git diff-index --quiet HEAD || git commit -m "Updating server API" &&  git push origin ${{ github.event.inputs.branch }} -q
+        if ! git diff-index --quiet HEAD; then
+             git commit -m "Updating server API"
+             git push origin ${{ github.event.inputs.branch }} -q
+        fi
+        echo "Workflow done! 🎉"
