@@ -537,6 +537,9 @@ def v2_accounts_phone_number_identity_key_distribution(flow: HTTPFlow):
             Set phone-number identity keys
             Updates key material for the phone-number identity for all devices and sends a synchronization message to companion devices
          Parameters:
+            User-Agent
+              location: header
+              None
 
 
          Responses:
@@ -621,7 +624,9 @@ def v1_archives_upload_form(flow: HTTPFlow):
             200 -
             429 - Rate limited.
             403 - Forbidden. The request had insufficient permissions to perform the requested action
-            401 - The provided backup auth credential presentation could not be verified
+            401 - The provided backup auth credential presentation could not be verified or
+    The public key signature was invalid or
+    There is no backup associated with the backup-id in the presentation
             400 - Bad arguments. The request may have been made on an authenticated channel
 
          Security:
@@ -655,7 +660,9 @@ def v1_archives(flow: HTTPFlow):
             404 - No existing backups found
             429 - Rate limited.
             403 - Forbidden. The request had insufficient permissions to perform the requested action
-            401 - The provided backup auth credential presentation could not be verified
+            401 - The provided backup auth credential presentation could not be verified or
+    The public key signature was invalid or
+    There is no backup associated with the backup-id in the presentation
             400 - Bad arguments. The request may have been made on an authenticated channel
 
          Security:
@@ -690,7 +697,9 @@ def v1_archives(flow: HTTPFlow):
             204 - The backup was successfully refreshed
             429 - Rate limited.
             403 - Forbidden. The request had insufficient permissions to perform the requested action
-            401 - The provided backup auth credential presentation could not be verified
+            401 - The provided backup auth credential presentation could not be verified or
+    The public key signature was invalid or
+    There is no backup associated with the backup-id in the presentation
             400 - Bad arguments. The request may have been made on an authenticated channel
 
          Security:
@@ -732,7 +741,9 @@ def v1_archives_media_batch(flow: HTTPFlow):
             413 - All media capacity has been consumed. Free some space to continue.
             429 - Rate limited.
             403 - Forbidden. The request had insufficient permissions to perform the requested action
-            401 - The provided backup auth credential presentation could not be verified
+            401 - The provided backup auth credential presentation could not be verified or
+    The public key signature was invalid or
+    There is no backup associated with the backup-id in the presentation
             400 - Bad arguments. The request may have been made on an authenticated channel
 
          Security:
@@ -777,7 +788,9 @@ def v1_archives_media(flow: HTTPFlow):
             400 - Bad arguments. The request may have been made on an authenticated channel
             429 - Rate limited.
             403 - Forbidden. The request had insufficient permissions to perform the requested action
-            401 - The provided backup auth credential presentation could not be verified
+            401 - The provided backup auth credential presentation could not be verified or
+    The public key signature was invalid or
+    There is no backup associated with the backup-id in the presentation
 
          Security:
             authenticatedAccount - basic
@@ -818,7 +831,9 @@ def v1_archives_media(flow: HTTPFlow):
             410 - The source object was not found.
             429 - Rate limited.
             403 - Forbidden. The request had insufficient permissions to perform the requested action
-            401 - The provided backup auth credential presentation could not be verified
+            401 - The provided backup auth credential presentation could not be verified or
+    The public key signature was invalid or
+    There is no backup associated with the backup-id in the presentation
 
          Security:
             authenticatedAccount - basic
@@ -849,7 +864,9 @@ def v1_archives_media_delete(flow: HTTPFlow):
          Responses:
             429 - Rate limited.
             403 - Forbidden. The request had insufficient permissions to perform the requested action
-            401 - The provided backup auth credential presentation could not be verified
+            401 - The provided backup auth credential presentation could not be verified or
+    The public key signature was invalid or
+    There is no backup associated with the backup-id in the presentation
             400 - Bad arguments. The request may have been made on an authenticated channel
 
          Security:
@@ -918,7 +935,9 @@ def v1_archives_auth_read(flow: HTTPFlow):
             200 -
             429 - Rate limited.
             403 - Forbidden. The request had insufficient permissions to perform the requested action
-            401 - The provided backup auth credential presentation could not be verified
+            401 - The provided backup auth credential presentation could not be verified or
+    The public key signature was invalid or
+    There is no backup associated with the backup-id in the presentation
             400 - Bad arguments. The request may have been made on an authenticated channel
 
          Security:
@@ -983,7 +1002,9 @@ def v1_archives_keys(flow: HTTPFlow):
             204 - The public key was set
             429 - Rate limited.
             403 - Forbidden. The request had insufficient permissions to perform the requested action
-            401 - The provided backup auth credential presentation could not be verified
+            401 - The provided backup auth credential presentation could not be verified or
+    The public key signature was invalid or
+    There is no backup associated with the backup-id in the presentation
             400 - Bad arguments. The request may have been made on an authenticated channel
 
          Security:
@@ -1186,10 +1207,6 @@ def v1_certificate_auth_group(flow: HTTPFlow):
               location: query
               None
 
-            pniAsServiceId
-              location: query
-              None
-
 
          Responses:
             default - default response
@@ -1338,6 +1355,10 @@ def v1_devices_link(flow: HTTPFlow):
 
     Parameters:
        Authorization
+         location: header
+         None
+
+       User-Agent
          location: header
          None
 
@@ -1602,10 +1623,6 @@ def v2_keys(flow: HTTPFlow):
               location: query
               None
 
-            User-Agent
-              location: header
-              None
-
 
          Responses:
             200 - Body contains the number of available one-time prekeys for the device.
@@ -1661,6 +1678,10 @@ def v2_keys_signed(flow: HTTPFlow):
                 Upload a new signed elliptic-curve prekey for this device. Deprecated; use PUT /v2/keys instead.
 
          Parameters:
+            User-Agent
+              location: header
+              None
+
             identity
               location: query
               None
