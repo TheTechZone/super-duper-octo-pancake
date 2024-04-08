@@ -3,7 +3,7 @@ from xepor import InterceptedAPI, RouteType
 
 SIGNAL_PRODUCTION_SERVER = "https://chat.signal.org"
 SIGNAL_STAGING_SERVER = "https://chat.staging.signal.org"
-HOST_HTTPBIN = "SIGNAL_PRODUCTION_SERVER"
+HOST_HTTPBIN = SIGNAL_PRODUCTION_SERVER
 api = InterceptedAPI(HOST_HTTPBIN)
 
 
@@ -2853,4 +2853,4 @@ def v1_verification_session_sessionId_code(flow: HTTPFlow, sessionId):
     pass
 
 
-ddons = [api]
+addons = [api]
