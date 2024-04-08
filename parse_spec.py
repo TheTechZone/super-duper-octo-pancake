@@ -29,7 +29,7 @@ def generate_python_code(spec):
             code_snippets.append(endpoint_code)
             # break
         # break
-    code_snippets.append("ddons = [api]")
+    code_snippets.append("addons = [api]")
     return "\n".join(code_snippets)
 
 
@@ -46,7 +46,7 @@ def get_servers(spec, main="PRODUCTION"):
             f'SIGNAL_{server.get("description").split()[0].upper()}_SERVER="{server.get("url")}"'
         )
 
-    svrs.append(f'HOST_HTTPBIN="SIGNAL_{main}_SERVER"')
+    svrs.append(f'HOST_HTTPBIN=SIGNAL_{main}_SERVER')
     return "\n".join(svrs)
 
 
