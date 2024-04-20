@@ -889,6 +889,12 @@ def v1_archives_auth(flow: HTTPFlow):
 
     The redemptionStart and redemptionEnd seconds must be UTC day aligned, and must not span more than 7 days.
 
+    Each credential contains a receipt level which indicates the backup level the credential is good for. If the
+    account has paid backup access that expires at some point in the provided redemption window, credentials with
+    redemption times after the expiration may be on a lower backup level.
+
+    Clients must validate the receipt level on the credential matches a known receipt level before using it.
+
          Parameters:
             redemptionStartSeconds  (required)
               location: query
@@ -930,6 +936,10 @@ def v1_archives_auth_read(flow: HTTPFlow):
               location: header
               Signature of the ZK auth credential's presentation, encoded in standard padded base64
 
+            cdn  (required)
+              location: query
+              The number of the CDN to get credentials for
+
 
          Responses:
             200 -
@@ -939,6 +949,35 @@ def v1_archives_auth_read(flow: HTTPFlow):
     The public key signature was invalid or
     There is no backup associated with the backup-id in the presentation
             400 - Bad arguments. The request may have been made on an authenticated channel
+
+         Security:
+            authenticatedAccount - basic
+            Account authentication is based on Basic authentication schema,
+    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
+    user's `main` device is assumed.
+
+    """
+    # Implement the function body here
+    pass
+
+
+@api.route("/v1/archives/redeem-receipt", methods=["POST"])
+def v1_archives_redeem_receipt(flow: HTTPFlow):
+    """
+            Redeem receipt
+            Redeem a receipt acquired from /v1/subscription/{subscriberId}/receipt_credentials to mark the account as
+    eligible for the paid backup tier.
+
+    After successful redemption, subsequent requests to /v1/archive/auth will return credentials with the level on
+    the provided receipt until the expiration time on the receipt.
+
+         Parameters:
+
+
+         Responses:
+            204 - The receipt was redeemed
+            400 - The provided presentation or receipt was invalid
+            429 - Rate limited.
 
          Security:
             authenticatedAccount - basic
@@ -1000,6 +1039,45 @@ def v1_archives_keys(flow: HTTPFlow):
 
          Responses:
             204 - The public key was set
+            429 - Rate limited.
+            403 - Forbidden. The request had insufficient permissions to perform the requested action
+            401 - The provided backup auth credential presentation could not be verified or
+    The public key signature was invalid or
+    There is no backup associated with the backup-id in the presentation
+            400 - Bad arguments. The request may have been made on an authenticated channel
+
+         Security:
+            authenticatedAccount - basic
+            Account authentication is based on Basic authentication schema,
+    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
+    user's `main` device is assumed.
+
+    """
+    # Implement the function body here
+    pass
+
+
+@api.route("/v1/archives/media/upload/form", methods=["GET"])
+def v1_archives_media_upload_form(flow: HTTPFlow):
+    """
+            Fetch media attachment upload form
+            Retrieve an upload form that can be used to perform a resumable upload of an attachment. After uploading, the
+    attachment can be copied into the backup at PUT /archives/media/.
+
+    Like the account authenticated version at /attachments, the uploaded object is only temporary.
+
+         Parameters:
+            X-Signal-ZK-Auth  (required)
+              location: header
+              Presentation of a ZK backup auth credential acquired from /v1/archives/auth, encoded in standard padded base64
+
+            X-Signal-ZK-Auth-Signature  (required)
+              location: header
+              Signature of the ZK auth credential's presentation, encoded in standard padded base64
+
+
+         Responses:
+            200 -
             429 - Rate limited.
             403 - Forbidden. The request had insufficient permissions to perform the requested action
             401 - The provided backup auth credential presentation could not be verified or
@@ -1204,6 +1282,10 @@ def v1_certificate_auth_group(flow: HTTPFlow):
               None
 
             redemptionEndSeconds
+              location: query
+              None
+
+            zkcCredential
               location: query
               None
 
@@ -1583,6 +1665,10 @@ def v2_keys_identifier_device_id(flow: HTTPFlow, identifier, device_id):
               location: header
               None
 
+            Group-Send-Token
+              location: header
+              None
+
             identifier  (required)
               location: path
               the account or phone-number identifier to retrieve keys for
@@ -1598,7 +1684,8 @@ def v2_keys_identifier_device_id(flow: HTTPFlow, identifier, device_id):
 
          Responses:
             200 - Indicates at least one prekey was available for at least one requested device.
-            401 - Account authentication check failed and unidentified-access key was not supplied or invalid.
+            400 - A group send endorsement and other authorization (account authentication or unidentified-access key) were both provided.
+            401 - Account authentication check failed and unidentified-access key or group send endorsement token was not supplied or invalid.
             404 - Requested identity or device does not exist, is not active, or has no available prekeys.
             429 - Rate limit exceeded.
 
@@ -1793,12 +1880,18 @@ def v1_messages_report_source_messageGuid(flow: HTTPFlow, source, messageGuid):
 @api.route("/v1/messages/{destination}", methods=["PUT"])
 def v1_messages_destination(flow: HTTPFlow, destination):
     """
-
+            Send a message
+            Deliver a message to a single recipient. May be authenticated or unauthenticated; if unauthenticated,
+    an unidentifed-access key or group-send endorsement token must be provided, unless the message is a story.
 
          Parameters:
             Unidentified-Access-Key
               location: header
-              None
+              The recipient's unidentified access key
+
+            Group-Send-Token
+              location: header
+              A group send endorsement token covering the recipient. Must not be combined with `Unidentified-Access-Key` or set on a story message.
 
             User-Agent
               location: header
@@ -1806,15 +1899,19 @@ def v1_messages_destination(flow: HTTPFlow, destination):
 
             destination  (required)
               location: path
-              None
+              If true, deliver the message only to recipients that are online when it is sent
 
             story
               location: query
-              None
+              If true, the message is a story; access tokens are not checked and sending to nonexistent recipients is permitted
 
 
          Responses:
-            default - default response
+            200 - Message was successfully sent
+            401 - The message is not a story and the authorization, unauthorized access key, or group send endorsement token is missing or incorrect
+            404 - The message is not a story and some the recipient service ID does not correspond to a registered Signal user
+            409 - Incorrect set of devices supplied for recipient
+            410 - Mismatched registration ids supplied for some recipient devices
 
          Security:
             authenticatedAccount - basic
@@ -1837,11 +1934,11 @@ def v1_messages_multi_recipient(flow: HTTPFlow):
          Parameters:
             Unidentified-Access-Key
               location: header
-              The bitwise xor of the unidentified access keys for every recipient of the message. Will be replaced with group send credentials
+              The bitwise xor of the unidentified access keys for every recipient of the message. Will be replaced with group send endorsements
 
-            Group-Send-Credential
+            Group-Send-Token
               location: header
-              A group send credential covering all (included and excluded) recipients of the message. Must not be combined with `Unidentified-Access-Key` or set on a story message.
+              A group send endorsement token covering recipients of this message. Must not be combined with `Unidentified-Access-Key` or set on a story message.
 
             User-Agent
               location: header
@@ -1867,7 +1964,7 @@ def v1_messages_multi_recipient(flow: HTTPFlow):
          Responses:
             200 - Message was successfully sent to all recipients
             400 - The envelope specified delivery to the same recipient device multiple times
-            401 - The message is not a story and the unauthorized access key or group send credential is missing or incorrect
+            401 - The message is not a story and the unauthorized access key or group send endorsement token is missing or incorrect
             404 - The message is not a story and some of the recipient service IDs do not correspond to registered Signal users
             409 - Incorrect set of devices supplied for some recipients
             410 - Mismatched registration ids supplied for some recipient devices
