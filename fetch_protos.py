@@ -11,7 +11,7 @@ base_url = "https://api.github.com/search/code"
 
 # Define the search query parameters
 query_params = {
-    "q": 'repo:signalapp/Signal-Android language:"Protocol Buffer"',
+    "q": 'repo:signalapp/Signal-Android repo:signalapp/libsignal language:"Protocol Buffer"',
     "per_page": 100,  # You can change this to navigate through pages of results
 }
 
