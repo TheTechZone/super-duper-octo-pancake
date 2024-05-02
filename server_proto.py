@@ -713,6 +713,42 @@ def v1_archives(flow: HTTPFlow):
     pass
 
 
+@api.route("/v1/archives", methods=["DELETE"])
+def v1_archives(flow: HTTPFlow):
+    """
+            Delete entire backup
+            Delete all backup metadata, objects, and stored public key. To use backups again, a public key must be resupplied.
+
+         Parameters:
+            X-Signal-ZK-Auth  (required)
+              location: header
+              Presentation of a ZK backup auth credential acquired from /v1/archives/auth, encoded in standard padded base64
+
+            X-Signal-ZK-Auth-Signature  (required)
+              location: header
+              Signature of the ZK auth credential's presentation, encoded in standard padded base64
+
+
+         Responses:
+            204 - The backup has been successfully removed
+            429 - Rate limited.
+            403 - Forbidden. The request had insufficient permissions to perform the requested action
+            401 - The provided backup auth credential presentation could not be verified or
+    The public key signature was invalid or
+    There is no backup associated with the backup-id in the presentation
+            400 - Bad arguments. The request may have been made on an authenticated channel
+
+         Security:
+            authenticatedAccount - basic
+            Account authentication is based on Basic authentication schema,
+    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
+    user's `main` device is assumed.
+
+    """
+    # Implement the function body here
+    pass
+
+
 @api.route("/v1/archives/media/batch", methods=["PUT"])
 def v1_archives_media_batch(flow: HTTPFlow):
     """
@@ -1233,7 +1269,7 @@ def v1_calling_relays(flow: HTTPFlow):
             400 - Invalid get call endpoint request.
             401 - Account authentication check failed.
             422 - Invalid request format.
-            429 - Ratelimited.
+            429 - Rate limited.
 
          Security:
             authenticatedAccount - basic
@@ -2105,6 +2141,10 @@ def v1_profile_identifier(flow: HTTPFlow, identifier):
               location: header
               None
 
+            Group-Send-Token
+              location: header
+              None
+
             User-Agent
               location: header
               None
@@ -2408,6 +2448,9 @@ def v1_subscription_boost_paypal_confirm(flow: HTTPFlow):
 
 
     Parameters:
+       User-Agent
+         location: header
+         None
 
 
     Responses:
@@ -2425,6 +2468,9 @@ def v1_subscription_boost_create(flow: HTTPFlow):
 
 
     Parameters:
+       User-Agent
+         location: header
+         None
 
 
     Responses:
@@ -2487,6 +2533,10 @@ def v1_subscription_subscriberId_create_payment_method_paypal(
               location: path
               None
 
+            User-Agent
+              location: header
+              None
+
 
          Responses:
             default - default response
@@ -2514,6 +2564,10 @@ def v1_subscription_subscriberId_create_payment_method(flow: HTTPFlow, subscribe
 
             type
               location: query
+              None
+
+            User-Agent
+              location: header
               None
 
 
