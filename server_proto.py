@@ -1541,6 +1541,33 @@ def v1_devices_capabilities(flow: HTTPFlow):
     pass
 
 
+@api.route("/v1/devices/public_key", methods=["PUT"])
+def v1_devices_public_key(flow: HTTPFlow):
+    """
+            Sets a public key for authentication
+            Sets the authentication public key for the authenticated device. The public key will be used for
+    authentication in the nascent gRPC-over-Noise API. Existing devices must upload a public key before they can
+    use the gRPC-over-Noise API, and this endpoint exists to facilitate migration to the new API.
+
+         Parameters:
+
+
+         Responses:
+            200 - Public key stored successfully
+            401 - Account authentication check failed
+            422 - Invalid request format
+
+         Security:
+            authenticatedAccount - basic
+            Account authentication is based on Basic authentication schema,
+    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
+    user's `main` device is assumed.
+
+    """
+    # Implement the function body here
+    pass
+
+
 @api.route("/v1/devices/unauthenticated_delivery", methods=["PUT"])
 def v1_devices_unauthenticated_delivery(flow: HTTPFlow):
     """
@@ -2221,6 +2248,10 @@ def v1_provisioning_destination(flow: HTTPFlow, destination):
               location: path
               None
 
+            User-Agent
+              location: header
+              None
+
 
          Responses:
             default - default response
@@ -2376,7 +2407,8 @@ def v3_backup_auth_check(flow: HTTPFlow):
             Over time, clients may wind up with multiple sets of SVR3 authentication credentials in cloud storage.
     To determine which set is most current and should be used to communicate with SVR3 to retrieve a master key
     (from which a registration recovery password can be derived), clients should call this endpoint
-    with a list of stored credentials. The response will identify which (if any) set of credentials are appropriate for communicating with SVR3.
+    with a list of stored credentials. The response will identify which (if any) set of credentials are
+    appropriate for communicating with SVR3.
 
          Parameters:
 
@@ -2399,11 +2431,38 @@ def v3_backup_auth(flow: HTTPFlow):
             Generate SVR3 service credentials. Generated credentials have an expiration time of 30 days
     (however, the TTL is fully controlled by the server side and may change even for already generated credentials).
 
+    If a share-set has been previously set via /v3/backups/share-set, it will be included in the response
+
          Parameters:
 
 
          Responses:
-            200 - `JSON` with generated credentials.
+            200 - `JSON` with generated credentials and share-set
+            401 - Account authentication check failed.
+
+         Security:
+            authenticatedAccount - basic
+            Account authentication is based on Basic authentication schema,
+    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
+    user's `main` device is assumed.
+
+    """
+    # Implement the function body here
+    pass
+
+
+@api.route("/v3/backup/share-set", methods=["PUT"])
+def v3_backup_share_set(flow: HTTPFlow):
+    """
+            Set a share-set for the account
+            Add a share-set to the account that can later be retrieved at v3/backups/auth or during registration. After
+    storing a value with SVR3, clients must store the returned share-set so the value can be restored later.
+
+         Parameters:
+
+
+         Responses:
+            204 - Successfully set share-set
             401 - Account authentication check failed.
 
          Security:
