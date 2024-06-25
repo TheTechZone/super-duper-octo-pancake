@@ -13,7 +13,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x15\x45xternalBackups.proto\x12\x06signal\"\x1e\n\x0cSvrAuthToken\x12\x0e\n\x06tokens\x18\x01 \x03(\tB-\n+org.thoughtcrime.securesms.absbackup.protosb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x15\x45xternalBackups.proto\x12\x06signal\"6\n\x0cSvrAuthToken\x12\x12\n\nsvr2Tokens\x18\x01 \x03(\t\x12\x12\n\nsvr3Tokens\x18\x02 \x03(\tB-\n+org.thoughtcrime.securesms.absbackup.protosb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -23,5 +23,5 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   DESCRIPTOR._options = None
   DESCRIPTOR._serialized_options = b'\n+org.thoughtcrime.securesms.absbackup.protos'
   _globals['_SVRAUTHTOKEN']._serialized_start=33
-  _globals['_SVRAUTHTOKEN']._serialized_end=63
+  _globals['_SVRAUTHTOKEN']._serialized_end=87
 # @@protoc_insertion_point(module_scope)
