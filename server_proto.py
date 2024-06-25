@@ -1484,6 +1484,7 @@ def v1_devices_link(flow: HTTPFlow):
     Responses:
        200 - The new device was linked to the calling account
        403 - The given account was not found or the given verification code was incorrect
+       409 - The new device is missing a capability supported by all other devices on the account
        411 - The given account already has its maximum number of linked devices
        422 - The request did not pass validation
        429 - Too many attempts
