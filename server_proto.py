@@ -1750,7 +1750,7 @@ def v2_keys_identifier_device_id(flow: HTTPFlow, identifier, device_id):
             200 - Indicates at least one prekey was available for at least one requested device.
             400 - A group send endorsement and other authorization (account authentication or unidentified-access key) were both provided.
             401 - Account authentication check failed and unidentified-access key or group send endorsement token was not supplied or invalid.
-            404 - Requested identity or device does not exist, is not active, or has no available prekeys.
+            404 - Requested identity or device does not exist or device has no available prekeys.
             429 - Rate limit exceeded.
 
          Security:
