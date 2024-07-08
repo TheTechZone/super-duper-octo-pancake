@@ -12,31 +12,35 @@ def generate_python_code(spec):
     code_snippets = [
         "from mitmproxy.http import HTTPFlow\n"
         "from xepor import InterceptedAPI, RouteType\n\n"
-        f"{get_servers(spec)}\n"
+        f"{get_servers(spec)}\n\n"
         "api = InterceptedAPI(HOST_HTTPBIN)\n\n"
     ]
     for path, methods in spec["paths"].items():
         for method, details in methods.items():
-            endpoint_code = f"@api.route('{path}', methods=['{method.upper()}'])\n"
-            endpoint_code += f"{build_signature(path, details)}\n"
-            endpoint_code += f"    '''\n\t{details.get('summary', '')}\n\t{details.get('description','')}\n"
-            endpoint_code += f"     Parameters:\n{get_params(details)}\n\n"
-            endpoint_code += f"     Responses:\n{get_responses(details)}\n\n"
-            endpoint_code += f"     {get_security(spec, details)}\n"
-            endpoint_code += "      '''\n"
-            endpoint_code += "    # Implement the function body here\n"
-            endpoint_code += "    pass\n\n"
-            code_snippets.append(endpoint_code)
-            # break
+            for rtype in [('req', 'RouteType.REQUEST'), ('resp', 'RouteType.RESPONSE') ]:
+                # endpoint_code = f"@api.route('{path}', methods=['{method.upper()}'])\n"
+                endpoint_code = f"@api.route('{path}', rtype={rtype[1]})\n"
+                endpoint_code += f"{build_signature(path, details, rtype[0])}\n"
+                endpoint_code += f"    '''\n\t{details.get('summary', '')}\n\t{details.get('description','')}\n"
+                if rtype[0] == "req":
+                    endpoint_code += f"     Parameters:\n{get_params(details)}\n\n"
+                if rtype[0] == "resp":
+                    endpoint_code += f"     Responses:\n{get_responses(details)}\n\n"
+                endpoint_code += f"     {get_security(spec, details)}\n"
+                endpoint_code += "      '''\n"
+                endpoint_code += "    # Implement the function body here\n"
+                endpoint_code += "    pass\n\n"
+                code_snippets.append(endpoint_code)
+                # break
         # break
     code_snippets.append("addons = [api]")
     return "\n".join(code_snippets)
 
 
-def build_signature(path, details):
+def build_signature(path, details, route):
     args = get_route_args(path)
     args_str = ", ".join(args)
-    return f"def {path.replace('/', '_').replace('-','_').replace('{','').replace('}','').lstrip('_')}(flow: HTTPFlow{','+args_str if len(args) > 0 else ''}):"
+    return f"def {route}_{path.replace('/', '_').replace('-','_').replace('{','').replace('}','').lstrip('_')}(flow: HTTPFlow{','+args_str if len(args) > 0 else ''}):"
 
 
 def get_servers(spec, main="PRODUCTION"):
