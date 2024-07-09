@@ -2933,55 +2933,6 @@ def resp_v2_keys(flow: HTTPFlow):
     pass
 
 
-@api.route("/v2/keys/signed", rtype=RouteType.REQUEST)
-def req_v2_keys_signed(flow: HTTPFlow):
-    """
-            Upload a new signed prekey
-                Upload a new signed elliptic-curve prekey for this device. Deprecated; use PUT /v2/keys instead.
-
-         Parameters:
-            User-Agent
-              location: header
-              None
-
-            identity
-              location: query
-              None
-
-
-         Security:
-            authenticatedAccount - basic
-            Account authentication is based on Basic authentication schema,
-    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
-    user's `main` device is assumed.
-
-    """
-    # Implement the function body here
-    pass
-
-
-@api.route("/v2/keys/signed", rtype=RouteType.RESPONSE)
-def resp_v2_keys_signed(flow: HTTPFlow):
-    """
-            Upload a new signed prekey
-                Upload a new signed elliptic-curve prekey for this device. Deprecated; use PUT /v2/keys instead.
-
-         Responses:
-            200 - Indicates that new prekey was successfully stored.
-            401 - Account authentication check failed.
-            422 - Invalid request format.
-
-         Security:
-            authenticatedAccount - basic
-            Account authentication is based on Basic authentication schema,
-    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
-    user's `main` device is assumed.
-
-    """
-    # Implement the function body here
-    pass
-
-
 @api.route("/v1/messages", rtype=RouteType.REQUEST)
 def req_v1_messages(flow: HTTPFlow):
     """
