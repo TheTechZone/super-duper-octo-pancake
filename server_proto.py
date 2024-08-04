@@ -4412,9 +4412,10 @@ def resp_v1_subscription_boost_badges(flow: HTTPFlow):
 @api.route("/v1/subscription/configuration", rtype=RouteType.REQUEST)
 def req_v1_subscription_configuration(flow: HTTPFlow):
     """
-
-
-    Parameters:
+            Subscription configuration
+            Returns all configuration for badges, donation subscriptions, backup subscriptions, and one-time donation (
+    "boost" and "gift") minimum and suggested amounts.
+         Parameters:
 
 
 
@@ -4426,10 +4427,11 @@ def req_v1_subscription_configuration(flow: HTTPFlow):
 @api.route("/v1/subscription/configuration", rtype=RouteType.RESPONSE)
 def resp_v1_subscription_configuration(flow: HTTPFlow):
     """
-
-
-    Responses:
-       default - default response
+            Subscription configuration
+            Returns all configuration for badges, donation subscriptions, backup subscriptions, and one-time donation (
+    "boost" and "gift") minimum and suggested amounts.
+         Responses:
+            200 -
 
 
     """
