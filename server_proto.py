@@ -4381,34 +4381,6 @@ def resp_v1_subscription_bank_mandate_bankTransferType(
     pass
 
 
-@api.route("/v1/subscription/boost/badges", rtype=RouteType.REQUEST)
-def req_v1_subscription_boost_badges(flow: HTTPFlow):
-    """
-
-
-    Parameters:
-
-
-
-    """
-    # Implement the function body here
-    pass
-
-
-@api.route("/v1/subscription/boost/badges", rtype=RouteType.RESPONSE)
-def resp_v1_subscription_boost_badges(flow: HTTPFlow):
-    """
-
-
-    Responses:
-       default - default response
-
-
-    """
-    # Implement the function body here
-    pass
-
-
 @api.route("/v1/subscription/configuration", rtype=RouteType.REQUEST)
 def req_v1_subscription_configuration(flow: HTTPFlow):
     """
@@ -4433,61 +4405,6 @@ def resp_v1_subscription_configuration(flow: HTTPFlow):
          Responses:
             200 -
 
-
-    """
-    # Implement the function body here
-    pass
-
-
-@api.route(
-    "/v1/subscription/{subscriberId}/default_payment_method/{paymentMethodId}",
-    rtype=RouteType.REQUEST,
-)
-def req_v1_subscription_subscriberId_default_payment_method_paymentMethodId(
-    flow: HTTPFlow, subscriberId, paymentMethodId
-):
-    """
-
-
-         Parameters:
-            subscriberId  (required)
-              location: path
-              None
-
-            paymentMethodId  (required)
-              location: path
-              None
-
-
-         Security:
-            authenticatedAccount - basic
-            Account authentication is based on Basic authentication schema,
-    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
-    user's `main` device is assumed.
-
-    """
-    # Implement the function body here
-    pass
-
-
-@api.route(
-    "/v1/subscription/{subscriberId}/default_payment_method/{paymentMethodId}",
-    rtype=RouteType.RESPONSE,
-)
-def resp_v1_subscription_subscriberId_default_payment_method_paymentMethodId(
-    flow: HTTPFlow, subscriberId, paymentMethodId
-):
-    """
-
-
-         Responses:
-            default - default response
-
-         Security:
-            authenticatedAccount - basic
-            Account authentication is based on Basic authentication schema,
-    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
-    user's `main` device is assumed.
 
     """
     # Implement the function body here
