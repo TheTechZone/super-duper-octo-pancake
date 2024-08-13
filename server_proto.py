@@ -1784,22 +1784,6 @@ def resp_v1_archives_media_upload_form(flow: HTTPFlow):
 
     Like the account authenticated version at /attachments, the uploaded object is only temporary.
 
-         Security:
-            authenticatedAccount - basic
-            Account authentication is based on Basic authentication schema,
-    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
-    user's `main` device is assumed.
-
-    """
-    # Implement the function body here
-    pass
-
-
-@api.route("/v1/archives/upload/form", rtype=RouteType.RESPONSE)
-def resp_v1_archives_upload_form(flow: HTTPFlow):
-    """
-            Fetch message backup upload form
-            Retrieve an upload form that can be used to perform a resumable upload of a message backup.
          Responses:
             200 -
             429 - Rate limited.
@@ -1818,58 +1802,6 @@ def resp_v1_archives_upload_form(flow: HTTPFlow):
     """
     # Implement the function body here
     pass
-
-
-@api.route("/v1/archives", rtype=RouteType.REQUEST)
-def req_v1_archives(flow: HTTPFlow):
-    """
-            Fetch backup info
-            Retrieve information about the currently stored backup
-         Parameters:
-            X-Signal-ZK-Auth  (required)
-              location: header
-              Presentation of a ZK backup auth credential acquired from /v1/archives/auth, encoded in standard padded base64
-
-            X-Signal-ZK-Auth-Signature  (required)
-              location: header
-              Signature of the ZK auth credential's presentation, encoded in standard padded base64
-
-
-         Security:
-            authenticatedAccount - basic
-            Account authentication is based on Basic authentication schema,
-    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
-    user's `main` device is assumed.
-
-    """
-    # Implement the function body here
-    pass
-
-
-@api.route("/v1/archives", rtype=RouteType.RESPONSE)
-def resp_v1_archives(flow: HTTPFlow):
-    """
-            Fetch backup info
-            Retrieve information about the currently stored backup
-         Responses:
-            200 -
-            429 - Rate limited.
-            403 - Forbidden. The request had insufficient permissions to perform the requested action
-            401 - The provided backup auth credential presentation could not be verified or
-    The public key signature was invalid or
-    There is no backup associated with the backup-id in the presentation
-            400 - Bad arguments. The request may have been made on an authenticated channel
-
-         Security:
-            authenticatedAccount - basic
-            Account authentication is based on Basic authentication schema,
-    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
-    user's `main` device is assumed.
-
-    """
-    # Implement the function body here
-    pass
-
 
 
 @api.route("/v1/art/auth", rtype=RouteType.REQUEST)
@@ -1936,23 +1868,6 @@ def req_v2_attachments_form_upload(flow: HTTPFlow):
 def resp_v2_attachments_form_upload(flow: HTTPFlow):
     """
 
-
-         Security:
-            authenticatedAccount - basic
-            Account authentication is based on Basic authentication schema,
-    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
-    user's `main` device is assumed.
-
-    """
-    # Implement the function body here
-    pass
-
-
-@api.route("/v1/archives", rtype=RouteType.RESPONSE)
-def resp_v1_archives(flow: HTTPFlow):
-    """
-            Delete entire backup
-            Delete all backup metadata, objects, and stored public key. To use backups again, a public key must be resupplied.
 
          Responses:
             default - default response
@@ -2078,28 +1993,6 @@ def resp_v1_call_link_create_auth(flow: HTTPFlow):
             Generate a credential over a truncated timestamp, room ID, and account UUID. With zero knowledge
     group infrastructure, the server does not know the room ID.
 
-         Security:
-            authenticatedAccount - basic
-            Account authentication is based on Basic authentication schema,
-    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
-    user's `main` device is assumed.
-
-    """
-    # Implement the function body here
-    pass
-
-
-@api.route("/v1/archives/media", rtype=RouteType.RESPONSE)
-def resp_v1_archives_media(flow: HTTPFlow):
-    """
-            Backup media
-            Copy and re-encrypt media from the attachments cdn into the backup cdn.
-
-    The original, already encrypted, attachment will be encrypted with the provided key material before being copied.
-
-    A particular destination media id should not be reused with a different source media id or different encryption
-    parameters.
-
          Responses:
             200 - `JSON` with generated credentials.
             400 - Invalid create call link credential request.
@@ -2116,6 +2009,7 @@ def resp_v1_archives_media(flow: HTTPFlow):
     """
     # Implement the function body here
     pass
+
 
 @api.route("/v1/calling/relays", rtype=RouteType.REQUEST)
 def req_v1_calling_relays(flow: HTTPFlow):
@@ -2143,22 +2037,6 @@ def resp_v1_calling_relays(flow: HTTPFlow):
             Get 1:1 calling relay options for the client
             Get 1:1 relay addresses in IpV4, Ipv6, and URL formats.
 
-         Security:
-            authenticatedAccount - basic
-            Account authentication is based on Basic authentication schema,
-    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
-    user's `main` device is assumed.
-
-    """
-    # Implement the function body here
-    pass
-
-
-@api.route("/v1/archives/media/delete", rtype=RouteType.RESPONSE)
-def resp_v1_archives_media_delete(flow: HTTPFlow):
-    """
-            Delete media objects
-            Delete media objects stored with this backup-id
          Responses:
             200 - `JSON` with call endpoints.
             400 - Invalid get call endpoint request.
@@ -2199,59 +2077,11 @@ def req_v1_certificate_delivery(flow: HTTPFlow):
     pass
 
 
-@api.route("/v1/archives/auth", rtype=RouteType.RESPONSE)
-def resp_v1_archives_auth(flow: HTTPFlow):
-    """
-            Fetch ZK credentials
-            After setting a blinded backup-id with PUT /v1/archives/, this fetches credentials that can be used to perform
-    operations against that backup-id. Clients may (and should) request up to 7 days of credentials at a time.
-
-    The redemptionStart and redemptionEnd seconds must be UTC day aligned, and must not span more than 7 days.
-
-    Each credential contains a receipt level which indicates the backup level the credential is good for. If the
-    account has paid backup access that expires at some point in the provided redemption window, credentials with
-    redemption times after the expiration may be on a lower backup level.
-
-    Clients must validate the receipt level on the credential matches a known receipt level before using it.
-
-         Responses:
-            200 -
-            400 - The start/end did not meet alignment/duration requirements
-            404 - Could not find an existing blinded backup id
-            429 - Rate limited.
-
-         Security:
-            authenticatedAccount - basic
-            Account authentication is based on Basic authentication schema,
-    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
-    user's `main` device is assumed.
-
-    """
-    # Implement the function body here
-    pass
-
-
 @api.route("/v1/certificate/delivery", rtype=RouteType.RESPONSE)
 def resp_v1_certificate_delivery(flow: HTTPFlow):
     """
 
 
-         Security:
-            authenticatedAccount - basic
-            Account authentication is based on Basic authentication schema,
-    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
-    user's `main` device is assumed.
-
-    """
-    # Implement the function body here
-    pass
-
-
-@api.route("/v1/archives/auth/read", rtype=RouteType.RESPONSE)
-def resp_v1_archives_auth_read(flow: HTTPFlow):
-    """
-            Get CDN read credentials
-            Retrieve credentials used to read objects stored on the backup cdn
          Responses:
             default - default response
 
@@ -2284,6 +2114,7 @@ def req_v1_certificate_auth_group(flow: HTTPFlow):
               location: query
               None
 
+
          Security:
             authenticatedAccount - basic
             Account authentication is based on Basic authentication schema,
@@ -2299,27 +2130,6 @@ def req_v1_certificate_auth_group(flow: HTTPFlow):
 def resp_v1_certificate_auth_group(flow: HTTPFlow):
     """
 
-
-         Security:
-            authenticatedAccount - basic
-            Account authentication is based on Basic authentication schema,
-    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
-    user's `main` device is assumed.
-
-    """
-    # Implement the function body here
-    pass
-
-
-@api.route("/v1/archives/backupid", rtype=RouteType.RESPONSE)
-def resp_v1_archives_backupid(flow: HTTPFlow):
-    """
-            Set backup id
-            Set a (blinded) backup-id for the account. Each account may have a single active backup-id that can be used
-    to store and retrieve backups. Once the backup-id is set, BackupAuthCredentials can be generated
-    using /v1/archives/auth.
-
-    The blinded backup-id and the key-pair used to blind it should be derived from a recoverable secret.
 
          Responses:
             default - default response
@@ -2348,33 +2158,6 @@ def req_v1_challenge(flow: HTTPFlow):
               location: header
               None
 
-         Security:
-            authenticatedAccount - basic
-            Account authentication is based on Basic authentication schema,
-    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
-    user's `main` device is assumed.
-
-    """
-    # Implement the function body here
-    pass
-
-
-@api.route("/v1/archives/keys", rtype=RouteType.RESPONSE)
-def resp_v1_archives_keys(flow: HTTPFlow):
-    """
-            Set public key
-            Permanently set the public key of an ED25519 key-pair for the backup-id. All requests that provide a anonymous
-    BackupAuthCredentialPresentation (including this one!) must also sign the presentation with the private key
-    corresponding to the provided public key.
-
-         Responses:
-            204 - The public key was set
-            429 - Rate limited.
-            403 - Forbidden. The request had insufficient permissions to perform the requested action
-            401 - The provided backup auth credential presentation could not be verified or
-    The public key signature was invalid or
-    There is no backup associated with the backup-id in the presentation
-            400 - Bad arguments. The request may have been made on an authenticated channel
 
          Security:
             authenticatedAccount - basic
@@ -2394,26 +2177,6 @@ def resp_v1_challenge(flow: HTTPFlow):
             Some server endpoints (the "send message" endpoint, for example) may return a 428 response indicating the client must complete a challenge before continuing.
     Clients may use this endpoint to provide proof of a completed challenge. If successful, the client may then
     continue their original operation.
-
-         Security:
-            authenticatedAccount - basic
-            Account authentication is based on Basic authentication schema,
-    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
-    user's `main` device is assumed.
-
-    """
-    # Implement the function body here
-    pass
-
-
-@api.route("/v1/archives/media/upload/form", rtype=RouteType.RESPONSE)
-def resp_v1_archives_media_upload_form(flow: HTTPFlow):
-    """
-            Fetch media attachment upload form
-            Retrieve an upload form that can be used to perform a resumable upload of an attachment. After uploading, the
-    attachment can be copied into the backup at PUT /archives/media/.
-
-    Like the account authenticated version at /attachments, the uploaded object is only temporary.
 
          Responses:
             200 - Indicates the challenge proof was accepted
@@ -2459,6 +2222,7 @@ def req_v1_challenge_push(flow: HTTPFlow):
     implement an exponential back-off system and limit the total number of retries.
 
          Parameters:
+
 
          Security:
             authenticatedAccount - basic
@@ -2507,7 +2271,7 @@ def resp_v1_challenge_push(flow: HTTPFlow):
 
             413 - Too many attempts
             429 - Too many attempts
-            
+
          Security:
             authenticatedAccount - basic
             Account authentication is based on Basic authentication schema,
@@ -2561,7 +2325,9 @@ def resp_v1_devices_provisioning_code(flow: HTTPFlow):
 def req_v1_devices(flow: HTTPFlow):
     """
 
+
          Parameters:
+
 
          Security:
             authenticatedAccount - basic
@@ -2578,23 +2344,6 @@ def req_v1_devices(flow: HTTPFlow):
 def resp_v1_devices(flow: HTTPFlow):
     """
 
-
-         Security:
-            authenticatedAccount - basic
-            Account authentication is based on Basic authentication schema,
-    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
-    user's `main` device is assumed.
-
-    """
-    # Implement the function body here
-    pass
-
-
-@api.route("/v1/calling/relays", rtype=RouteType.RESPONSE)
-def resp_v1_calling_relays(flow: HTTPFlow):
-    """
-            Get 1:1 calling relay options for the client
-            Get 1:1 relay addresses in IpV4, Ipv6, and URL formats.
 
          Responses:
             default - default response
@@ -2626,6 +2375,7 @@ def req_v1_devices_link(flow: HTTPFlow):
          None
 
 
+
     """
     # Implement the function body here
     pass
@@ -2644,6 +2394,7 @@ def resp_v1_devices_link(flow: HTTPFlow):
        411 - The given account already has its maximum number of linked devices
        422 - The request did not pass validation
        429 - Too many attempts
+
 
     """
     # Implement the function body here
@@ -2675,6 +2426,7 @@ def req_v1_devices_device_id(flow: HTTPFlow, device_id):
 @api.route("/v1/devices/{device_id}", rtype=RouteType.RESPONSE)
 def resp_v1_devices_device_id(flow: HTTPFlow, device_id):
     """
+
 
          Responses:
             default - default response
@@ -2713,6 +2465,7 @@ def req_v1_devices_capabilities(flow: HTTPFlow):
 def resp_v1_devices_capabilities(flow: HTTPFlow):
     """
 
+
          Responses:
             default - default response
 
@@ -2748,7 +2501,7 @@ def req_v1_devices_public_key(flow: HTTPFlow):
     # Implement the function body here
     pass
 
-  
+
 @api.route("/v1/devices/public_key", rtype=RouteType.RESPONSE)
 def resp_v1_devices_public_key(flow: HTTPFlow):
     """
@@ -2953,6 +2706,95 @@ def resp_v1_keepalive_provisioning(flow: HTTPFlow):
     pass
 
 
+@api.route("/v1/key-transparency/monitor", rtype=RouteType.REQUEST)
+def req_v1_key_transparency_monitor(flow: HTTPFlow):
+    """
+            Monitor the given search keys in the key transparency log
+            Enforced unauthenticated endpoint. Return proofs proving that the log tree
+    has been constructed correctly in later entries for each of the given search keys .
+
+         Parameters:
+
+
+         Security:
+            authenticatedAccount - basic
+            Account authentication is based on Basic authentication schema,
+    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
+    user's `main` device is assumed.
+
+    """
+    # Implement the function body here
+    pass
+
+
+@api.route("/v1/key-transparency/monitor", rtype=RouteType.RESPONSE)
+def resp_v1_key_transparency_monitor(flow: HTTPFlow):
+    """
+            Monitor the given search keys in the key transparency log
+            Enforced unauthenticated endpoint. Return proofs proving that the log tree
+    has been constructed correctly in later entries for each of the given search keys .
+
+         Responses:
+            200 - All search keys exist in the log
+            404 - At least one search key lookup did not find the key
+            413 - Ratelimited
+            422 - Invalid request format
+
+         Security:
+            authenticatedAccount - basic
+            Account authentication is based on Basic authentication schema,
+    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
+    user's `main` device is assumed.
+
+    """
+    # Implement the function body here
+    pass
+
+
+@api.route("/v1/key-transparency/search", rtype=RouteType.REQUEST)
+def req_v1_key_transparency_search(flow: HTTPFlow):
+    """
+            Search for the given search keys in the key transparency log
+            Enforced unauthenticated endpoint. Returns a response if all search keys exist in the key transparency log.
+
+         Parameters:
+
+
+         Security:
+            authenticatedAccount - basic
+            Account authentication is based on Basic authentication schema,
+    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
+    user's `main` device is assumed.
+
+    """
+    # Implement the function body here
+    pass
+
+
+@api.route("/v1/key-transparency/search", rtype=RouteType.RESPONSE)
+def resp_v1_key_transparency_search(flow: HTTPFlow):
+    """
+            Search for the given search keys in the key transparency log
+            Enforced unauthenticated endpoint. Returns a response if all search keys exist in the key transparency log.
+
+         Responses:
+            200 - All search key lookups were successful
+            403 - At least one search key lookup to value mapping was invalid
+            404 - At least one search key lookup did not find the key
+            413 - Ratelimited
+            422 - Invalid request format
+
+         Security:
+            authenticatedAccount - basic
+            Account authentication is based on Basic authentication schema,
+    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
+    user's `main` device is assumed.
+
+    """
+    # Implement the function body here
+    pass
+
+
 @api.route("/v2/keys/check", rtype=RouteType.REQUEST)
 def req_v2_keys_check(flow: HTTPFlow):
     """
@@ -3145,6 +2987,7 @@ def req_v2_keys(flow: HTTPFlow):
             User-Agent
               location: header
               None
+
 
          Security:
             authenticatedAccount - basic
@@ -3429,19 +3272,6 @@ def resp_v1_messages_multi_recipient(flow: HTTPFlow):
             Deliver a common-payload message to multiple recipients.
     An unidentifed-access key for all recipients must be provided, unless the message is a story.
 
-
-    """
-    # Implement the function body here
-    pass
-
-
-@api.route("/v1/messages/multi_recipient", rtype=RouteType.RESPONSE)
-def resp_v1_messages_multi_recipient(flow: HTTPFlow):
-    """
-            Send multi-recipient sealed-sender message
-            Deliver a common-payload message to multiple recipients.
-    An unidentifed-access key for all recipients must be provided, unless the message is a story.
-
          Responses:
             200 - Message was successfully sent to all recipients
             400 - The envelope specified delivery to the same recipient device multiple times
@@ -3549,22 +3379,6 @@ def req_v1_profile_identifier_version(flow: HTTPFlow, identifier, version):
             version  (required)
               location: path
               None
-
-
-         Security:
-            authenticatedAccount - basic
-            Account authentication is based on Basic authentication schema,
-    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
-    user's `main` device is assumed.
-
-    """
-    # Implement the function body here
-    pass
-
-
-@api.route("/v1/profile/{identifier}/{version}", rtype=RouteType.RESPONSE)
-def resp_v1_profile_identifier_version(flow: HTTPFlow, identifier, version):
-    """
 
 
          Security:
@@ -4223,12 +4037,17 @@ def req_v1_subscription_boost_paypal_confirm(flow: HTTPFlow):
     """
 
 
-    Parameters:
-       User-Agent
-         location: header
-         None
+         Parameters:
+            User-Agent
+              location: header
+              None
 
 
+         Security:
+            authenticatedAccount - basic
+            Account authentication is based on Basic authentication schema,
+    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
+    user's `main` device is assumed.
 
     """
     # Implement the function body here
@@ -4240,9 +4059,14 @@ def resp_v1_subscription_boost_paypal_confirm(flow: HTTPFlow):
     """
 
 
-    Responses:
-       default - default response
+         Responses:
+            default - default response
 
+         Security:
+            authenticatedAccount - basic
+            Account authentication is based on Basic authentication schema,
+    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
+    user's `main` device is assumed.
 
     """
     # Implement the function body here
@@ -4254,12 +4078,17 @@ def req_v1_subscription_boost_create(flow: HTTPFlow):
     """
 
 
-    Parameters:
-       User-Agent
-         location: header
-         None
+         Parameters:
+            User-Agent
+              location: header
+              None
 
 
+         Security:
+            authenticatedAccount - basic
+            Account authentication is based on Basic authentication schema,
+    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
+    user's `main` device is assumed.
 
     """
     # Implement the function body here
@@ -4271,9 +4100,14 @@ def resp_v1_subscription_boost_create(flow: HTTPFlow):
     """
 
 
-    Responses:
-       default - default response
+         Responses:
+            default - default response
 
+         Security:
+            authenticatedAccount - basic
+            Account authentication is based on Basic authentication schema,
+    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
+    user's `main` device is assumed.
 
     """
     # Implement the function body here
@@ -4285,12 +4119,17 @@ def req_v1_subscription_boost_receipt_credentials(flow: HTTPFlow):
     """
 
 
-    Parameters:
-       User-Agent
-         location: header
-         None
+         Parameters:
+            User-Agent
+              location: header
+              None
 
 
+         Security:
+            authenticatedAccount - basic
+            Account authentication is based on Basic authentication schema,
+    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
+    user's `main` device is assumed.
 
     """
     # Implement the function body here
@@ -4302,9 +4141,14 @@ def resp_v1_subscription_boost_receipt_credentials(flow: HTTPFlow):
     """
 
 
-    Responses:
-       default - default response
+         Responses:
+            default - default response
 
+         Security:
+            authenticatedAccount - basic
+            Account authentication is based on Basic authentication schema,
+    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
+    user's `main` device is assumed.
 
     """
     # Implement the function body here
@@ -4316,25 +4160,17 @@ def req_v1_subscription_boost_paypal_create(flow: HTTPFlow):
     """
 
 
-    Parameters:
+         Parameters:
+            User-Agent
+              location: header
+              None
 
 
-
-
-    """
-    # Implement the function body here
-    pass
-
-
-
-@api.route("/v1/subscription/boost/paypal/create", rtype=RouteType.REQUEST)
-def req_v1_subscription_boost_paypal_create(flow: HTTPFlow):
-    """
-
-
-    Parameters:
-
-
+         Security:
+            authenticatedAccount - basic
+            Account authentication is based on Basic authentication schema,
+    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
+    user's `main` device is assumed.
 
     """
     # Implement the function body here
@@ -4346,9 +4182,14 @@ def resp_v1_subscription_boost_paypal_create(flow: HTTPFlow):
     """
 
 
-    Responses:
-       default - default response
+         Responses:
+            default - default response
 
+         Security:
+            authenticatedAccount - basic
+            Account authentication is based on Basic authentication schema,
+    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
+    user's `main` device is assumed.
 
     """
     # Implement the function body here
@@ -4696,6 +4537,7 @@ def resp_v1_subscription_configuration(flow: HTTPFlow):
          Responses:
             200 -
 
+
     """
     # Implement the function body here
     pass
@@ -4740,6 +4582,7 @@ def resp_v1_subscription_subscriberId_default_payment_method_for_ideal_setupInte
     flow: HTTPFlow, subscriberId, setupIntentId
 ):
     """
+
 
          Responses:
             default - default response
