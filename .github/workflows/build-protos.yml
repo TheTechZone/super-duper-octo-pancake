@@ -19,6 +19,8 @@ jobs:
         ref: ${{ github.event.inputs.branch }}
     - name: Install Protoc
       uses: arduino/setup-protoc@v3
+      with:
+        version: "27.3"
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
@@ -32,6 +34,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         mkdir -p protos/gen
+        protoc --version
         GITHUB_ACCESS_TOKEN=${{ secrets.GITHUB_TOKEN }} python3 fetch_protos.py && echo "Updated protocol buffers to latest version."
         git config user.email "actions@users.noreply.github.com"
         git config user.name "Protobuf Updater"
