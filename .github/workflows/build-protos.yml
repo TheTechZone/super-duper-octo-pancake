@@ -19,6 +19,8 @@ jobs:
         ref: ${{ github.event.inputs.branch }}
     - name: Install Protoc
       uses: arduino/setup-protoc@v3
+      with:
+        version: "26.x"
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
