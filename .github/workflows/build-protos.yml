@@ -20,8 +20,7 @@ jobs:
     - name: Install Protoc
       uses: arduino/setup-protoc@v3
       with:
-#        version: "27.3"
-        version: "3.19.5"
+        version: "27.3"
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
