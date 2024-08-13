@@ -141,6 +141,7 @@ def compile_protobuf(proto_file, src_dir="protos", dst_dir="protos/gen", zipped=
     """
     # Construct the command
     cmd = f"protoc -I{src_dir} --python_out={dst_dir} {src_dir}/{proto_file}"
+    print(f"[D]: running command `{cmd}`")
     args = shlex.split(cmd)
 
     # Execute the command
