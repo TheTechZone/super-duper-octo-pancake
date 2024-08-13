@@ -140,7 +140,7 @@ def compile_protobuf(proto_file, src_dir="protos", dst_dir="protos/gen", zipped=
     :param proto_file: The name of the .proto file.
     """
     # Construct the command
-    cmd = f"protoc -I {src_dir} --python_out={dst_dir} {src_dir}/{proto_file}"
+    cmd = f"protoc -I {src_dir} --python_out={dst_dir} --proto-path= {src_dir}/{proto_file}"
     args = shlex.split(cmd)
 
     # Execute the command
