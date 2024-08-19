@@ -50,6 +50,7 @@ jobs:
         python3 parse_spec.py
         black server_proto.py
         datamodel-codegen --input signal-server-openapi.yaml --input-file-type openapi --output schemas.py --output-model-type dataclasses.dataclass --use-field-description --use-schema-description
+        black schemas.py
         git config user.email "actions@users.noreply.github.com"
         git config user.name "API Updater"
         git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
