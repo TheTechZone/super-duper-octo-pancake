@@ -26,6 +26,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install pyyaml
         pip install black
+        pip install datamodel-code-generator
     - name: Clone and build
       run: |
         git clone https://github.com/signalapp/Signal-Server.git --depth=1 server
@@ -48,10 +49,11 @@ jobs:
         cp -r api-doc/target/openapi/signal-server-openapi.yaml $(pwd)
         python3 parse_spec.py
         black server_proto.py
+        datamodel-codegen --input signal-server-openapi.yaml --input-file-type openapi --output schemas.py --output-model-type dataclasses.dataclass --use-field-description --use-schema-description
         git config user.email "actions@users.noreply.github.com"
         git config user.name "API Updater"
         git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
-        git add server_proto.py
+        git add server_proto.py schemas.py
         git checkout -- README.md # fix for mv
         if ! git diff-index --quiet HEAD; then
              git commit -m "Updating server API"
