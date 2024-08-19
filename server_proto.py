@@ -3286,6 +3286,170 @@ def resp_v1_messages_multi_recipient(flow: HTTPFlow):
     pass
 
 
+@api.route("/v1/subscription/boost/paypal/confirm", rtype=RouteType.REQUEST)
+def req_v1_subscription_boost_paypal_confirm(flow: HTTPFlow):
+    """
+
+
+         Parameters:
+            User-Agent
+              location: header
+              None
+
+
+         Security:
+            authenticatedAccount - basic
+            Account authentication is based on Basic authentication schema,
+    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
+    user's `main` device is assumed.
+
+    """
+    # Implement the function body here
+    pass
+
+
+@api.route("/v1/subscription/boost/paypal/confirm", rtype=RouteType.RESPONSE)
+def resp_v1_subscription_boost_paypal_confirm(flow: HTTPFlow):
+    """
+
+
+         Responses:
+            default - default response
+
+         Security:
+            authenticatedAccount - basic
+            Account authentication is based on Basic authentication schema,
+    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
+    user's `main` device is assumed.
+
+    """
+    # Implement the function body here
+    pass
+
+
+@api.route("/v1/subscription/boost/create", rtype=RouteType.REQUEST)
+def req_v1_subscription_boost_create(flow: HTTPFlow):
+    """
+
+
+         Parameters:
+            User-Agent
+              location: header
+              None
+
+
+         Security:
+            authenticatedAccount - basic
+            Account authentication is based on Basic authentication schema,
+    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
+    user's `main` device is assumed.
+
+    """
+    # Implement the function body here
+    pass
+
+
+@api.route("/v1/subscription/boost/create", rtype=RouteType.RESPONSE)
+def resp_v1_subscription_boost_create(flow: HTTPFlow):
+    """
+
+
+         Responses:
+            default - default response
+
+         Security:
+            authenticatedAccount - basic
+            Account authentication is based on Basic authentication schema,
+    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
+    user's `main` device is assumed.
+
+    """
+    # Implement the function body here
+    pass
+
+
+@api.route("/v1/subscription/boost/receipt_credentials", rtype=RouteType.REQUEST)
+def req_v1_subscription_boost_receipt_credentials(flow: HTTPFlow):
+    """
+
+
+         Parameters:
+            User-Agent
+              location: header
+              None
+
+
+         Security:
+            authenticatedAccount - basic
+            Account authentication is based on Basic authentication schema,
+    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
+    user's `main` device is assumed.
+
+    """
+    # Implement the function body here
+    pass
+
+
+@api.route("/v1/subscription/boost/receipt_credentials", rtype=RouteType.RESPONSE)
+def resp_v1_subscription_boost_receipt_credentials(flow: HTTPFlow):
+    """
+
+
+         Responses:
+            default - default response
+
+         Security:
+            authenticatedAccount - basic
+            Account authentication is based on Basic authentication schema,
+    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
+    user's `main` device is assumed.
+
+    """
+    # Implement the function body here
+    pass
+
+
+@api.route("/v1/subscription/boost/paypal/create", rtype=RouteType.REQUEST)
+def req_v1_subscription_boost_paypal_create(flow: HTTPFlow):
+    """
+
+
+         Parameters:
+            User-Agent
+              location: header
+              None
+
+
+         Security:
+            authenticatedAccount - basic
+            Account authentication is based on Basic authentication schema,
+    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
+    user's `main` device is assumed.
+
+    """
+    # Implement the function body here
+    pass
+
+
+@api.route("/v1/subscription/boost/paypal/create", rtype=RouteType.RESPONSE)
+def resp_v1_subscription_boost_paypal_create(flow: HTTPFlow):
+    """
+
+
+         Responses:
+            default - default response
+
+         Security:
+            authenticatedAccount - basic
+            Account authentication is based on Basic authentication schema,
+    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
+    user's `main` device is assumed.
+
+    """
+    # Implement the function body here
+    pass
+
+
 @api.route("/v1/payments/auth", rtype=RouteType.REQUEST)
 def req_v1_payments_auth(flow: HTTPFlow):
     """
@@ -4015,170 +4179,6 @@ def req_v1_sticker_pack_form_count(flow: HTTPFlow, count):
 
 @api.route("/v1/sticker/pack/form/{count}", rtype=RouteType.RESPONSE)
 def resp_v1_sticker_pack_form_count(flow: HTTPFlow, count):
-    """
-
-
-         Responses:
-            default - default response
-
-         Security:
-            authenticatedAccount - basic
-            Account authentication is based on Basic authentication schema,
-    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
-    user's `main` device is assumed.
-
-    """
-    # Implement the function body here
-    pass
-
-
-@api.route("/v1/subscription/boost/paypal/confirm", rtype=RouteType.REQUEST)
-def req_v1_subscription_boost_paypal_confirm(flow: HTTPFlow):
-    """
-
-
-         Parameters:
-            User-Agent
-              location: header
-              None
-
-
-         Security:
-            authenticatedAccount - basic
-            Account authentication is based on Basic authentication schema,
-    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
-    user's `main` device is assumed.
-
-    """
-    # Implement the function body here
-    pass
-
-
-@api.route("/v1/subscription/boost/paypal/confirm", rtype=RouteType.RESPONSE)
-def resp_v1_subscription_boost_paypal_confirm(flow: HTTPFlow):
-    """
-
-
-         Responses:
-            default - default response
-
-         Security:
-            authenticatedAccount - basic
-            Account authentication is based on Basic authentication schema,
-    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
-    user's `main` device is assumed.
-
-    """
-    # Implement the function body here
-    pass
-
-
-@api.route("/v1/subscription/boost/create", rtype=RouteType.REQUEST)
-def req_v1_subscription_boost_create(flow: HTTPFlow):
-    """
-
-
-         Parameters:
-            User-Agent
-              location: header
-              None
-
-
-         Security:
-            authenticatedAccount - basic
-            Account authentication is based on Basic authentication schema,
-    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
-    user's `main` device is assumed.
-
-    """
-    # Implement the function body here
-    pass
-
-
-@api.route("/v1/subscription/boost/create", rtype=RouteType.RESPONSE)
-def resp_v1_subscription_boost_create(flow: HTTPFlow):
-    """
-
-
-         Responses:
-            default - default response
-
-         Security:
-            authenticatedAccount - basic
-            Account authentication is based on Basic authentication schema,
-    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
-    user's `main` device is assumed.
-
-    """
-    # Implement the function body here
-    pass
-
-
-@api.route("/v1/subscription/boost/receipt_credentials", rtype=RouteType.REQUEST)
-def req_v1_subscription_boost_receipt_credentials(flow: HTTPFlow):
-    """
-
-
-         Parameters:
-            User-Agent
-              location: header
-              None
-
-
-         Security:
-            authenticatedAccount - basic
-            Account authentication is based on Basic authentication schema,
-    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
-    user's `main` device is assumed.
-
-    """
-    # Implement the function body here
-    pass
-
-
-@api.route("/v1/subscription/boost/receipt_credentials", rtype=RouteType.RESPONSE)
-def resp_v1_subscription_boost_receipt_credentials(flow: HTTPFlow):
-    """
-
-
-         Responses:
-            default - default response
-
-         Security:
-            authenticatedAccount - basic
-            Account authentication is based on Basic authentication schema,
-    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
-    user's `main` device is assumed.
-
-    """
-    # Implement the function body here
-    pass
-
-
-@api.route("/v1/subscription/boost/paypal/create", rtype=RouteType.REQUEST)
-def req_v1_subscription_boost_paypal_create(flow: HTTPFlow):
-    """
-
-
-         Parameters:
-            User-Agent
-              location: header
-              None
-
-
-         Security:
-            authenticatedAccount - basic
-            Account authentication is based on Basic authentication schema,
-    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
-    user's `main` device is assumed.
-
-    """
-    # Implement the function body here
-    pass
-
-
-@api.route("/v1/subscription/boost/paypal/create", rtype=RouteType.RESPONSE)
-def resp_v1_subscription_boost_paypal_create(flow: HTTPFlow):
     """
 
 
