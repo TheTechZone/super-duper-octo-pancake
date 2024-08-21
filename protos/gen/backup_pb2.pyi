@@ -903,7 +903,7 @@ class FilePointer(_message.Message):
     def __init__(self, backupLocator: _Optional[_Union[FilePointer.BackupLocator, _Mapping]] = ..., attachmentLocator: _Optional[_Union[FilePointer.AttachmentLocator, _Mapping]] = ..., invalidAttachmentLocator: _Optional[_Union[FilePointer.InvalidAttachmentLocator, _Mapping]] = ..., contentType: _Optional[str] = ..., incrementalMac: _Optional[bytes] = ..., incrementalMacChunkSize: _Optional[int] = ..., fileName: _Optional[str] = ..., width: _Optional[int] = ..., height: _Optional[int] = ..., caption: _Optional[str] = ..., blurHash: _Optional[str] = ...) -> None: ...
 
 class Quote(_message.Message):
-    __slots__ = ("targetSentTimestamp", "authorId", "text", "attachments", "bodyRanges", "type")
+    __slots__ = ("targetSentTimestamp", "authorId", "text", "attachments", "type")
     class Type(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = ()
         UNKNOWN: _ClassVar[Quote.Type]
@@ -925,15 +925,13 @@ class Quote(_message.Message):
     AUTHORID_FIELD_NUMBER: _ClassVar[int]
     TEXT_FIELD_NUMBER: _ClassVar[int]
     ATTACHMENTS_FIELD_NUMBER: _ClassVar[int]
-    BODYRANGES_FIELD_NUMBER: _ClassVar[int]
     TYPE_FIELD_NUMBER: _ClassVar[int]
     targetSentTimestamp: int
     authorId: int
-    text: str
+    text: Text
     attachments: _containers.RepeatedCompositeFieldContainer[Quote.QuotedAttachment]
-    bodyRanges: _containers.RepeatedCompositeFieldContainer[BodyRange]
     type: Quote.Type
-    def __init__(self, targetSentTimestamp: _Optional[int] = ..., authorId: _Optional[int] = ..., text: _Optional[str] = ..., attachments: _Optional[_Iterable[_Union[Quote.QuotedAttachment, _Mapping]]] = ..., bodyRanges: _Optional[_Iterable[_Union[BodyRange, _Mapping]]] = ..., type: _Optional[_Union[Quote.Type, str]] = ...) -> None: ...
+    def __init__(self, targetSentTimestamp: _Optional[int] = ..., authorId: _Optional[int] = ..., text: _Optional[_Union[Text, _Mapping]] = ..., attachments: _Optional[_Iterable[_Union[Quote.QuotedAttachment, _Mapping]]] = ..., type: _Optional[_Union[Quote.Type, str]] = ...) -> None: ...
 
 class BodyRange(_message.Message):
     __slots__ = ("start", "length", "mentionAci", "style")
@@ -962,18 +960,16 @@ class BodyRange(_message.Message):
     def __init__(self, start: _Optional[int] = ..., length: _Optional[int] = ..., mentionAci: _Optional[bytes] = ..., style: _Optional[_Union[BodyRange.Style, str]] = ...) -> None: ...
 
 class Reaction(_message.Message):
-    __slots__ = ("emoji", "authorId", "sentTimestamp", "receivedTimestamp", "sortOrder")
+    __slots__ = ("emoji", "authorId", "sentTimestamp", "sortOrder")
     EMOJI_FIELD_NUMBER: _ClassVar[int]
     AUTHORID_FIELD_NUMBER: _ClassVar[int]
     SENTTIMESTAMP_FIELD_NUMBER: _ClassVar[int]
-    RECEIVEDTIMESTAMP_FIELD_NUMBER: _ClassVar[int]
     SORTORDER_FIELD_NUMBER: _ClassVar[int]
     emoji: str
     authorId: int
     sentTimestamp: int
-    receivedTimestamp: int
     sortOrder: int
-    def __init__(self, emoji: _Optional[str] = ..., authorId: _Optional[int] = ..., sentTimestamp: _Optional[int] = ..., receivedTimestamp: _Optional[int] = ..., sortOrder: _Optional[int] = ...) -> None: ...
+    def __init__(self, emoji: _Optional[str] = ..., authorId: _Optional[int] = ..., sentTimestamp: _Optional[int] = ..., sortOrder: _Optional[int] = ...) -> None: ...
 
 class ChatUpdateMessage(_message.Message):
     __slots__ = ("simpleUpdate", "groupChange", "expirationTimerChange", "profileChange", "threadMerge", "sessionSwitchover", "individualCall", "groupCall", "learnedProfileChange")
@@ -998,7 +994,7 @@ class ChatUpdateMessage(_message.Message):
     def __init__(self, simpleUpdate: _Optional[_Union[SimpleChatUpdate, _Mapping]] = ..., groupChange: _Optional[_Union[GroupChangeChatUpdate, _Mapping]] = ..., expirationTimerChange: _Optional[_Union[ExpirationTimerChatUpdate, _Mapping]] = ..., profileChange: _Optional[_Union[ProfileChangeChatUpdate, _Mapping]] = ..., threadMerge: _Optional[_Union[ThreadMergeChatUpdate, _Mapping]] = ..., sessionSwitchover: _Optional[_Union[SessionSwitchoverChatUpdate, _Mapping]] = ..., individualCall: _Optional[_Union[IndividualCall, _Mapping]] = ..., groupCall: _Optional[_Union[GroupCall, _Mapping]] = ..., learnedProfileChange: _Optional[_Union[LearnedProfileChatUpdate, _Mapping]] = ...) -> None: ...
 
 class IndividualCall(_message.Message):
-    __slots__ = ("callId", "type", "direction", "state", "startedCallTimestamp")
+    __slots__ = ("callId", "type", "direction", "state", "startedCallTimestamp", "read")
     class Type(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = ()
         UNKNOWN_TYPE: _ClassVar[IndividualCall.Type]
@@ -1032,15 +1028,17 @@ class IndividualCall(_message.Message):
     DIRECTION_FIELD_NUMBER: _ClassVar[int]
     STATE_FIELD_NUMBER: _ClassVar[int]
     STARTEDCALLTIMESTAMP_FIELD_NUMBER: _ClassVar[int]
+    READ_FIELD_NUMBER: _ClassVar[int]
     callId: int
     type: IndividualCall.Type
     direction: IndividualCall.Direction
     state: IndividualCall.State
     startedCallTimestamp: int
-    def __init__(self, callId: _Optional[int] = ..., type: _Optional[_Union[IndividualCall.Type, str]] = ..., direction: _Optional[_Union[IndividualCall.Direction, str]] = ..., state: _Optional[_Union[IndividualCall.State, str]] = ..., startedCallTimestamp: _Optional[int] = ...) -> None: ...
+    read: bool
+    def __init__(self, callId: _Optional[int] = ..., type: _Optional[_Union[IndividualCall.Type, str]] = ..., direction: _Optional[_Union[IndividualCall.Direction, str]] = ..., state: _Optional[_Union[IndividualCall.State, str]] = ..., startedCallTimestamp: _Optional[int] = ..., read: bool = ...) -> None: ...
 
 class GroupCall(_message.Message):
-    __slots__ = ("callId", "state", "ringerRecipientId", "startedCallRecipientId", "startedCallTimestamp", "endedCallTimestamp")
+    __slots__ = ("callId", "state", "ringerRecipientId", "startedCallRecipientId", "startedCallTimestamp", "endedCallTimestamp", "read")
     class State(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = ()
         UNKNOWN_STATE: _ClassVar[GroupCall.State]
@@ -1067,13 +1065,15 @@ class GroupCall(_message.Message):
     STARTEDCALLRECIPIENTID_FIELD_NUMBER: _ClassVar[int]
     STARTEDCALLTIMESTAMP_FIELD_NUMBER: _ClassVar[int]
     ENDEDCALLTIMESTAMP_FIELD_NUMBER: _ClassVar[int]
+    READ_FIELD_NUMBER: _ClassVar[int]
     callId: int
     state: GroupCall.State
     ringerRecipientId: int
     startedCallRecipientId: int
     startedCallTimestamp: int
     endedCallTimestamp: int
-    def __init__(self, callId: _Optional[int] = ..., state: _Optional[_Union[GroupCall.State, str]] = ..., ringerRecipientId: _Optional[int] = ..., startedCallRecipientId: _Optional[int] = ..., startedCallTimestamp: _Optional[int] = ..., endedCallTimestamp: _Optional[int] = ...) -> None: ...
+    read: bool
+    def __init__(self, callId: _Optional[int] = ..., state: _Optional[_Union[GroupCall.State, str]] = ..., ringerRecipientId: _Optional[int] = ..., startedCallRecipientId: _Optional[int] = ..., startedCallTimestamp: _Optional[int] = ..., endedCallTimestamp: _Optional[int] = ..., read: bool = ...) -> None: ...
 
 class SimpleChatUpdate(_message.Message):
     __slots__ = ("type",)
