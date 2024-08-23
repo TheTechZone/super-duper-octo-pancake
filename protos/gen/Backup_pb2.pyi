@@ -227,8 +227,7 @@ class Group(_message.Message):
     DISABLED: Group.StorySendMode
     ENABLED: Group.StorySendMode
     class GroupSnapshot(_message.Message):
-        __slots__ = ("publicKey", "title", "description", "avatarUrl", "disappearingMessagesTimer", "accessControl", "version", "members", "membersPendingProfileKey", "membersPendingAdminApproval", "inviteLinkPassword", "announcements_only", "members_banned")
-        PUBLICKEY_FIELD_NUMBER: _ClassVar[int]
+        __slots__ = ("title", "description", "avatarUrl", "disappearingMessagesTimer", "accessControl", "version", "members", "membersPendingProfileKey", "membersPendingAdminApproval", "inviteLinkPassword", "announcements_only", "members_banned")
         TITLE_FIELD_NUMBER: _ClassVar[int]
         DESCRIPTION_FIELD_NUMBER: _ClassVar[int]
         AVATARURL_FIELD_NUMBER: _ClassVar[int]
@@ -241,7 +240,6 @@ class Group(_message.Message):
         INVITELINKPASSWORD_FIELD_NUMBER: _ClassVar[int]
         ANNOUNCEMENTS_ONLY_FIELD_NUMBER: _ClassVar[int]
         MEMBERS_BANNED_FIELD_NUMBER: _ClassVar[int]
-        publicKey: bytes
         title: Group.GroupAttributeBlob
         description: Group.GroupAttributeBlob
         avatarUrl: str
@@ -254,7 +252,7 @@ class Group(_message.Message):
         inviteLinkPassword: bytes
         announcements_only: bool
         members_banned: _containers.RepeatedCompositeFieldContainer[Group.MemberBanned]
-        def __init__(self, publicKey: _Optional[bytes] = ..., title: _Optional[_Union[Group.GroupAttributeBlob, _Mapping]] = ..., description: _Optional[_Union[Group.GroupAttributeBlob, _Mapping]] = ..., avatarUrl: _Optional[str] = ..., disappearingMessagesTimer: _Optional[_Union[Group.GroupAttributeBlob, _Mapping]] = ..., accessControl: _Optional[_Union[Group.AccessControl, _Mapping]] = ..., version: _Optional[int] = ..., members: _Optional[_Iterable[_Union[Group.Member, _Mapping]]] = ..., membersPendingProfileKey: _Optional[_Iterable[_Union[Group.MemberPendingProfileKey, _Mapping]]] = ..., membersPendingAdminApproval: _Optional[_Iterable[_Union[Group.MemberPendingAdminApproval, _Mapping]]] = ..., inviteLinkPassword: _Optional[bytes] = ..., announcements_only: bool = ..., members_banned: _Optional[_Iterable[_Union[Group.MemberBanned, _Mapping]]] = ...) -> None: ...
+        def __init__(self, title: _Optional[_Union[Group.GroupAttributeBlob, _Mapping]] = ..., description: _Optional[_Union[Group.GroupAttributeBlob, _Mapping]] = ..., avatarUrl: _Optional[str] = ..., disappearingMessagesTimer: _Optional[_Union[Group.GroupAttributeBlob, _Mapping]] = ..., accessControl: _Optional[_Union[Group.AccessControl, _Mapping]] = ..., version: _Optional[int] = ..., members: _Optional[_Iterable[_Union[Group.Member, _Mapping]]] = ..., membersPendingProfileKey: _Optional[_Iterable[_Union[Group.MemberPendingProfileKey, _Mapping]]] = ..., membersPendingAdminApproval: _Optional[_Iterable[_Union[Group.MemberPendingAdminApproval, _Mapping]]] = ..., inviteLinkPassword: _Optional[bytes] = ..., announcements_only: bool = ..., members_banned: _Optional[_Iterable[_Union[Group.MemberBanned, _Mapping]]] = ...) -> None: ...
     class GroupAttributeBlob(_message.Message):
         __slots__ = ("title", "avatar", "disappearingMessagesDuration", "descriptionText")
         TITLE_FIELD_NUMBER: _ClassVar[int]
@@ -503,38 +501,59 @@ class ChatItem(_message.Message):
     def __init__(self, chatId: _Optional[int] = ..., authorId: _Optional[int] = ..., dateSent: _Optional[int] = ..., expireStartDate: _Optional[int] = ..., expiresInMs: _Optional[int] = ..., revisions: _Optional[_Iterable[_Union[ChatItem, _Mapping]]] = ..., sms: bool = ..., incoming: _Optional[_Union[ChatItem.IncomingMessageDetails, _Mapping]] = ..., outgoing: _Optional[_Union[ChatItem.OutgoingMessageDetails, _Mapping]] = ..., directionless: _Optional[_Union[ChatItem.DirectionlessMessageDetails, _Mapping]] = ..., standardMessage: _Optional[_Union[StandardMessage, _Mapping]] = ..., contactMessage: _Optional[_Union[ContactMessage, _Mapping]] = ..., stickerMessage: _Optional[_Union[StickerMessage, _Mapping]] = ..., remoteDeletedMessage: _Optional[_Union[RemoteDeletedMessage, _Mapping]] = ..., updateMessage: _Optional[_Union[ChatUpdateMessage, _Mapping]] = ..., paymentNotification: _Optional[_Union[PaymentNotification, _Mapping]] = ..., giftBadge: _Optional[_Union[GiftBadge, _Mapping]] = ...) -> None: ...
 
 class SendStatus(_message.Message):
-    __slots__ = ("recipientId", "deliveryStatus", "networkFailure", "identityKeyMismatch", "sealedSender", "lastStatusUpdateTimestamp")
-    class Status(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+    __slots__ = ("recipientId", "timestamp", "pending", "sent", "delivered", "read", "viewed", "skipped", "failed")
+    class Pending(_message.Message):
         __slots__ = ()
-        UNKNOWN: _ClassVar[SendStatus.Status]
-        FAILED: _ClassVar[SendStatus.Status]
-        PENDING: _ClassVar[SendStatus.Status]
-        SENT: _ClassVar[SendStatus.Status]
-        DELIVERED: _ClassVar[SendStatus.Status]
-        READ: _ClassVar[SendStatus.Status]
-        VIEWED: _ClassVar[SendStatus.Status]
-        SKIPPED: _ClassVar[SendStatus.Status]
-    UNKNOWN: SendStatus.Status
-    FAILED: SendStatus.Status
-    PENDING: SendStatus.Status
-    SENT: SendStatus.Status
-    DELIVERED: SendStatus.Status
-    READ: SendStatus.Status
-    VIEWED: SendStatus.Status
-    SKIPPED: SendStatus.Status
+        def __init__(self) -> None: ...
+    class Sent(_message.Message):
+        __slots__ = ("sealedSender",)
+        SEALEDSENDER_FIELD_NUMBER: _ClassVar[int]
+        sealedSender: bool
+        def __init__(self, sealedSender: bool = ...) -> None: ...
+    class Delivered(_message.Message):
+        __slots__ = ("sealedSender",)
+        SEALEDSENDER_FIELD_NUMBER: _ClassVar[int]
+        sealedSender: bool
+        def __init__(self, sealedSender: bool = ...) -> None: ...
+    class Read(_message.Message):
+        __slots__ = ("sealedSender",)
+        SEALEDSENDER_FIELD_NUMBER: _ClassVar[int]
+        sealedSender: bool
+        def __init__(self, sealedSender: bool = ...) -> None: ...
+    class Viewed(_message.Message):
+        __slots__ = ("sealedSender",)
+        SEALEDSENDER_FIELD_NUMBER: _ClassVar[int]
+        sealedSender: bool
+        def __init__(self, sealedSender: bool = ...) -> None: ...
+    class Skipped(_message.Message):
+        __slots__ = ()
+        def __init__(self) -> None: ...
+    class Failed(_message.Message):
+        __slots__ = ("network", "identityKeyMismatch")
+        NETWORK_FIELD_NUMBER: _ClassVar[int]
+        IDENTITYKEYMISMATCH_FIELD_NUMBER: _ClassVar[int]
+        network: bool
+        identityKeyMismatch: bool
+        def __init__(self, network: bool = ..., identityKeyMismatch: bool = ...) -> None: ...
     RECIPIENTID_FIELD_NUMBER: _ClassVar[int]
-    DELIVERYSTATUS_FIELD_NUMBER: _ClassVar[int]
-    NETWORKFAILURE_FIELD_NUMBER: _ClassVar[int]
-    IDENTITYKEYMISMATCH_FIELD_NUMBER: _ClassVar[int]
-    SEALEDSENDER_FIELD_NUMBER: _ClassVar[int]
-    LASTSTATUSUPDATETIMESTAMP_FIELD_NUMBER: _ClassVar[int]
+    TIMESTAMP_FIELD_NUMBER: _ClassVar[int]
+    PENDING_FIELD_NUMBER: _ClassVar[int]
+    SENT_FIELD_NUMBER: _ClassVar[int]
+    DELIVERED_FIELD_NUMBER: _ClassVar[int]
+    READ_FIELD_NUMBER: _ClassVar[int]
+    VIEWED_FIELD_NUMBER: _ClassVar[int]
+    SKIPPED_FIELD_NUMBER: _ClassVar[int]
+    FAILED_FIELD_NUMBER: _ClassVar[int]
     recipientId: int
-    deliveryStatus: SendStatus.Status
-    networkFailure: bool
-    identityKeyMismatch: bool
-    sealedSender: bool
-    lastStatusUpdateTimestamp: int
-    def __init__(self, recipientId: _Optional[int] = ..., deliveryStatus: _Optional[_Union[SendStatus.Status, str]] = ..., networkFailure: bool = ..., identityKeyMismatch: bool = ..., sealedSender: bool = ..., lastStatusUpdateTimestamp: _Optional[int] = ...) -> None: ...
+    timestamp: int
+    pending: SendStatus.Pending
+    sent: SendStatus.Sent
+    delivered: SendStatus.Delivered
+    read: SendStatus.Read
+    viewed: SendStatus.Viewed
+    skipped: SendStatus.Skipped
+    failed: SendStatus.Failed
+    def __init__(self, recipientId: _Optional[int] = ..., timestamp: _Optional[int] = ..., pending: _Optional[_Union[SendStatus.Pending, _Mapping]] = ..., sent: _Optional[_Union[SendStatus.Sent, _Mapping]] = ..., delivered: _Optional[_Union[SendStatus.Delivered, _Mapping]] = ..., read: _Optional[_Union[SendStatus.Read, _Mapping]] = ..., viewed: _Optional[_Union[SendStatus.Viewed, _Mapping]] = ..., skipped: _Optional[_Union[SendStatus.Skipped, _Mapping]] = ..., failed: _Optional[_Union[SendStatus.Failed, _Mapping]] = ...) -> None: ...
 
 class Text(_message.Message):
     __slots__ = ("body", "bodyRanges")
@@ -1068,6 +1087,9 @@ class SimpleChatUpdate(_message.Message):
         PAYMENT_ACTIVATION_REQUEST: _ClassVar[SimpleChatUpdate.Type]
         UNSUPPORTED_PROTOCOL_MESSAGE: _ClassVar[SimpleChatUpdate.Type]
         REPORTED_SPAM: _ClassVar[SimpleChatUpdate.Type]
+        BLOCKED: _ClassVar[SimpleChatUpdate.Type]
+        UNBLOCKED: _ClassVar[SimpleChatUpdate.Type]
+        ACCEPTED: _ClassVar[SimpleChatUpdate.Type]
     UNKNOWN: SimpleChatUpdate.Type
     JOINED_SIGNAL: SimpleChatUpdate.Type
     IDENTITY_UPDATE: SimpleChatUpdate.Type
@@ -1082,6 +1104,9 @@ class SimpleChatUpdate(_message.Message):
     PAYMENT_ACTIVATION_REQUEST: SimpleChatUpdate.Type
     UNSUPPORTED_PROTOCOL_MESSAGE: SimpleChatUpdate.Type
     REPORTED_SPAM: SimpleChatUpdate.Type
+    BLOCKED: SimpleChatUpdate.Type
+    UNBLOCKED: SimpleChatUpdate.Type
+    ACCEPTED: SimpleChatUpdate.Type
     TYPE_FIELD_NUMBER: _ClassVar[int]
     type: SimpleChatUpdate.Type
     def __init__(self, type: _Optional[_Union[SimpleChatUpdate.Type, str]] = ...) -> None: ...
