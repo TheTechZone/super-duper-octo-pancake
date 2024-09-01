@@ -4360,7 +4360,13 @@ def resp_v1_subscription_subscriberId_receipt_credentials(flow: HTTPFlow, subscr
 @api.route("/v1/subscription/{subscriberId}", rtype=RouteType.REQUEST)
 def req_v1_subscription_subscriberId(flow: HTTPFlow, subscriberId):
     """
+            Subscription information
+            Returns information about the current subscription associated with the provided subscriberId if one exists.
 
+    Although it uses [Stripe’s values](https://stripe.com/docs/billing/subscriptions/overview#subscription-statuses),
+    the status field in the response is generic, with [Braintree-specific values](https://developer.paypal.com/braintree/docs/guides/recurring-billing/overview#subscription-statuses) mapped
+    to Stripe's. Since we don’t support trials or unpaid subscriptions, the associated statuses will never be returned
+    by the API.
 
          Parameters:
             subscriberId  (required)
@@ -4382,10 +4388,18 @@ def req_v1_subscription_subscriberId(flow: HTTPFlow, subscriberId):
 @api.route("/v1/subscription/{subscriberId}", rtype=RouteType.RESPONSE)
 def resp_v1_subscription_subscriberId(flow: HTTPFlow, subscriberId):
     """
+            Subscription information
+            Returns information about the current subscription associated with the provided subscriberId if one exists.
 
+    Although it uses [Stripe’s values](https://stripe.com/docs/billing/subscriptions/overview#subscription-statuses),
+    the status field in the response is generic, with [Braintree-specific values](https://developer.paypal.com/braintree/docs/guides/recurring-billing/overview#subscription-statuses) mapped
+    to Stripe's. Since we don’t support trials or unpaid subscriptions, the associated statuses will never be returned
+    by the API.
 
          Responses:
-            default - default response
+            200 - The subscriberId exists
+            403 - subscriberId authentication failure OR account authentication is present
+            404 - No such subscriberId exists or subscriberId is malformed
 
          Security:
             authenticatedAccount - basic
@@ -4645,6 +4659,91 @@ def resp_v1_subscription_subscriberId_default_payment_method_processor_paymentMe
 
          Responses:
             default - default response
+
+         Security:
+            authenticatedAccount - basic
+            Account authentication is based on Basic authentication schema,
+    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
+    user's `main` device is assumed.
+
+    """
+    # Implement the function body here
+    pass
+
+
+@api.route(
+    "/v1/subscription/{subscriberId}/playbilling/{purchaseToken}",
+    rtype=RouteType.REQUEST,
+)
+def req_v1_subscription_subscriberId_playbilling_purchaseToken(
+    flow: HTTPFlow, subscriberId, purchaseToken
+):
+    """
+            Set a google play billing purchase token
+            Set a purchaseToken that represents an IAP subscription made with Google Play Billing.
+
+    To set up a subscription with Google Play Billing:
+    1. Create a subscriber with `PUT subscriptions/{subscriberId}` (you must regularly refresh this subscriber)
+    2. [Create a subscription](https://developer.android.com/google/play/billing/integrate) with Google Play Billing
+       directly and obtain a purchaseToken. Do not [acknowledge](https://developer.android.com/google/play/billing/integrate#subscriptions)
+       the purchaseToken.
+    3. `POST` the purchaseToken here
+    4. Obtain a receipt at `POST /v1/subscription/{subscriberId}/receipt_credentials` which can then be used to obtain the
+       entitlement
+
+    After calling this method, the payment is confirmed. Callers must durably store their subscriberId before calling
+    this method to ensure their payment is tracked.
+
+         Parameters:
+            subscriberId  (required)
+              location: path
+              None
+
+            purchaseToken  (required)
+              location: path
+              None
+
+
+         Security:
+            authenticatedAccount - basic
+            Account authentication is based on Basic authentication schema,
+    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
+    user's `main` device is assumed.
+
+    """
+    # Implement the function body here
+    pass
+
+
+@api.route(
+    "/v1/subscription/{subscriberId}/playbilling/{purchaseToken}",
+    rtype=RouteType.RESPONSE,
+)
+def resp_v1_subscription_subscriberId_playbilling_purchaseToken(
+    flow: HTTPFlow, subscriberId, purchaseToken
+):
+    """
+            Set a google play billing purchase token
+            Set a purchaseToken that represents an IAP subscription made with Google Play Billing.
+
+    To set up a subscription with Google Play Billing:
+    1. Create a subscriber with `PUT subscriptions/{subscriberId}` (you must regularly refresh this subscriber)
+    2. [Create a subscription](https://developer.android.com/google/play/billing/integrate) with Google Play Billing
+       directly and obtain a purchaseToken. Do not [acknowledge](https://developer.android.com/google/play/billing/integrate#subscriptions)
+       the purchaseToken.
+    3. `POST` the purchaseToken here
+    4. Obtain a receipt at `POST /v1/subscription/{subscriberId}/receipt_credentials` which can then be used to obtain the
+       entitlement
+
+    After calling this method, the payment is confirmed. Callers must durably store their subscriberId before calling
+    this method to ensure their payment is tracked.
+
+         Responses:
+            200 - The purchaseToken was validated and acknowledged
+            402 - The purchaseToken payment is incomplete or invalid
+            403 - subscriberId authentication failure OR account authentication is present
+            404 - No such subscriberId exists or subscriberId is malformed or the purchaseToken does not exist
+            409 - subscriberId is already linked to a processor that does not support Play Billing. Delete this subscriberId and use a new one.
 
          Security:
             authenticatedAccount - basic
