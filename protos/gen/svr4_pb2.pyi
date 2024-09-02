@@ -82,37 +82,35 @@ class Request4(_message.Message):
 
 class Response4(_message.Message):
     __slots__ = ("create", "restore1", "restore2", "remove", "query", "rotate_start", "rotate_commit", "rotate_rollback")
+    class Status(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+        __slots__ = ()
+        UNSET: _ClassVar[Response4.Status]
+        OK: _ClassVar[Response4.Status]
+        INVALID_REQUEST: _ClassVar[Response4.Status]
+        MISSING: _ClassVar[Response4.Status]
+        ERROR: _ClassVar[Response4.Status]
+        RESTORE1_MISSING: _ClassVar[Response4.Status]
+        VERSION_MISMATCH: _ClassVar[Response4.Status]
+        NOT_ROTATING: _ClassVar[Response4.Status]
+        ALREADY_ROTATING: _ClassVar[Response4.Status]
+    UNSET: Response4.Status
+    OK: Response4.Status
+    INVALID_REQUEST: Response4.Status
+    MISSING: Response4.Status
+    ERROR: Response4.Status
+    RESTORE1_MISSING: Response4.Status
+    VERSION_MISMATCH: Response4.Status
+    NOT_ROTATING: Response4.Status
+    ALREADY_ROTATING: Response4.Status
     class Create(_message.Message):
         __slots__ = ("status", "tries_remaining")
-        class Status(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-            __slots__ = ()
-            UNSET: _ClassVar[Response4.Create.Status]
-            OK: _ClassVar[Response4.Create.Status]
-            INVALID_REQUEST: _ClassVar[Response4.Create.Status]
-            ERROR: _ClassVar[Response4.Create.Status]
-        UNSET: Response4.Create.Status
-        OK: Response4.Create.Status
-        INVALID_REQUEST: Response4.Create.Status
-        ERROR: Response4.Create.Status
         STATUS_FIELD_NUMBER: _ClassVar[int]
         TRIES_REMAINING_FIELD_NUMBER: _ClassVar[int]
-        status: Response4.Create.Status
+        status: Response4.Status
         tries_remaining: int
-        def __init__(self, status: _Optional[_Union[Response4.Create.Status, str]] = ..., tries_remaining: _Optional[int] = ...) -> None: ...
+        def __init__(self, status: _Optional[_Union[Response4.Status, str]] = ..., tries_remaining: _Optional[int] = ...) -> None: ...
     class Restore1(_message.Message):
         __slots__ = ("status", "auth", "tries_remaining")
-        class Status(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-            __slots__ = ()
-            UNSET: _ClassVar[Response4.Restore1.Status]
-            OK: _ClassVar[Response4.Restore1.Status]
-            MISSING: _ClassVar[Response4.Restore1.Status]
-            INVALID_REQUEST: _ClassVar[Response4.Restore1.Status]
-            ERROR: _ClassVar[Response4.Restore1.Status]
-        UNSET: Response4.Restore1.Status
-        OK: Response4.Restore1.Status
-        MISSING: Response4.Restore1.Status
-        INVALID_REQUEST: Response4.Restore1.Status
-        ERROR: Response4.Restore1.Status
         class Auth(_message.Message):
             __slots__ = ("element", "version")
             ELEMENT_FIELD_NUMBER: _ClassVar[int]
@@ -123,108 +121,46 @@ class Response4(_message.Message):
         STATUS_FIELD_NUMBER: _ClassVar[int]
         AUTH_FIELD_NUMBER: _ClassVar[int]
         TRIES_REMAINING_FIELD_NUMBER: _ClassVar[int]
-        status: Response4.Restore1.Status
+        status: Response4.Status
         auth: _containers.RepeatedCompositeFieldContainer[Response4.Restore1.Auth]
         tries_remaining: int
-        def __init__(self, status: _Optional[_Union[Response4.Restore1.Status, str]] = ..., auth: _Optional[_Iterable[_Union[Response4.Restore1.Auth, _Mapping]]] = ..., tries_remaining: _Optional[int] = ...) -> None: ...
+        def __init__(self, status: _Optional[_Union[Response4.Status, str]] = ..., auth: _Optional[_Iterable[_Union[Response4.Restore1.Auth, _Mapping]]] = ..., tries_remaining: _Optional[int] = ...) -> None: ...
     class Restore2(_message.Message):
         __slots__ = ("status", "encryption_secretshare")
-        class Status(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-            __slots__ = ()
-            UNSET: _ClassVar[Response4.Restore2.Status]
-            OK: _ClassVar[Response4.Restore2.Status]
-            MISSING: _ClassVar[Response4.Restore2.Status]
-            INVALID_REQUEST: _ClassVar[Response4.Restore2.Status]
-            RESTORE1_MISSING: _ClassVar[Response4.Restore2.Status]
-            ERROR: _ClassVar[Response4.Restore2.Status]
-        UNSET: Response4.Restore2.Status
-        OK: Response4.Restore2.Status
-        MISSING: Response4.Restore2.Status
-        INVALID_REQUEST: Response4.Restore2.Status
-        RESTORE1_MISSING: Response4.Restore2.Status
-        ERROR: Response4.Restore2.Status
         STATUS_FIELD_NUMBER: _ClassVar[int]
         ENCRYPTION_SECRETSHARE_FIELD_NUMBER: _ClassVar[int]
-        status: Response4.Restore2.Status
+        status: Response4.Status
         encryption_secretshare: bytes
-        def __init__(self, status: _Optional[_Union[Response4.Restore2.Status, str]] = ..., encryption_secretshare: _Optional[bytes] = ...) -> None: ...
+        def __init__(self, status: _Optional[_Union[Response4.Status, str]] = ..., encryption_secretshare: _Optional[bytes] = ...) -> None: ...
     class Remove(_message.Message):
         __slots__ = ()
         def __init__(self) -> None: ...
     class Query(_message.Message):
         __slots__ = ("status", "tries_remaining", "version", "new_version")
-        class Status(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-            __slots__ = ()
-            UNSET: _ClassVar[Response4.Query.Status]
-            OK: _ClassVar[Response4.Query.Status]
-            MISSING: _ClassVar[Response4.Query.Status]
-        UNSET: Response4.Query.Status
-        OK: Response4.Query.Status
-        MISSING: Response4.Query.Status
         STATUS_FIELD_NUMBER: _ClassVar[int]
         TRIES_REMAINING_FIELD_NUMBER: _ClassVar[int]
         VERSION_FIELD_NUMBER: _ClassVar[int]
         NEW_VERSION_FIELD_NUMBER: _ClassVar[int]
-        status: Response4.Query.Status
+        status: Response4.Status
         tries_remaining: int
         version: int
         new_version: int
-        def __init__(self, status: _Optional[_Union[Response4.Query.Status, str]] = ..., tries_remaining: _Optional[int] = ..., version: _Optional[int] = ..., new_version: _Optional[int] = ...) -> None: ...
+        def __init__(self, status: _Optional[_Union[Response4.Status, str]] = ..., tries_remaining: _Optional[int] = ..., version: _Optional[int] = ..., new_version: _Optional[int] = ...) -> None: ...
     class RotateStart(_message.Message):
         __slots__ = ("status",)
-        class Status(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-            __slots__ = ()
-            UNSET: _ClassVar[Response4.RotateStart.Status]
-            OK: _ClassVar[Response4.RotateStart.Status]
-            MISSING: _ClassVar[Response4.RotateStart.Status]
-            ALREADY_ROTATING: _ClassVar[Response4.RotateStart.Status]
-            ERROR: _ClassVar[Response4.RotateStart.Status]
-        UNSET: Response4.RotateStart.Status
-        OK: Response4.RotateStart.Status
-        MISSING: Response4.RotateStart.Status
-        ALREADY_ROTATING: Response4.RotateStart.Status
-        ERROR: Response4.RotateStart.Status
         STATUS_FIELD_NUMBER: _ClassVar[int]
-        status: Response4.RotateStart.Status
-        def __init__(self, status: _Optional[_Union[Response4.RotateStart.Status, str]] = ...) -> None: ...
+        status: Response4.Status
+        def __init__(self, status: _Optional[_Union[Response4.Status, str]] = ...) -> None: ...
     class RotateCommit(_message.Message):
         __slots__ = ("status",)
-        class Status(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-            __slots__ = ()
-            UNSET: _ClassVar[Response4.RotateCommit.Status]
-            OK: _ClassVar[Response4.RotateCommit.Status]
-            MISSING: _ClassVar[Response4.RotateCommit.Status]
-            VERSION_MISMATCH: _ClassVar[Response4.RotateCommit.Status]
-            NOT_ROTATING: _ClassVar[Response4.RotateCommit.Status]
-            ERROR: _ClassVar[Response4.RotateCommit.Status]
-        UNSET: Response4.RotateCommit.Status
-        OK: Response4.RotateCommit.Status
-        MISSING: Response4.RotateCommit.Status
-        VERSION_MISMATCH: Response4.RotateCommit.Status
-        NOT_ROTATING: Response4.RotateCommit.Status
-        ERROR: Response4.RotateCommit.Status
         STATUS_FIELD_NUMBER: _ClassVar[int]
-        status: Response4.RotateCommit.Status
-        def __init__(self, status: _Optional[_Union[Response4.RotateCommit.Status, str]] = ...) -> None: ...
+        status: Response4.Status
+        def __init__(self, status: _Optional[_Union[Response4.Status, str]] = ...) -> None: ...
     class RotateRollback(_message.Message):
         __slots__ = ("status",)
-        class Status(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-            __slots__ = ()
-            UNSET: _ClassVar[Response4.RotateRollback.Status]
-            OK: _ClassVar[Response4.RotateRollback.Status]
-            MISSING: _ClassVar[Response4.RotateRollback.Status]
-            VERSION_MISMATCH: _ClassVar[Response4.RotateRollback.Status]
-            NOT_ROTATING: _ClassVar[Response4.RotateRollback.Status]
-            ERROR: _ClassVar[Response4.RotateRollback.Status]
-        UNSET: Response4.RotateRollback.Status
-        OK: Response4.RotateRollback.Status
-        MISSING: Response4.RotateRollback.Status
-        VERSION_MISMATCH: Response4.RotateRollback.Status
-        NOT_ROTATING: Response4.RotateRollback.Status
-        ERROR: Response4.RotateRollback.Status
         STATUS_FIELD_NUMBER: _ClassVar[int]
-        status: Response4.RotateRollback.Status
-        def __init__(self, status: _Optional[_Union[Response4.RotateRollback.Status, str]] = ...) -> None: ...
+        status: Response4.Status
+        def __init__(self, status: _Optional[_Union[Response4.Status, str]] = ...) -> None: ...
     CREATE_FIELD_NUMBER: _ClassVar[int]
     RESTORE1_FIELD_NUMBER: _ClassVar[int]
     RESTORE2_FIELD_NUMBER: _ClassVar[int]

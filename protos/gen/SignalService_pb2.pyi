@@ -187,7 +187,7 @@ class BodyRange(_message.Message):
     def __init__(self, start: _Optional[int] = ..., length: _Optional[int] = ..., mentionAci: _Optional[str] = ..., style: _Optional[_Union[BodyRange.Style, str]] = ...) -> None: ...
 
 class DataMessage(_message.Message):
-    __slots__ = ("body", "attachments", "groupV2", "flags", "expireTimer", "profileKey", "timestamp", "quote", "contact", "preview", "sticker", "requiredProtocolVersion", "isViewOnce", "reaction", "delete", "bodyRanges", "groupCallUpdate", "payment", "storyContext", "giftBadge")
+    __slots__ = ("body", "attachments", "groupV2", "flags", "expireTimer", "expireTimerVersion", "profileKey", "timestamp", "quote", "contact", "preview", "sticker", "requiredProtocolVersion", "isViewOnce", "reaction", "delete", "bodyRanges", "groupCallUpdate", "payment", "storyContext", "giftBadge")
     class Flags(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = ()
         END_SESSION: _ClassVar[DataMessage.Flags]
@@ -441,6 +441,7 @@ class DataMessage(_message.Message):
     GROUPV2_FIELD_NUMBER: _ClassVar[int]
     FLAGS_FIELD_NUMBER: _ClassVar[int]
     EXPIRETIMER_FIELD_NUMBER: _ClassVar[int]
+    EXPIRETIMERVERSION_FIELD_NUMBER: _ClassVar[int]
     PROFILEKEY_FIELD_NUMBER: _ClassVar[int]
     TIMESTAMP_FIELD_NUMBER: _ClassVar[int]
     QUOTE_FIELD_NUMBER: _ClassVar[int]
@@ -461,6 +462,7 @@ class DataMessage(_message.Message):
     groupV2: GroupContextV2
     flags: int
     expireTimer: int
+    expireTimerVersion: int
     profileKey: bytes
     timestamp: int
     quote: DataMessage.Quote
@@ -476,7 +478,7 @@ class DataMessage(_message.Message):
     payment: DataMessage.Payment
     storyContext: DataMessage.StoryContext
     giftBadge: DataMessage.GiftBadge
-    def __init__(self, body: _Optional[str] = ..., attachments: _Optional[_Iterable[_Union[AttachmentPointer, _Mapping]]] = ..., groupV2: _Optional[_Union[GroupContextV2, _Mapping]] = ..., flags: _Optional[int] = ..., expireTimer: _Optional[int] = ..., profileKey: _Optional[bytes] = ..., timestamp: _Optional[int] = ..., quote: _Optional[_Union[DataMessage.Quote, _Mapping]] = ..., contact: _Optional[_Iterable[_Union[DataMessage.Contact, _Mapping]]] = ..., preview: _Optional[_Iterable[_Union[Preview, _Mapping]]] = ..., sticker: _Optional[_Union[DataMessage.Sticker, _Mapping]] = ..., requiredProtocolVersion: _Optional[int] = ..., isViewOnce: bool = ..., reaction: _Optional[_Union[DataMessage.Reaction, _Mapping]] = ..., delete: _Optional[_Union[DataMessage.Delete, _Mapping]] = ..., bodyRanges: _Optional[_Iterable[_Union[BodyRange, _Mapping]]] = ..., groupCallUpdate: _Optional[_Union[DataMessage.GroupCallUpdate, _Mapping]] = ..., payment: _Optional[_Union[DataMessage.Payment, _Mapping]] = ..., storyContext: _Optional[_Union[DataMessage.StoryContext, _Mapping]] = ..., giftBadge: _Optional[_Union[DataMessage.GiftBadge, _Mapping]] = ...) -> None: ...
+    def __init__(self, body: _Optional[str] = ..., attachments: _Optional[_Iterable[_Union[AttachmentPointer, _Mapping]]] = ..., groupV2: _Optional[_Union[GroupContextV2, _Mapping]] = ..., flags: _Optional[int] = ..., expireTimer: _Optional[int] = ..., expireTimerVersion: _Optional[int] = ..., profileKey: _Optional[bytes] = ..., timestamp: _Optional[int] = ..., quote: _Optional[_Union[DataMessage.Quote, _Mapping]] = ..., contact: _Optional[_Iterable[_Union[DataMessage.Contact, _Mapping]]] = ..., preview: _Optional[_Iterable[_Union[Preview, _Mapping]]] = ..., sticker: _Optional[_Union[DataMessage.Sticker, _Mapping]] = ..., requiredProtocolVersion: _Optional[int] = ..., isViewOnce: bool = ..., reaction: _Optional[_Union[DataMessage.Reaction, _Mapping]] = ..., delete: _Optional[_Union[DataMessage.Delete, _Mapping]] = ..., bodyRanges: _Optional[_Iterable[_Union[BodyRange, _Mapping]]] = ..., groupCallUpdate: _Optional[_Union[DataMessage.GroupCallUpdate, _Mapping]] = ..., payment: _Optional[_Union[DataMessage.Payment, _Mapping]] = ..., storyContext: _Optional[_Union[DataMessage.StoryContext, _Mapping]] = ..., giftBadge: _Optional[_Union[DataMessage.GiftBadge, _Mapping]] = ...) -> None: ...
 
 class NullMessage(_message.Message):
     __slots__ = ("padding",)
@@ -1106,7 +1108,7 @@ class GroupContextV2(_message.Message):
     def __init__(self, masterKey: _Optional[bytes] = ..., revision: _Optional[int] = ..., groupChange: _Optional[bytes] = ...) -> None: ...
 
 class ContactDetails(_message.Message):
-    __slots__ = ("number", "aci", "name", "avatar", "color", "verified", "profileKey", "expireTimer", "inboxPosition", "archived")
+    __slots__ = ("number", "aci", "name", "avatar", "color", "verified", "profileKey", "expireTimer", "expireTimerVersion", "inboxPosition", "archived")
     class Avatar(_message.Message):
         __slots__ = ("contentType", "length")
         CONTENTTYPE_FIELD_NUMBER: _ClassVar[int]
@@ -1122,6 +1124,7 @@ class ContactDetails(_message.Message):
     VERIFIED_FIELD_NUMBER: _ClassVar[int]
     PROFILEKEY_FIELD_NUMBER: _ClassVar[int]
     EXPIRETIMER_FIELD_NUMBER: _ClassVar[int]
+    EXPIRETIMERVERSION_FIELD_NUMBER: _ClassVar[int]
     INBOXPOSITION_FIELD_NUMBER: _ClassVar[int]
     ARCHIVED_FIELD_NUMBER: _ClassVar[int]
     number: str
@@ -1132,9 +1135,10 @@ class ContactDetails(_message.Message):
     verified: Verified
     profileKey: bytes
     expireTimer: int
+    expireTimerVersion: int
     inboxPosition: int
     archived: bool
-    def __init__(self, number: _Optional[str] = ..., aci: _Optional[str] = ..., name: _Optional[str] = ..., avatar: _Optional[_Union[ContactDetails.Avatar, _Mapping]] = ..., color: _Optional[str] = ..., verified: _Optional[_Union[Verified, _Mapping]] = ..., profileKey: _Optional[bytes] = ..., expireTimer: _Optional[int] = ..., inboxPosition: _Optional[int] = ..., archived: bool = ...) -> None: ...
+    def __init__(self, number: _Optional[str] = ..., aci: _Optional[str] = ..., name: _Optional[str] = ..., avatar: _Optional[_Union[ContactDetails.Avatar, _Mapping]] = ..., color: _Optional[str] = ..., verified: _Optional[_Union[Verified, _Mapping]] = ..., profileKey: _Optional[bytes] = ..., expireTimer: _Optional[int] = ..., expireTimerVersion: _Optional[int] = ..., inboxPosition: _Optional[int] = ..., archived: bool = ...) -> None: ...
 
 class GroupDetails(_message.Message):
     __slots__ = ("id", "name", "membersE164", "members", "avatar", "active", "expireTimer", "color", "blocked", "inboxPosition", "archived")

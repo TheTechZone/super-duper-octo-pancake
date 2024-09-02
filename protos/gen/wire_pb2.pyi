@@ -82,10 +82,10 @@ class SearchRequest(_message.Message):
     SEARCH_KEY_FIELD_NUMBER: _ClassVar[int]
     VERSION_FIELD_NUMBER: _ClassVar[int]
     CONSISTENCY_FIELD_NUMBER: _ClassVar[int]
-    search_key: str
+    search_key: bytes
     version: int
     consistency: Consistency
-    def __init__(self, search_key: _Optional[str] = ..., version: _Optional[int] = ..., consistency: _Optional[_Union[Consistency, _Mapping]] = ...) -> None: ...
+    def __init__(self, search_key: _Optional[bytes] = ..., version: _Optional[int] = ..., consistency: _Optional[_Union[Consistency, _Mapping]] = ...) -> None: ...
 
 class SearchResponse(_message.Message):
     __slots__ = ("tree_head", "vrf_proof", "search", "opening", "value")
@@ -106,10 +106,10 @@ class UpdateRequest(_message.Message):
     SEARCH_KEY_FIELD_NUMBER: _ClassVar[int]
     VALUE_FIELD_NUMBER: _ClassVar[int]
     CONSISTENCY_FIELD_NUMBER: _ClassVar[int]
-    search_key: str
+    search_key: bytes
     value: bytes
     consistency: Consistency
-    def __init__(self, search_key: _Optional[str] = ..., value: _Optional[bytes] = ..., consistency: _Optional[_Union[Consistency, _Mapping]] = ...) -> None: ...
+    def __init__(self, search_key: _Optional[bytes] = ..., value: _Optional[bytes] = ..., consistency: _Optional[_Union[Consistency, _Mapping]] = ...) -> None: ...
 
 class UpdateResponse(_message.Message):
     __slots__ = ("tree_head", "vrf_proof", "search", "opening")
@@ -127,9 +127,9 @@ class MonitorKey(_message.Message):
     __slots__ = ("search_key", "entries")
     SEARCH_KEY_FIELD_NUMBER: _ClassVar[int]
     ENTRIES_FIELD_NUMBER: _ClassVar[int]
-    search_key: str
+    search_key: bytes
     entries: _containers.RepeatedScalarFieldContainer[int]
-    def __init__(self, search_key: _Optional[str] = ..., entries: _Optional[_Iterable[int]] = ...) -> None: ...
+    def __init__(self, search_key: _Optional[bytes] = ..., entries: _Optional[_Iterable[int]] = ...) -> None: ...
 
 class MonitorRequest(_message.Message):
     __slots__ = ("owned_keys", "contact_keys", "consistency")

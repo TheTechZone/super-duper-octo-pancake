@@ -24,7 +24,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\nsvr4.proto\x12\x0bsvr4.client\"\xfe\x06\n\x08Request4\x12.\n\x06\x63reate\x18\x01 \x01(\x0b\x32\x1c.svr4.client.Request4.CreateH\x00\x12\x32\n\x08restore1\x18\x02 \x01(\x0b\x32\x1e.svr4.client.Request4.Restore1H\x00\x12\x32\n\x08restore2\x18\x03 \x01(\x0b\x32\x1e.svr4.client.Request4.Restore2H\x00\x12.\n\x06remove\x18\x04 \x01(\x0b\x32\x1c.svr4.client.Request4.RemoveH\x00\x12,\n\x05query\x18\x05 \x01(\x0b\x32\x1b.svr4.client.Request4.QueryH\x00\x12\x39\n\x0crotate_start\x18\x06 \x01(\x0b\x32!.svr4.client.Request4.RotateStartH\x00\x12;\n\rrotate_commit\x18\x07 \x01(\x0b\x32\".svr4.client.Request4.RotateCommitH\x00\x12?\n\x0frotate_rollback\x18\x08 \x01(\x0b\x32$.svr4.client.Request4.RotateRollbackH\x00\x1a\x99\x01\n\x06\x43reate\x12\x11\n\tmax_tries\x18\x01 \x01(\r\x12\x18\n\x10oprf_secretshare\x18\x02 \x01(\x0c\x12\x17\n\x0f\x61uth_commitment\x18\x03 \x01(\x0c\x12\x1e\n\x16\x65ncryption_secretshare\x18\x04 \x01(\x0c\x12\x18\n\x10zero_secretshare\x18\x05 \x01(\x0c\x12\x0f\n\x07version\x18\x06 \x01(\x06\x1a\x1b\n\x08Restore1\x12\x0f\n\x07\x62linded\x18\x01 \x01(\x0c\x1a\x44\n\x08Restore2\x12\x12\n\nauth_point\x18\x01 \x01(\x0c\x12\x13\n\x0b\x61uth_scalar\x18\x02 \x01(\x0c\x12\x0f\n\x07version\x18\x03 \x01(\x06\x1a\x08\n\x06Remove\x1a\x07\n\x05Query\x1a\x64\n\x0bRotateStart\x12\x0f\n\x07version\x18\x01 \x01(\x06\x12\x1e\n\x16oprf_secretshare_delta\x18\x02 \x01(\x0c\x12$\n\x1c\x65ncryption_secretshare_delta\x18\x03 \x01(\x0c\x1a\x1f\n\x0cRotateCommit\x12\x0f\n\x07version\x18\x01 \x01(\x06\x1a!\n\x0eRotateRollback\x12\x0f\n\x07version\x18\x01 \x01(\x06\x42\x07\n\x05inner\"\xcd\r\n\tResponse4\x12/\n\x06\x63reate\x18\x01 \x01(\x0b\x32\x1d.svr4.client.Response4.CreateH\x00\x12\x33\n\x08restore1\x18\x02 \x01(\x0b\x32\x1f.svr4.client.Response4.Restore1H\x00\x12\x33\n\x08restore2\x18\x03 \x01(\x0b\x32\x1f.svr4.client.Response4.Restore2H\x00\x12/\n\x06remove\x18\x04 \x01(\x0b\x32\x1d.svr4.client.Response4.RemoveH\x00\x12-\n\x05query\x18\x05 \x01(\x0b\x32\x1c.svr4.client.Response4.QueryH\x00\x12:\n\x0crotate_start\x18\x06 \x01(\x0b\x32\".svr4.client.Response4.RotateStartH\x00\x12<\n\rrotate_commit\x18\x07 \x01(\x0b\x32#.svr4.client.Response4.RotateCommitH\x00\x12@\n\x0frotate_rollback\x18\x08 \x01(\x0b\x32%.svr4.client.Response4.RotateRollbackH\x00\x1a\x94\x01\n\x06\x43reate\x12\x34\n\x06status\x18\x01 \x01(\x0e\x32$.svr4.client.Response4.Create.Status\x12\x17\n\x0ftries_remaining\x18\x02 \x01(\r\";\n\x06Status\x12\t\n\x05UNSET\x10\x00\x12\x06\n\x02OK\x10\x01\x12\x13\n\x0fINVALID_REQUEST\x10\x02\x12\t\n\x05\x45RROR\x10\x03\x1a\x83\x02\n\x08Restore1\x12\x36\n\x06status\x18\x01 \x01(\x0e\x32&.svr4.client.Response4.Restore1.Status\x12\x32\n\x04\x61uth\x18\x02 \x03(\x0b\x32$.svr4.client.Response4.Restore1.Auth\x12\x17\n\x0ftries_remaining\x18\x03 \x01(\r\x1a(\n\x04\x41uth\x12\x0f\n\x07\x65lement\x18\x01 \x01(\x0c\x12\x0f\n\x07version\x18\x02 \x01(\x06\"H\n\x06Status\x12\t\n\x05UNSET\x10\x00\x12\x06\n\x02OK\x10\x01\x12\x0b\n\x07MISSING\x10\x02\x12\x13\n\x0fINVALID_REQUEST\x10\x03\x12\t\n\x05\x45RROR\x10\x04\x1a\xc2\x01\n\x08Restore2\x12\x36\n\x06status\x18\x01 \x01(\x0e\x32&.svr4.client.Response4.Restore2.Status\x12\x1e\n\x16\x65ncryption_secretshare\x18\x02 \x01(\x0c\"^\n\x06Status\x12\t\n\x05UNSET\x10\x00\x12\x06\n\x02OK\x10\x01\x12\x0b\n\x07MISSING\x10\x02\x12\x13\n\x0fINVALID_REQUEST\x10\x03\x12\x14\n\x10RESTORE1_MISSING\x10\x04\x12\t\n\x05\x45RROR\x10\x05\x1a\x08\n\x06Remove\x1a\xa5\x01\n\x05Query\x12\x33\n\x06status\x18\x01 \x01(\x0e\x32#.svr4.client.Response4.Query.Status\x12\x17\n\x0ftries_remaining\x18\x02 \x01(\r\x12\x0f\n\x07version\x18\x03 \x01(\x06\x12\x13\n\x0bnew_version\x18\x04 \x01(\x06\"(\n\x06Status\x12\t\n\x05UNSET\x10\x00\x12\x06\n\x02OK\x10\x01\x12\x0b\n\x07MISSING\x10\x02\x1a\x93\x01\n\x0bRotateStart\x12\x39\n\x06status\x18\x01 \x01(\x0e\x32).svr4.client.Response4.RotateStart.Status\"I\n\x06Status\x12\t\n\x05UNSET\x10\x00\x12\x06\n\x02OK\x10\x01\x12\x0b\n\x07MISSING\x10\x02\x12\x14\n\x10\x41LREADY_ROTATING\x10\x03\x12\t\n\x05\x45RROR\x10\x04\x1a\xa7\x01\n\x0cRotateCommit\x12:\n\x06status\x18\x01 \x01(\x0e\x32*.svr4.client.Response4.RotateCommit.Status\"[\n\x06Status\x12\t\n\x05UNSET\x10\x00\x12\x06\n\x02OK\x10\x01\x12\x0b\n\x07MISSING\x10\x02\x12\x14\n\x10VERSION_MISMATCH\x10\x03\x12\x10\n\x0cNOT_ROTATING\x10\x04\x12\t\n\x05\x45RROR\x10\x05\x1a\xab\x01\n\x0eRotateRollback\x12<\n\x06status\x18\x01 \x01(\x0e\x32,.svr4.client.Response4.RotateRollback.Status\"[\n\x06Status\x12\t\n\x05UNSET\x10\x00\x12\x06\n\x02OK\x10\x01\x12\x0b\n\x07MISSING\x10\x02\x12\x14\n\x10VERSION_MISMATCH\x10\x03\x12\x10\n\x0cNOT_ROTATING\x10\x04\x12\t\n\x05\x45RROR\x10\x05\x42\x07\n\x05innerB\x02H\x03\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\nsvr4.proto\x12\x0bsvr4.client\"\xfe\x06\n\x08Request4\x12.\n\x06\x63reate\x18\x01 \x01(\x0b\x32\x1c.svr4.client.Request4.CreateH\x00\x12\x32\n\x08restore1\x18\x02 \x01(\x0b\x32\x1e.svr4.client.Request4.Restore1H\x00\x12\x32\n\x08restore2\x18\x03 \x01(\x0b\x32\x1e.svr4.client.Request4.Restore2H\x00\x12.\n\x06remove\x18\x04 \x01(\x0b\x32\x1c.svr4.client.Request4.RemoveH\x00\x12,\n\x05query\x18\x05 \x01(\x0b\x32\x1b.svr4.client.Request4.QueryH\x00\x12\x39\n\x0crotate_start\x18\x06 \x01(\x0b\x32!.svr4.client.Request4.RotateStartH\x00\x12;\n\rrotate_commit\x18\x07 \x01(\x0b\x32\".svr4.client.Request4.RotateCommitH\x00\x12?\n\x0frotate_rollback\x18\x08 \x01(\x0b\x32$.svr4.client.Request4.RotateRollbackH\x00\x1a\x99\x01\n\x06\x43reate\x12\x11\n\tmax_tries\x18\x01 \x01(\r\x12\x18\n\x10oprf_secretshare\x18\x02 \x01(\x0c\x12\x17\n\x0f\x61uth_commitment\x18\x03 \x01(\x0c\x12\x1e\n\x16\x65ncryption_secretshare\x18\x04 \x01(\x0c\x12\x18\n\x10zero_secretshare\x18\x05 \x01(\x0c\x12\x0f\n\x07version\x18\x06 \x01(\x06\x1a\x1b\n\x08Restore1\x12\x0f\n\x07\x62linded\x18\x01 \x01(\x0c\x1a\x44\n\x08Restore2\x12\x12\n\nauth_point\x18\x01 \x01(\x0c\x12\x13\n\x0b\x61uth_scalar\x18\x02 \x01(\x0c\x12\x0f\n\x07version\x18\x03 \x01(\x06\x1a\x08\n\x06Remove\x1a\x07\n\x05Query\x1a\x64\n\x0bRotateStart\x12\x0f\n\x07version\x18\x01 \x01(\x06\x12\x1e\n\x16oprf_secretshare_delta\x18\x02 \x01(\x0c\x12$\n\x1c\x65ncryption_secretshare_delta\x18\x03 \x01(\x0c\x1a\x1f\n\x0cRotateCommit\x12\x0f\n\x07version\x18\x01 \x01(\x06\x1a!\n\x0eRotateRollback\x12\x0f\n\x07version\x18\x01 \x01(\x06\x42\x07\n\x05inner\"\x89\n\n\tResponse4\x12/\n\x06\x63reate\x18\x01 \x01(\x0b\x32\x1d.svr4.client.Response4.CreateH\x00\x12\x33\n\x08restore1\x18\x02 \x01(\x0b\x32\x1f.svr4.client.Response4.Restore1H\x00\x12\x33\n\x08restore2\x18\x03 \x01(\x0b\x32\x1f.svr4.client.Response4.Restore2H\x00\x12/\n\x06remove\x18\x04 \x01(\x0b\x32\x1d.svr4.client.Response4.RemoveH\x00\x12-\n\x05query\x18\x05 \x01(\x0b\x32\x1c.svr4.client.Response4.QueryH\x00\x12:\n\x0crotate_start\x18\x06 \x01(\x0b\x32\".svr4.client.Response4.RotateStartH\x00\x12<\n\rrotate_commit\x18\x07 \x01(\x0b\x32#.svr4.client.Response4.RotateCommitH\x00\x12@\n\x0frotate_rollback\x18\x08 \x01(\x0b\x32%.svr4.client.Response4.RotateRollbackH\x00\x1aP\n\x06\x43reate\x12-\n\x06status\x18\x01 \x01(\x0e\x32\x1d.svr4.client.Response4.Status\x12\x17\n\x0ftries_remaining\x18\x02 \x01(\r\x1a\xb0\x01\n\x08Restore1\x12-\n\x06status\x18\x01 \x01(\x0e\x32\x1d.svr4.client.Response4.Status\x12\x32\n\x04\x61uth\x18\x02 \x03(\x0b\x32$.svr4.client.Response4.Restore1.Auth\x12\x17\n\x0ftries_remaining\x18\x03 \x01(\r\x1a(\n\x04\x41uth\x12\x0f\n\x07\x65lement\x18\x01 \x01(\x0c\x12\x0f\n\x07version\x18\x02 \x01(\x06\x1aY\n\x08Restore2\x12-\n\x06status\x18\x01 \x01(\x0e\x32\x1d.svr4.client.Response4.Status\x12\x1e\n\x16\x65ncryption_secretshare\x18\x02 \x01(\x0c\x1a\x08\n\x06Remove\x1au\n\x05Query\x12-\n\x06status\x18\x01 \x01(\x0e\x32\x1d.svr4.client.Response4.Status\x12\x17\n\x0ftries_remaining\x18\x02 \x01(\r\x12\x0f\n\x07version\x18\x03 \x01(\x06\x12\x13\n\x0bnew_version\x18\x04 \x01(\x06\x1a<\n\x0bRotateStart\x12-\n\x06status\x18\x01 \x01(\x0e\x32\x1d.svr4.client.Response4.Status\x1a=\n\x0cRotateCommit\x12-\n\x06status\x18\x01 \x01(\x0e\x32\x1d.svr4.client.Response4.Status\x1a?\n\x0eRotateRollback\x12-\n\x06status\x18\x01 \x01(\x0e\x32\x1d.svr4.client.Response4.Status\"\x9c\x01\n\x06Status\x12\t\n\x05UNSET\x10\x00\x12\x06\n\x02OK\x10\x01\x12\x13\n\x0fINVALID_REQUEST\x10\x02\x12\x0b\n\x07MISSING\x10\x03\x12\t\n\x05\x45RROR\x10\x04\x12\x14\n\x10RESTORE1_MISSING\x10\x05\x12\x14\n\x10VERSION_MISMATCH\x10\x06\x12\x10\n\x0cNOT_ROTATING\x10\x07\x12\x14\n\x10\x41LREADY_ROTATING\x10\x08\x42\x07\n\x05innerB\x02H\x03\x62\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -51,37 +51,25 @@ if not _descriptor._USE_C_DESCRIPTORS:
   _globals['_REQUEST4_ROTATEROLLBACK']._serialized_start=880
   _globals['_REQUEST4_ROTATEROLLBACK']._serialized_end=913
   _globals['_RESPONSE4']._serialized_start=925
-  _globals['_RESPONSE4']._serialized_end=2666
-  _globals['_RESPONSE4_CREATE']._serialized_start=1378
-  _globals['_RESPONSE4_CREATE']._serialized_end=1526
-  _globals['_RESPONSE4_CREATE_STATUS']._serialized_start=1467
-  _globals['_RESPONSE4_CREATE_STATUS']._serialized_end=1526
-  _globals['_RESPONSE4_RESTORE1']._serialized_start=1529
-  _globals['_RESPONSE4_RESTORE1']._serialized_end=1788
-  _globals['_RESPONSE4_RESTORE1_AUTH']._serialized_start=1674
-  _globals['_RESPONSE4_RESTORE1_AUTH']._serialized_end=1714
-  _globals['_RESPONSE4_RESTORE1_STATUS']._serialized_start=1716
-  _globals['_RESPONSE4_RESTORE1_STATUS']._serialized_end=1788
-  _globals['_RESPONSE4_RESTORE2']._serialized_start=1791
-  _globals['_RESPONSE4_RESTORE2']._serialized_end=1985
-  _globals['_RESPONSE4_RESTORE2_STATUS']._serialized_start=1891
-  _globals['_RESPONSE4_RESTORE2_STATUS']._serialized_end=1985
+  _globals['_RESPONSE4']._serialized_end=2214
+  _globals['_RESPONSE4_CREATE']._serialized_start=1377
+  _globals['_RESPONSE4_CREATE']._serialized_end=1457
+  _globals['_RESPONSE4_RESTORE1']._serialized_start=1460
+  _globals['_RESPONSE4_RESTORE1']._serialized_end=1636
+  _globals['_RESPONSE4_RESTORE1_AUTH']._serialized_start=1596
+  _globals['_RESPONSE4_RESTORE1_AUTH']._serialized_end=1636
+  _globals['_RESPONSE4_RESTORE2']._serialized_start=1638
+  _globals['_RESPONSE4_RESTORE2']._serialized_end=1727
   _globals['_RESPONSE4_REMOVE']._serialized_start=726
   _globals['_RESPONSE4_REMOVE']._serialized_end=734
-  _globals['_RESPONSE4_QUERY']._serialized_start=1998
-  _globals['_RESPONSE4_QUERY']._serialized_end=2163
-  _globals['_RESPONSE4_QUERY_STATUS']._serialized_start=1716
-  _globals['_RESPONSE4_QUERY_STATUS']._serialized_end=1756
-  _globals['_RESPONSE4_ROTATESTART']._serialized_start=2166
-  _globals['_RESPONSE4_ROTATESTART']._serialized_end=2313
-  _globals['_RESPONSE4_ROTATESTART_STATUS']._serialized_start=2240
-  _globals['_RESPONSE4_ROTATESTART_STATUS']._serialized_end=2313
-  _globals['_RESPONSE4_ROTATECOMMIT']._serialized_start=2316
-  _globals['_RESPONSE4_ROTATECOMMIT']._serialized_end=2483
-  _globals['_RESPONSE4_ROTATECOMMIT_STATUS']._serialized_start=2392
-  _globals['_RESPONSE4_ROTATECOMMIT_STATUS']._serialized_end=2483
-  _globals['_RESPONSE4_ROTATEROLLBACK']._serialized_start=2486
-  _globals['_RESPONSE4_ROTATEROLLBACK']._serialized_end=2657
-  _globals['_RESPONSE4_ROTATEROLLBACK_STATUS']._serialized_start=2392
-  _globals['_RESPONSE4_ROTATEROLLBACK_STATUS']._serialized_end=2483
+  _globals['_RESPONSE4_QUERY']._serialized_start=1739
+  _globals['_RESPONSE4_QUERY']._serialized_end=1856
+  _globals['_RESPONSE4_ROTATESTART']._serialized_start=1858
+  _globals['_RESPONSE4_ROTATESTART']._serialized_end=1918
+  _globals['_RESPONSE4_ROTATECOMMIT']._serialized_start=1920
+  _globals['_RESPONSE4_ROTATECOMMIT']._serialized_end=1981
+  _globals['_RESPONSE4_ROTATEROLLBACK']._serialized_start=1983
+  _globals['_RESPONSE4_ROTATEROLLBACK']._serialized_end=2046
+  _globals['_RESPONSE4_STATUS']._serialized_start=2049
+  _globals['_RESPONSE4_STATUS']._serialized_end=2205
 # @@protoc_insertion_point(module_scope)
