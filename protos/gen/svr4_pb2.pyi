@@ -93,6 +93,8 @@ class Response4(_message.Message):
         VERSION_MISMATCH: _ClassVar[Response4.Status]
         NOT_ROTATING: _ClassVar[Response4.Status]
         ALREADY_ROTATING: _ClassVar[Response4.Status]
+        MERKLE_FAILURE: _ClassVar[Response4.Status]
+        DUPLICATE_VERSION: _ClassVar[Response4.Status]
     UNSET: Response4.Status
     OK: Response4.Status
     INVALID_REQUEST: Response4.Status
@@ -102,6 +104,8 @@ class Response4(_message.Message):
     VERSION_MISMATCH: Response4.Status
     NOT_ROTATING: Response4.Status
     ALREADY_ROTATING: Response4.Status
+    MERKLE_FAILURE: Response4.Status
+    DUPLICATE_VERSION: Response4.Status
     class Create(_message.Message):
         __slots__ = ("status", "tries_remaining")
         STATUS_FIELD_NUMBER: _ClassVar[int]

@@ -1,93 +1,32 @@
-// Copyright 2023 Signal Messenger, LLC
+//
+// Copyright 2024 Signal Messenger, LLC.
 // SPDX-License-Identifier: AGPL-3.0-only
-
+//
 syntax = "proto3";
 
-package svr3.client;
-option optimize_for = LITE_RUNTIME;
+package org.signal.svr3;
 
-// Client protocol for SVR3.
+message ASNPEvidence {
+  // Serialized AttestationData
+  bytes attestation_data = 1;
 
-message Request {
-  oneof inner {
-    CreateRequest create = 1;
-    EvaluateRequest evaluate = 2;
-    RemoveRequest remove = 3;
-    QueryRequest query = 4;
-  }
+  // tpm2_quote -c 0x81000003 -l sha256:all -q "<sha256 of attestation_data>" -m msg -s sig -o pcrs --pcrs_format values
+  bytes pcrs = 2;
+  bytes msg = 3;
+  bytes sig = 4;
+
+  // tpm2_nvread -C o 0x01400001
+  bytes snp_report = 5;
+  // runtime_data, in the form used by Azure
+  bytes runtime_data = 6;
+  // tpm2_nvread -C o 0x1C101D0
+  bytes akcert_der = 7;
 }
 
-message Response {
-  oneof inner {
-    CreateResponse create = 1;
-    EvaluateResponse evaluate = 2;
-    RemoveResponse remove = 3;
-    QueryResponse query = 4;
-  }
-}
-
-//
-// create
-//
-
-message CreateRequest {
-  uint32 max_tries = 1;
-  bytes blinded_element = 2;  // ristretto255 element, 32 bytes
-}
-
-message CreateResponse {
-  enum Status {
-    UNSET = 0;
-    OK = 1;
-    INVALID_REQUEST = 2;
-    ERROR = 3;
-  }
-  Status status = 1;
-  bytes evaluated_element = 2;  // ristretto255 element, 32 bytes
-}
-
-//
-// evaluate
-//
-
-message EvaluateRequest {
-  bytes blinded_element = 1;  // ristretto255 element, 32 bytes
-}
-
-message EvaluateResponse {
-  enum Status {
-    UNSET = 0;
-    OK = 1;
-    MISSING = 2;
-    INVALID_REQUEST = 3;
-    ERROR = 4;
-  }
-  Status status = 1;
-  bytes evaluated_element = 2;  // ristretto255 element, 32 bytes
-  uint32 tries_remaining = 3;
-}
-
-//
-// remove
-//
-
-message RemoveRequest {
-}
-message RemoveResponse {
-}
-
-//
-// query
-//
-
-message QueryRequest {
-}
-message QueryResponse {
-  enum Status {
-    UNSET = 0;
-    OK = 1;
-    MISSING = 2;
-  }
-  Status status = 1;
-  uint32 tries_remaining = 2;
+message ASNPEndorsements {
+  // From https://learn.microsoft.com/en-us/azure/virtual-machines/trusted-launch-faq?tabs=cli%2Cdebianbased#certificates
+  bytes intermediate_der = 1;
+  // From http://169.254.169.254/metadata/THIM/amd/certification
+  bytes vcek_der = 2;
+  bytes ask_der = 3;
 }
