@@ -2180,7 +2180,7 @@ def resp_v1_challenge(flow: HTTPFlow):
 
          Responses:
             200 - Indicates the challenge proof was accepted
-            413 - Too many attempts
+            428 - Submitted captcha token is invalid
             429 - Too many attempts
 
          Security:
