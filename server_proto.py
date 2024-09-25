@@ -2102,6 +2102,10 @@ def req_v1_certificate_auth_group(flow: HTTPFlow):
 
 
          Parameters:
+            User-Agent
+              location: header
+              None
+
             redemptionStartSeconds
               location: query
               None
