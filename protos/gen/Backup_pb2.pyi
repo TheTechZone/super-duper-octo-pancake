@@ -265,7 +265,7 @@ class Group(_message.Message):
         descriptionText: str
         def __init__(self, title: _Optional[str] = ..., avatar: _Optional[bytes] = ..., disappearingMessagesDuration: _Optional[int] = ..., descriptionText: _Optional[str] = ...) -> None: ...
     class Member(_message.Message):
-        __slots__ = ("userId", "role", "profileKey", "joinedAtVersion")
+        __slots__ = ("userId", "role", "joinedAtVersion")
         class Role(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
             __slots__ = ()
             UNKNOWN: _ClassVar[Group.Member.Role]
@@ -276,13 +276,11 @@ class Group(_message.Message):
         ADMINISTRATOR: Group.Member.Role
         USERID_FIELD_NUMBER: _ClassVar[int]
         ROLE_FIELD_NUMBER: _ClassVar[int]
-        PROFILEKEY_FIELD_NUMBER: _ClassVar[int]
         JOINEDATVERSION_FIELD_NUMBER: _ClassVar[int]
         userId: bytes
         role: Group.Member.Role
-        profileKey: bytes
         joinedAtVersion: int
-        def __init__(self, userId: _Optional[bytes] = ..., role: _Optional[_Union[Group.Member.Role, str]] = ..., profileKey: _Optional[bytes] = ..., joinedAtVersion: _Optional[int] = ...) -> None: ...
+        def __init__(self, userId: _Optional[bytes] = ..., role: _Optional[_Union[Group.Member.Role, str]] = ..., joinedAtVersion: _Optional[int] = ...) -> None: ...
     class MemberPendingProfileKey(_message.Message):
         __slots__ = ("member", "addedByUserId", "timestamp")
         MEMBER_FIELD_NUMBER: _ClassVar[int]
@@ -293,14 +291,12 @@ class Group(_message.Message):
         timestamp: int
         def __init__(self, member: _Optional[_Union[Group.Member, _Mapping]] = ..., addedByUserId: _Optional[bytes] = ..., timestamp: _Optional[int] = ...) -> None: ...
     class MemberPendingAdminApproval(_message.Message):
-        __slots__ = ("userId", "profileKey", "timestamp")
+        __slots__ = ("userId", "timestamp")
         USERID_FIELD_NUMBER: _ClassVar[int]
-        PROFILEKEY_FIELD_NUMBER: _ClassVar[int]
         TIMESTAMP_FIELD_NUMBER: _ClassVar[int]
         userId: bytes
-        profileKey: bytes
         timestamp: int
-        def __init__(self, userId: _Optional[bytes] = ..., profileKey: _Optional[bytes] = ..., timestamp: _Optional[int] = ...) -> None: ...
+        def __init__(self, userId: _Optional[bytes] = ..., timestamp: _Optional[int] = ...) -> None: ...
     class MemberBanned(_message.Message):
         __slots__ = ("userId", "timestamp")
         USERID_FIELD_NUMBER: _ClassVar[int]
@@ -350,7 +346,7 @@ class ReleaseNotes(_message.Message):
     def __init__(self) -> None: ...
 
 class Chat(_message.Message):
-    __slots__ = ("id", "recipientId", "archived", "pinnedOrder", "expirationTimerMs", "muteUntilMs", "markedUnread", "dontNotifyForMentionsIfMuted", "style")
+    __slots__ = ("id", "recipientId", "archived", "pinnedOrder", "expirationTimerMs", "muteUntilMs", "markedUnread", "dontNotifyForMentionsIfMuted", "style", "expireTimerVersion")
     ID_FIELD_NUMBER: _ClassVar[int]
     RECIPIENTID_FIELD_NUMBER: _ClassVar[int]
     ARCHIVED_FIELD_NUMBER: _ClassVar[int]
@@ -360,6 +356,7 @@ class Chat(_message.Message):
     MARKEDUNREAD_FIELD_NUMBER: _ClassVar[int]
     DONTNOTIFYFORMENTIONSIFMUTED_FIELD_NUMBER: _ClassVar[int]
     STYLE_FIELD_NUMBER: _ClassVar[int]
+    EXPIRETIMERVERSION_FIELD_NUMBER: _ClassVar[int]
     id: int
     recipientId: int
     archived: bool
@@ -369,7 +366,8 @@ class Chat(_message.Message):
     markedUnread: bool
     dontNotifyForMentionsIfMuted: bool
     style: ChatStyle
-    def __init__(self, id: _Optional[int] = ..., recipientId: _Optional[int] = ..., archived: bool = ..., pinnedOrder: _Optional[int] = ..., expirationTimerMs: _Optional[int] = ..., muteUntilMs: _Optional[int] = ..., markedUnread: bool = ..., dontNotifyForMentionsIfMuted: bool = ..., style: _Optional[_Union[ChatStyle, _Mapping]] = ...) -> None: ...
+    expireTimerVersion: int
+    def __init__(self, id: _Optional[int] = ..., recipientId: _Optional[int] = ..., archived: bool = ..., pinnedOrder: _Optional[int] = ..., expirationTimerMs: _Optional[int] = ..., muteUntilMs: _Optional[int] = ..., markedUnread: bool = ..., dontNotifyForMentionsIfMuted: bool = ..., style: _Optional[_Union[ChatStyle, _Mapping]] = ..., expireTimerVersion: _Optional[int] = ...) -> None: ...
 
 class CallLink(_message.Message):
     __slots__ = ("rootKey", "adminKey", "name", "restrictions", "expirationMs")
@@ -529,12 +527,18 @@ class SendStatus(_message.Message):
         __slots__ = ()
         def __init__(self) -> None: ...
     class Failed(_message.Message):
-        __slots__ = ("network", "identityKeyMismatch")
-        NETWORK_FIELD_NUMBER: _ClassVar[int]
-        IDENTITYKEYMISMATCH_FIELD_NUMBER: _ClassVar[int]
-        network: bool
-        identityKeyMismatch: bool
-        def __init__(self, network: bool = ..., identityKeyMismatch: bool = ...) -> None: ...
+        __slots__ = ("reason",)
+        class FailureReason(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+            __slots__ = ()
+            UNKNOWN: _ClassVar[SendStatus.Failed.FailureReason]
+            NETWORK: _ClassVar[SendStatus.Failed.FailureReason]
+            IDENTITY_KEY_MISMATCH: _ClassVar[SendStatus.Failed.FailureReason]
+        UNKNOWN: SendStatus.Failed.FailureReason
+        NETWORK: SendStatus.Failed.FailureReason
+        IDENTITY_KEY_MISMATCH: SendStatus.Failed.FailureReason
+        REASON_FIELD_NUMBER: _ClassVar[int]
+        reason: SendStatus.Failed.FailureReason
+        def __init__(self, reason: _Optional[_Union[SendStatus.Failed.FailureReason, str]] = ...) -> None: ...
     RECIPIENTID_FIELD_NUMBER: _ClassVar[int]
     TIMESTAMP_FIELD_NUMBER: _ClassVar[int]
     PENDING_FIELD_NUMBER: _ClassVar[int]
@@ -672,20 +676,18 @@ class GiftBadge(_message.Message):
 class ContactAttachment(_message.Message):
     __slots__ = ("name", "number", "email", "address", "avatar", "organization")
     class Name(_message.Message):
-        __slots__ = ("givenName", "familyName", "prefix", "suffix", "middleName", "displayName")
+        __slots__ = ("givenName", "familyName", "prefix", "suffix", "middleName")
         GIVENNAME_FIELD_NUMBER: _ClassVar[int]
         FAMILYNAME_FIELD_NUMBER: _ClassVar[int]
         PREFIX_FIELD_NUMBER: _ClassVar[int]
         SUFFIX_FIELD_NUMBER: _ClassVar[int]
         MIDDLENAME_FIELD_NUMBER: _ClassVar[int]
-        DISPLAYNAME_FIELD_NUMBER: _ClassVar[int]
         givenName: str
         familyName: str
         prefix: str
         suffix: str
         middleName: str
-        displayName: str
-        def __init__(self, givenName: _Optional[str] = ..., familyName: _Optional[str] = ..., prefix: _Optional[str] = ..., suffix: _Optional[str] = ..., middleName: _Optional[str] = ..., displayName: _Optional[str] = ...) -> None: ...
+        def __init__(self, givenName: _Optional[str] = ..., familyName: _Optional[str] = ..., prefix: _Optional[str] = ..., suffix: _Optional[str] = ..., middleName: _Optional[str] = ...) -> None: ...
     class Phone(_message.Message):
         __slots__ = ("value", "type", "label")
         class Type(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
@@ -897,7 +899,7 @@ class FilePointer(_message.Message):
     def __init__(self, backupLocator: _Optional[_Union[FilePointer.BackupLocator, _Mapping]] = ..., attachmentLocator: _Optional[_Union[FilePointer.AttachmentLocator, _Mapping]] = ..., invalidAttachmentLocator: _Optional[_Union[FilePointer.InvalidAttachmentLocator, _Mapping]] = ..., contentType: _Optional[str] = ..., incrementalMac: _Optional[bytes] = ..., incrementalMacChunkSize: _Optional[int] = ..., fileName: _Optional[str] = ..., width: _Optional[int] = ..., height: _Optional[int] = ..., caption: _Optional[str] = ..., blurHash: _Optional[str] = ...) -> None: ...
 
 class Quote(_message.Message):
-    __slots__ = ("targetSentTimestamp", "authorId", "text", "attachments", "bodyRanges", "type")
+    __slots__ = ("targetSentTimestamp", "authorId", "text", "attachments", "type")
     class Type(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = ()
         UNKNOWN: _ClassVar[Quote.Type]
@@ -919,15 +921,13 @@ class Quote(_message.Message):
     AUTHORID_FIELD_NUMBER: _ClassVar[int]
     TEXT_FIELD_NUMBER: _ClassVar[int]
     ATTACHMENTS_FIELD_NUMBER: _ClassVar[int]
-    BODYRANGES_FIELD_NUMBER: _ClassVar[int]
     TYPE_FIELD_NUMBER: _ClassVar[int]
     targetSentTimestamp: int
     authorId: int
-    text: str
+    text: Text
     attachments: _containers.RepeatedCompositeFieldContainer[Quote.QuotedAttachment]
-    bodyRanges: _containers.RepeatedCompositeFieldContainer[BodyRange]
     type: Quote.Type
-    def __init__(self, targetSentTimestamp: _Optional[int] = ..., authorId: _Optional[int] = ..., text: _Optional[str] = ..., attachments: _Optional[_Iterable[_Union[Quote.QuotedAttachment, _Mapping]]] = ..., bodyRanges: _Optional[_Iterable[_Union[BodyRange, _Mapping]]] = ..., type: _Optional[_Union[Quote.Type, str]] = ...) -> None: ...
+    def __init__(self, targetSentTimestamp: _Optional[int] = ..., authorId: _Optional[int] = ..., text: _Optional[_Union[Text, _Mapping]] = ..., attachments: _Optional[_Iterable[_Union[Quote.QuotedAttachment, _Mapping]]] = ..., type: _Optional[_Union[Quote.Type, str]] = ...) -> None: ...
 
 class BodyRange(_message.Message):
     __slots__ = ("start", "length", "mentionAci", "style")
@@ -956,18 +956,16 @@ class BodyRange(_message.Message):
     def __init__(self, start: _Optional[int] = ..., length: _Optional[int] = ..., mentionAci: _Optional[bytes] = ..., style: _Optional[_Union[BodyRange.Style, str]] = ...) -> None: ...
 
 class Reaction(_message.Message):
-    __slots__ = ("emoji", "authorId", "sentTimestamp", "receivedTimestamp", "sortOrder")
+    __slots__ = ("emoji", "authorId", "sentTimestamp", "sortOrder")
     EMOJI_FIELD_NUMBER: _ClassVar[int]
     AUTHORID_FIELD_NUMBER: _ClassVar[int]
     SENTTIMESTAMP_FIELD_NUMBER: _ClassVar[int]
-    RECEIVEDTIMESTAMP_FIELD_NUMBER: _ClassVar[int]
     SORTORDER_FIELD_NUMBER: _ClassVar[int]
     emoji: str
     authorId: int
     sentTimestamp: int
-    receivedTimestamp: int
     sortOrder: int
-    def __init__(self, emoji: _Optional[str] = ..., authorId: _Optional[int] = ..., sentTimestamp: _Optional[int] = ..., receivedTimestamp: _Optional[int] = ..., sortOrder: _Optional[int] = ...) -> None: ...
+    def __init__(self, emoji: _Optional[str] = ..., authorId: _Optional[int] = ..., sentTimestamp: _Optional[int] = ..., sortOrder: _Optional[int] = ...) -> None: ...
 
 class ChatUpdateMessage(_message.Message):
     __slots__ = ("simpleUpdate", "groupChange", "expirationTimerChange", "profileChange", "threadMerge", "sessionSwitchover", "individualCall", "groupCall", "learnedProfileChange")
@@ -992,7 +990,7 @@ class ChatUpdateMessage(_message.Message):
     def __init__(self, simpleUpdate: _Optional[_Union[SimpleChatUpdate, _Mapping]] = ..., groupChange: _Optional[_Union[GroupChangeChatUpdate, _Mapping]] = ..., expirationTimerChange: _Optional[_Union[ExpirationTimerChatUpdate, _Mapping]] = ..., profileChange: _Optional[_Union[ProfileChangeChatUpdate, _Mapping]] = ..., threadMerge: _Optional[_Union[ThreadMergeChatUpdate, _Mapping]] = ..., sessionSwitchover: _Optional[_Union[SessionSwitchoverChatUpdate, _Mapping]] = ..., individualCall: _Optional[_Union[IndividualCall, _Mapping]] = ..., groupCall: _Optional[_Union[GroupCall, _Mapping]] = ..., learnedProfileChange: _Optional[_Union[LearnedProfileChatUpdate, _Mapping]] = ...) -> None: ...
 
 class IndividualCall(_message.Message):
-    __slots__ = ("callId", "type", "direction", "state", "startedCallTimestamp")
+    __slots__ = ("callId", "type", "direction", "state", "startedCallTimestamp", "read")
     class Type(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = ()
         UNKNOWN_TYPE: _ClassVar[IndividualCall.Type]
@@ -1026,15 +1024,17 @@ class IndividualCall(_message.Message):
     DIRECTION_FIELD_NUMBER: _ClassVar[int]
     STATE_FIELD_NUMBER: _ClassVar[int]
     STARTEDCALLTIMESTAMP_FIELD_NUMBER: _ClassVar[int]
+    READ_FIELD_NUMBER: _ClassVar[int]
     callId: int
     type: IndividualCall.Type
     direction: IndividualCall.Direction
     state: IndividualCall.State
     startedCallTimestamp: int
-    def __init__(self, callId: _Optional[int] = ..., type: _Optional[_Union[IndividualCall.Type, str]] = ..., direction: _Optional[_Union[IndividualCall.Direction, str]] = ..., state: _Optional[_Union[IndividualCall.State, str]] = ..., startedCallTimestamp: _Optional[int] = ...) -> None: ...
+    read: bool
+    def __init__(self, callId: _Optional[int] = ..., type: _Optional[_Union[IndividualCall.Type, str]] = ..., direction: _Optional[_Union[IndividualCall.Direction, str]] = ..., state: _Optional[_Union[IndividualCall.State, str]] = ..., startedCallTimestamp: _Optional[int] = ..., read: bool = ...) -> None: ...
 
 class GroupCall(_message.Message):
-    __slots__ = ("callId", "state", "ringerRecipientId", "startedCallRecipientId", "startedCallTimestamp", "endedCallTimestamp")
+    __slots__ = ("callId", "state", "ringerRecipientId", "startedCallRecipientId", "startedCallTimestamp", "endedCallTimestamp", "read")
     class State(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = ()
         UNKNOWN_STATE: _ClassVar[GroupCall.State]
@@ -1061,13 +1061,15 @@ class GroupCall(_message.Message):
     STARTEDCALLRECIPIENTID_FIELD_NUMBER: _ClassVar[int]
     STARTEDCALLTIMESTAMP_FIELD_NUMBER: _ClassVar[int]
     ENDEDCALLTIMESTAMP_FIELD_NUMBER: _ClassVar[int]
+    READ_FIELD_NUMBER: _ClassVar[int]
     callId: int
     state: GroupCall.State
     ringerRecipientId: int
     startedCallRecipientId: int
     startedCallTimestamp: int
     endedCallTimestamp: int
-    def __init__(self, callId: _Optional[int] = ..., state: _Optional[_Union[GroupCall.State, str]] = ..., ringerRecipientId: _Optional[int] = ..., startedCallRecipientId: _Optional[int] = ..., startedCallTimestamp: _Optional[int] = ..., endedCallTimestamp: _Optional[int] = ...) -> None: ...
+    read: bool
+    def __init__(self, callId: _Optional[int] = ..., state: _Optional[_Union[GroupCall.State, str]] = ..., ringerRecipientId: _Optional[int] = ..., startedCallRecipientId: _Optional[int] = ..., startedCallTimestamp: _Optional[int] = ..., endedCallTimestamp: _Optional[int] = ..., read: bool = ...) -> None: ...
 
 class SimpleChatUpdate(_message.Message):
     __slots__ = ("type",)
@@ -1089,7 +1091,7 @@ class SimpleChatUpdate(_message.Message):
         REPORTED_SPAM: _ClassVar[SimpleChatUpdate.Type]
         BLOCKED: _ClassVar[SimpleChatUpdate.Type]
         UNBLOCKED: _ClassVar[SimpleChatUpdate.Type]
-        ACCEPTED: _ClassVar[SimpleChatUpdate.Type]
+        MESSAGE_REQUEST_ACCEPTED: _ClassVar[SimpleChatUpdate.Type]
     UNKNOWN: SimpleChatUpdate.Type
     JOINED_SIGNAL: SimpleChatUpdate.Type
     IDENTITY_UPDATE: SimpleChatUpdate.Type
@@ -1106,7 +1108,7 @@ class SimpleChatUpdate(_message.Message):
     REPORTED_SPAM: SimpleChatUpdate.Type
     BLOCKED: SimpleChatUpdate.Type
     UNBLOCKED: SimpleChatUpdate.Type
-    ACCEPTED: SimpleChatUpdate.Type
+    MESSAGE_REQUEST_ACCEPTED: SimpleChatUpdate.Type
     TYPE_FIELD_NUMBER: _ClassVar[int]
     type: SimpleChatUpdate.Type
     def __init__(self, type: _Optional[_Union[SimpleChatUpdate.Type, str]] = ...) -> None: ...

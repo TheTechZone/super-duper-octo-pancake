@@ -880,9 +880,7 @@ class SyncMessage(_message.Message):
         class Type(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
             __slots__ = ()
             UPDATE: _ClassVar[SyncMessage.CallLinkUpdate.Type]
-            DELETE: _ClassVar[SyncMessage.CallLinkUpdate.Type]
         UPDATE: SyncMessage.CallLinkUpdate.Type
-        DELETE: SyncMessage.CallLinkUpdate.Type
         ROOTKEY_FIELD_NUMBER: _ClassVar[int]
         ADMINPASSKEY_FIELD_NUMBER: _ClassVar[int]
         TYPE_FIELD_NUMBER: _ClassVar[int]

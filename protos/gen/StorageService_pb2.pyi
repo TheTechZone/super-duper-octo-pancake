@@ -67,12 +67,14 @@ class ManifestRecord(_message.Message):
             GROUPV2: _ClassVar[ManifestRecord.Identifier.Type]
             ACCOUNT: _ClassVar[ManifestRecord.Identifier.Type]
             STORY_DISTRIBUTION_LIST: _ClassVar[ManifestRecord.Identifier.Type]
+            CALL_LINK: _ClassVar[ManifestRecord.Identifier.Type]
         UNKNOWN: ManifestRecord.Identifier.Type
         CONTACT: ManifestRecord.Identifier.Type
         GROUPV1: ManifestRecord.Identifier.Type
         GROUPV2: ManifestRecord.Identifier.Type
         ACCOUNT: ManifestRecord.Identifier.Type
         STORY_DISTRIBUTION_LIST: ManifestRecord.Identifier.Type
+        CALL_LINK: ManifestRecord.Identifier.Type
         RAW_FIELD_NUMBER: _ClassVar[int]
         TYPE_FIELD_NUMBER: _ClassVar[int]
         raw: bytes
@@ -87,18 +89,20 @@ class ManifestRecord(_message.Message):
     def __init__(self, version: _Optional[int] = ..., sourceDevice: _Optional[int] = ..., identifiers: _Optional[_Iterable[_Union[ManifestRecord.Identifier, _Mapping]]] = ...) -> None: ...
 
 class StorageRecord(_message.Message):
-    __slots__ = ("contact", "groupV1", "groupV2", "account", "storyDistributionList")
+    __slots__ = ("contact", "groupV1", "groupV2", "account", "storyDistributionList", "callLink")
     CONTACT_FIELD_NUMBER: _ClassVar[int]
     GROUPV1_FIELD_NUMBER: _ClassVar[int]
     GROUPV2_FIELD_NUMBER: _ClassVar[int]
     ACCOUNT_FIELD_NUMBER: _ClassVar[int]
     STORYDISTRIBUTIONLIST_FIELD_NUMBER: _ClassVar[int]
+    CALLLINK_FIELD_NUMBER: _ClassVar[int]
     contact: ContactRecord
     groupV1: GroupV1Record
     groupV2: GroupV2Record
     account: AccountRecord
     storyDistributionList: StoryDistributionListRecord
-    def __init__(self, contact: _Optional[_Union[ContactRecord, _Mapping]] = ..., groupV1: _Optional[_Union[GroupV1Record, _Mapping]] = ..., groupV2: _Optional[_Union[GroupV2Record, _Mapping]] = ..., account: _Optional[_Union[AccountRecord, _Mapping]] = ..., storyDistributionList: _Optional[_Union[StoryDistributionListRecord, _Mapping]] = ...) -> None: ...
+    callLink: CallLinkRecord
+    def __init__(self, contact: _Optional[_Union[ContactRecord, _Mapping]] = ..., groupV1: _Optional[_Union[GroupV1Record, _Mapping]] = ..., groupV2: _Optional[_Union[GroupV2Record, _Mapping]] = ..., account: _Optional[_Union[AccountRecord, _Mapping]] = ..., storyDistributionList: _Optional[_Union[StoryDistributionListRecord, _Mapping]] = ..., callLink: _Optional[_Union[CallLinkRecord, _Mapping]] = ...) -> None: ...
 
 class ContactRecord(_message.Message):
     __slots__ = ("aci", "e164", "pni", "profileKey", "identityKey", "identityState", "givenName", "familyName", "username", "blocked", "whitelisted", "archived", "markedUnread", "mutedUntilTimestamp", "hideStory", "unregisteredAtTimestamp", "systemGivenName", "systemFamilyName", "systemNickname", "hidden", "pniSignatureVerified", "nickname", "note")
@@ -355,3 +359,13 @@ class StoryDistributionListRecord(_message.Message):
     allowsReplies: bool
     isBlockList: bool
     def __init__(self, identifier: _Optional[bytes] = ..., name: _Optional[str] = ..., recipientServiceIds: _Optional[_Iterable[str]] = ..., deletedAtTimestamp: _Optional[int] = ..., allowsReplies: bool = ..., isBlockList: bool = ...) -> None: ...
+
+class CallLinkRecord(_message.Message):
+    __slots__ = ("rootKey", "adminPasskey", "deletedAtTimestampMs")
+    ROOTKEY_FIELD_NUMBER: _ClassVar[int]
+    ADMINPASSKEY_FIELD_NUMBER: _ClassVar[int]
+    DELETEDATTIMESTAMPMS_FIELD_NUMBER: _ClassVar[int]
+    rootKey: bytes
+    adminPasskey: bytes
+    deletedAtTimestampMs: int
+    def __init__(self, rootKey: _Optional[bytes] = ..., adminPasskey: _Optional[bytes] = ..., deletedAtTimestampMs: _Optional[int] = ...) -> None: ...
