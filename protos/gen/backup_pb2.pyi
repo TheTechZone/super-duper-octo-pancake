@@ -676,18 +676,20 @@ class GiftBadge(_message.Message):
 class ContactAttachment(_message.Message):
     __slots__ = ("name", "number", "email", "address", "avatar", "organization")
     class Name(_message.Message):
-        __slots__ = ("givenName", "familyName", "prefix", "suffix", "middleName")
+        __slots__ = ("givenName", "familyName", "prefix", "suffix", "middleName", "nickname")
         GIVENNAME_FIELD_NUMBER: _ClassVar[int]
         FAMILYNAME_FIELD_NUMBER: _ClassVar[int]
         PREFIX_FIELD_NUMBER: _ClassVar[int]
         SUFFIX_FIELD_NUMBER: _ClassVar[int]
         MIDDLENAME_FIELD_NUMBER: _ClassVar[int]
+        NICKNAME_FIELD_NUMBER: _ClassVar[int]
         givenName: str
         familyName: str
         prefix: str
         suffix: str
         middleName: str
-        def __init__(self, givenName: _Optional[str] = ..., familyName: _Optional[str] = ..., prefix: _Optional[str] = ..., suffix: _Optional[str] = ..., middleName: _Optional[str] = ...) -> None: ...
+        nickname: str
+        def __init__(self, givenName: _Optional[str] = ..., familyName: _Optional[str] = ..., prefix: _Optional[str] = ..., suffix: _Optional[str] = ..., middleName: _Optional[str] = ..., nickname: _Optional[str] = ...) -> None: ...
     class Phone(_message.Message):
         __slots__ = ("value", "type", "label")
         class Type(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
