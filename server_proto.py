@@ -1842,85 +1842,6 @@ def resp_v1_art_auth(flow: HTTPFlow):
     pass
 
 
-@api.route("/v2/attachments/form/upload", rtype=RouteType.REQUEST)
-def req_v2_attachments_form_upload(flow: HTTPFlow):
-    """
-
-
-         Parameters:
-            User-Agent
-              location: header
-              None
-
-
-         Security:
-            authenticatedAccount - basic
-            Account authentication is based on Basic authentication schema,
-    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
-    user's `main` device is assumed.
-
-    """
-    # Implement the function body here
-    pass
-
-
-@api.route("/v2/attachments/form/upload", rtype=RouteType.RESPONSE)
-def resp_v2_attachments_form_upload(flow: HTTPFlow):
-    """
-
-
-         Responses:
-            default - default response
-
-         Security:
-            authenticatedAccount - basic
-            Account authentication is based on Basic authentication schema,
-    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
-    user's `main` device is assumed.
-
-    """
-    # Implement the function body here
-    pass
-
-
-@api.route("/v3/attachments/form/upload", rtype=RouteType.REQUEST)
-def req_v3_attachments_form_upload(flow: HTTPFlow):
-    """
-
-
-         Parameters:
-
-
-         Security:
-            authenticatedAccount - basic
-            Account authentication is based on Basic authentication schema,
-    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
-    user's `main` device is assumed.
-
-    """
-    # Implement the function body here
-    pass
-
-
-@api.route("/v3/attachments/form/upload", rtype=RouteType.RESPONSE)
-def resp_v3_attachments_form_upload(flow: HTTPFlow):
-    """
-
-
-         Responses:
-            default - default response
-
-         Security:
-            authenticatedAccount - basic
-            Account authentication is based on Basic authentication schema,
-    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
-    user's `main` device is assumed.
-
-    """
-    # Implement the function body here
-    pass
-
-
 @api.route("/v4/attachments/form/upload", rtype=RouteType.REQUEST)
 def req_v4_attachments_form_upload(flow: HTTPFlow):
     """
@@ -2033,6 +1954,50 @@ def req_v1_calling_relays(flow: HTTPFlow):
 
 @api.route("/v1/calling/relays", rtype=RouteType.RESPONSE)
 def resp_v1_calling_relays(flow: HTTPFlow):
+    """
+            Get 1:1 calling relay options for the client
+            Get 1:1 relay addresses in IpV4, Ipv6, and URL formats.
+
+         Responses:
+            200 - `JSON` with call endpoints.
+            400 - Invalid get call endpoint request.
+            401 - Account authentication check failed.
+            422 - Invalid request format.
+            429 - Rate limited.
+
+         Security:
+            authenticatedAccount - basic
+            Account authentication is based on Basic authentication schema,
+    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
+    user's `main` device is assumed.
+
+    """
+    # Implement the function body here
+    pass
+
+
+@api.route("/v2/calling/relays", rtype=RouteType.REQUEST)
+def req_v2_calling_relays(flow: HTTPFlow):
+    """
+            Get 1:1 calling relay options for the client
+            Get 1:1 relay addresses in IpV4, Ipv6, and URL formats.
+
+         Parameters:
+
+
+         Security:
+            authenticatedAccount - basic
+            Account authentication is based on Basic authentication schema,
+    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
+    user's `main` device is assumed.
+
+    """
+    # Implement the function body here
+    pass
+
+
+@api.route("/v2/calling/relays", rtype=RouteType.RESPONSE)
+def resp_v2_calling_relays(flow: HTTPFlow):
     """
             Get 1:1 calling relay options for the client
             Get 1:1 relay addresses in IpV4, Ipv6, and URL formats.
@@ -2290,7 +2255,8 @@ def resp_v1_challenge_push(flow: HTTPFlow):
 @api.route("/v1/devices/provisioning/code", rtype=RouteType.REQUEST)
 def req_v1_devices_provisioning_code(flow: HTTPFlow):
     """
-
+            Generate a signed device-linking token
+            Generate a signed device-linking token for transmission to a pending linked device via a provisioning message.
 
          Parameters:
 
@@ -2309,10 +2275,13 @@ def req_v1_devices_provisioning_code(flow: HTTPFlow):
 @api.route("/v1/devices/provisioning/code", rtype=RouteType.RESPONSE)
 def resp_v1_devices_provisioning_code(flow: HTTPFlow):
     """
-
+            Generate a signed device-linking token
+            Generate a signed device-linking token for transmission to a pending linked device via a provisioning message.
 
          Responses:
-            default - default response
+            200 - Token was generated successfully
+            411 - The authenticated account already has the maximum allowed number of linked devices
+            429 - Too many attempts
 
          Security:
             authenticatedAccount - basic
@@ -2399,6 +2368,98 @@ def resp_v1_devices_link(flow: HTTPFlow):
        422 - The request did not pass validation
        429 - Too many attempts
 
+
+    """
+    # Implement the function body here
+    pass
+
+
+@api.route("/v1/devices/transfer_archive", rtype=RouteType.REQUEST)
+def req_v1_devices_transfer_archive(flow: HTTPFlow):
+    """
+            Wait for a new transfer archive to be uploaded
+            Waits for a new transfer archive to be uploaded for the authenticated device and returns the location of the
+    archive when available.
+
+         Parameters:
+            timeout
+              location: query
+              None
+
+
+         Security:
+            authenticatedAccount - basic
+            Account authentication is based on Basic authentication schema,
+    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
+    user's `main` device is assumed.
+
+    """
+    # Implement the function body here
+    pass
+
+
+@api.route("/v1/devices/transfer_archive", rtype=RouteType.RESPONSE)
+def resp_v1_devices_transfer_archive(flow: HTTPFlow):
+    """
+            Wait for a new transfer archive to be uploaded
+            Waits for a new transfer archive to be uploaded for the authenticated device and returns the location of the
+    archive when available.
+
+         Responses:
+            200 - A new transfer archive was uploaded for the authenticated device
+            204 - No transfer archive was uploaded before the call completed; clients may repeat the call to continue waiting
+            400 - The given timeout was invalid
+            429 - Rate-limited; try again after the prescribed delay
+
+         Security:
+            authenticatedAccount - basic
+            Account authentication is based on Basic authentication schema,
+    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
+    user's `main` device is assumed.
+
+    """
+    # Implement the function body here
+    pass
+
+
+@api.route("/v1/devices/transfer_archive", rtype=RouteType.REQUEST)
+def req_v1_devices_transfer_archive(flow: HTTPFlow):
+    """
+            Signals that a transfer archive has been uploaded for a specific linked device
+            Signals that a transfer archive has been uploaded for a specific linked device. Devices waiting via the "wait
+    for transfer archive" endpoint will be notified that the new archive is available.
+
+         Parameters:
+
+
+         Security:
+            authenticatedAccount - basic
+            Account authentication is based on Basic authentication schema,
+    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
+    user's `main` device is assumed.
+
+    """
+    # Implement the function body here
+    pass
+
+
+@api.route("/v1/devices/transfer_archive", rtype=RouteType.RESPONSE)
+def resp_v1_devices_transfer_archive(flow: HTTPFlow):
+    """
+            Signals that a transfer archive has been uploaded for a specific linked device
+            Signals that a transfer archive has been uploaded for a specific linked device. Devices waiting via the "wait
+    for transfer archive" endpoint will be notified that the new archive is available.
+
+         Responses:
+            204 - Success
+            422 - The request object could not be parsed or was otherwise invalid
+            429 - Rate-limited; try again after the prescribed delay
+
+         Security:
+            authenticatedAccount - basic
+            Account authentication is based on Basic authentication schema,
+    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
+    user's `main` device is assumed.
 
     """
     # Implement the function body here
@@ -2556,6 +2617,70 @@ def resp_v1_devices_unauthenticated_delivery(flow: HTTPFlow):
 
          Responses:
             default - default response
+
+         Security:
+            authenticatedAccount - basic
+            Account authentication is based on Basic authentication schema,
+    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
+    user's `main` device is assumed.
+
+    """
+    # Implement the function body here
+    pass
+
+
+@api.route(
+    "/v1/devices/wait_for_linked_device/{tokenIdentifier}", rtype=RouteType.REQUEST
+)
+def req_v1_devices_wait_for_linked_device_tokenIdentifier(
+    flow: HTTPFlow, tokenIdentifier
+):
+    """
+            Wait for a new device to be linked to an account
+            Waits for a new device to be linked to an account and returns basic information about the new device when
+    available.
+
+         Parameters:
+            tokenIdentifier  (required)
+              location: path
+              None
+
+            timeout
+              location: query
+              None
+
+            User-Agent
+              location: header
+              None
+
+
+         Security:
+            authenticatedAccount - basic
+            Account authentication is based on Basic authentication schema,
+    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
+    user's `main` device is assumed.
+
+    """
+    # Implement the function body here
+    pass
+
+
+@api.route(
+    "/v1/devices/wait_for_linked_device/{tokenIdentifier}", rtype=RouteType.RESPONSE
+)
+def resp_v1_devices_wait_for_linked_device_tokenIdentifier(
+    flow: HTTPFlow, tokenIdentifier
+):
+    """
+            Wait for a new device to be linked to an account
+            Waits for a new device to be linked to an account and returns basic information about the new device when
+    available.
+
+         Responses:
+            200 - A device was linked to an account using the token associated with the given token identifier
+            204 - No device was linked to the account before the call completed; clients may repeat the call to continue waiting
+            400 - The given token identifier or timeout was invalid
+            429 - Rate-limited; try again after the prescribed delay
 
          Security:
             authenticatedAccount - basic
@@ -2741,7 +2866,7 @@ def resp_v1_key_transparency_monitor(flow: HTTPFlow):
          Responses:
             200 - All search keys exist in the log
             404 - At least one search key lookup did not find the key
-            413 - Ratelimited
+            429 - Ratelimited
             422 - Invalid request format
 
          Security:
@@ -2785,7 +2910,7 @@ def resp_v1_key_transparency_search(flow: HTTPFlow):
             200 - All search key lookups were successful
             403 - At least one search key lookup to value mapping was invalid
             404 - At least one search key lookup did not find the key
-            413 - Ratelimited
+            429 - Ratelimited
             422 - Invalid request format
 
          Security:
@@ -3770,12 +3895,14 @@ def resp_v1_profile(flow: HTTPFlow):
 @api.route("/v1/provisioning/{destination}", rtype=RouteType.REQUEST)
 def req_v1_provisioning_destination(flow: HTTPFlow, destination):
     """
-
+            Send a provisioning message to a new device
+            Send a provisioning message from an authenticated device to a device that (presumably) is not yet associated
+    with a Signal account.
 
          Parameters:
             destination  (required)
               location: path
-              None
+              The temporary provisioning address to which to send a provisioning message
 
             User-Agent
               location: header
@@ -3796,10 +3923,14 @@ def req_v1_provisioning_destination(flow: HTTPFlow, destination):
 @api.route("/v1/provisioning/{destination}", rtype=RouteType.RESPONSE)
 def resp_v1_provisioning_destination(flow: HTTPFlow, destination):
     """
-
+            Send a provisioning message to a new device
+            Send a provisioning message from an authenticated device to a device that (presumably) is not yet associated
+    with a Signal account.
 
          Responses:
-            default - default response
+            204 - The provisioning message was delivered to the given provisioning address
+            400 - The provisioning message was too large
+            404 - No device with the given provisioning address was connected at the time of the request
 
          Security:
             authenticatedAccount - basic
@@ -4562,6 +4693,84 @@ def resp_v1_subscription_configuration(flow: HTTPFlow):
 
 
 @api.route(
+    "/v1/subscription/{subscriberId}/appstore/{originalTransactionId}",
+    rtype=RouteType.REQUEST,
+)
+def req_v1_subscription_subscriberId_appstore_originalTransactionId(
+    flow: HTTPFlow, subscriberId, originalTransactionId
+):
+    """
+            Set app store subscription
+            Set an originalTransactionId that represents an IAP subscription made with the app store.
+
+    To set up an app store subscription:
+    1. Create a subscriber with `PUT subscriptions/{subscriberId}` (you must regularly refresh this subscriber)
+    2. [Create a subscription](https://developer.apple.com/documentation/storekit/in-app_purchase/) with the App Store
+       directly via StoreKit and obtain a originalTransactionId.
+    3. `POST` the purchaseToken here
+    4. Obtain a receipt at `POST /v1/subscription/{subscriberId}/receipt_credentials` which can then be used to obtain the
+       entitlement
+
+         Parameters:
+            subscriberId  (required)
+              location: path
+              None
+
+            originalTransactionId  (required)
+              location: path
+              None
+
+
+         Security:
+            authenticatedAccount - basic
+            Account authentication is based on Basic authentication schema,
+    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
+    user's `main` device is assumed.
+
+    """
+    # Implement the function body here
+    pass
+
+
+@api.route(
+    "/v1/subscription/{subscriberId}/appstore/{originalTransactionId}",
+    rtype=RouteType.RESPONSE,
+)
+def resp_v1_subscription_subscriberId_appstore_originalTransactionId(
+    flow: HTTPFlow, subscriberId, originalTransactionId
+):
+    """
+            Set app store subscription
+            Set an originalTransactionId that represents an IAP subscription made with the app store.
+
+    To set up an app store subscription:
+    1. Create a subscriber with `PUT subscriptions/{subscriberId}` (you must regularly refresh this subscriber)
+    2. [Create a subscription](https://developer.apple.com/documentation/storekit/in-app_purchase/) with the App Store
+       directly via StoreKit and obtain a originalTransactionId.
+    3. `POST` the purchaseToken here
+    4. Obtain a receipt at `POST /v1/subscription/{subscriberId}/receipt_credentials` which can then be used to obtain the
+       entitlement
+
+         Responses:
+            200 - The originalTransactionId was successfully validated
+            402 - The subscription transaction is incomplete or invalid
+            403 - subscriberId authentication failure OR account authentication is present
+            404 - No such subscriberId exists or subscriberId is malformed or the specified transaction does not exist
+            409 - subscriberId is already linked to a processor that does not support appstore payments. Delete this subscriberId and use a new one.
+            429 - Rate limit exceeded.
+
+         Security:
+            authenticatedAccount - basic
+            Account authentication is based on Basic authentication schema,
+    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
+    user's `main` device is assumed.
+
+    """
+    # Implement the function body here
+    pass
+
+
+@api.route(
     "/v1/subscription/{subscriberId}/default_payment_method_for_ideal/{setupIntentId}",
     rtype=RouteType.REQUEST,
 )
@@ -4698,6 +4907,10 @@ def req_v1_subscription_subscriberId_playbilling_purchaseToken(
     After calling this method, the payment is confirmed. Callers must durably store their subscriberId before calling
     this method to ensure their payment is tracked.
 
+    Once a purchaseToken to is posted to a subscriberId, the same subscriberId must not be used with another payment
+    method. A different playbilling purchaseToken can be posted to the same subscriberId, in this case the subscription
+    associated with the old purchaseToken will be cancelled.
+
          Parameters:
             subscriberId  (required)
               location: path
@@ -4741,6 +4954,10 @@ def resp_v1_subscription_subscriberId_playbilling_purchaseToken(
 
     After calling this method, the payment is confirmed. Callers must durably store their subscriberId before calling
     this method to ensure their payment is tracked.
+
+    Once a purchaseToken to is posted to a subscriberId, the same subscriberId must not be used with another payment
+    method. A different playbilling purchaseToken can be posted to the same subscriberId, in this case the subscription
+    associated with the old purchaseToken will be cancelled.
 
          Responses:
             200 - The purchaseToken was validated and acknowledged
