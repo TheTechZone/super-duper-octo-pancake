@@ -20,12 +20,14 @@ ADMINISTRATOR: GroupV2AccessLevel
 UNSATISFIABLE: GroupV2AccessLevel
 
 class BackupInfo(_message.Message):
-    __slots__ = ("version", "backupTimeMs")
+    __slots__ = ("version", "backupTimeMs", "mediaRootBackupKey")
     VERSION_FIELD_NUMBER: _ClassVar[int]
     BACKUPTIMEMS_FIELD_NUMBER: _ClassVar[int]
+    MEDIAROOTBACKUPKEY_FIELD_NUMBER: _ClassVar[int]
     version: int
     backupTimeMs: int
-    def __init__(self, version: _Optional[int] = ..., backupTimeMs: _Optional[int] = ...) -> None: ...
+    mediaRootBackupKey: bytes
+    def __init__(self, version: _Optional[int] = ..., backupTimeMs: _Optional[int] = ..., mediaRootBackupKey: _Optional[bytes] = ...) -> None: ...
 
 class Frame(_message.Message):
     __slots__ = ("account", "recipient", "chat", "chatItem", "stickerPack", "adHocCall")
@@ -442,7 +444,7 @@ class DistributionList(_message.Message):
     def __init__(self, name: _Optional[str] = ..., allowReplies: bool = ..., privacyMode: _Optional[_Union[DistributionList.PrivacyMode, str]] = ..., memberRecipientIds: _Optional[_Iterable[int]] = ...) -> None: ...
 
 class ChatItem(_message.Message):
-    __slots__ = ("chatId", "authorId", "dateSent", "expireStartDate", "expiresInMs", "revisions", "sms", "incoming", "outgoing", "directionless", "standardMessage", "contactMessage", "stickerMessage", "remoteDeletedMessage", "updateMessage", "paymentNotification", "giftBadge")
+    __slots__ = ("chatId", "authorId", "dateSent", "expireStartDate", "expiresInMs", "revisions", "sms", "incoming", "outgoing", "directionless", "standardMessage", "contactMessage", "stickerMessage", "remoteDeletedMessage", "updateMessage", "paymentNotification", "giftBadge", "viewOnceMessage")
     class IncomingMessageDetails(_message.Message):
         __slots__ = ("dateReceived", "dateServerSent", "read", "sealedSender")
         DATERECEIVED_FIELD_NUMBER: _ClassVar[int]
@@ -479,6 +481,7 @@ class ChatItem(_message.Message):
     UPDATEMESSAGE_FIELD_NUMBER: _ClassVar[int]
     PAYMENTNOTIFICATION_FIELD_NUMBER: _ClassVar[int]
     GIFTBADGE_FIELD_NUMBER: _ClassVar[int]
+    VIEWONCEMESSAGE_FIELD_NUMBER: _ClassVar[int]
     chatId: int
     authorId: int
     dateSent: int
@@ -496,7 +499,8 @@ class ChatItem(_message.Message):
     updateMessage: ChatUpdateMessage
     paymentNotification: PaymentNotification
     giftBadge: GiftBadge
-    def __init__(self, chatId: _Optional[int] = ..., authorId: _Optional[int] = ..., dateSent: _Optional[int] = ..., expireStartDate: _Optional[int] = ..., expiresInMs: _Optional[int] = ..., revisions: _Optional[_Iterable[_Union[ChatItem, _Mapping]]] = ..., sms: bool = ..., incoming: _Optional[_Union[ChatItem.IncomingMessageDetails, _Mapping]] = ..., outgoing: _Optional[_Union[ChatItem.OutgoingMessageDetails, _Mapping]] = ..., directionless: _Optional[_Union[ChatItem.DirectionlessMessageDetails, _Mapping]] = ..., standardMessage: _Optional[_Union[StandardMessage, _Mapping]] = ..., contactMessage: _Optional[_Union[ContactMessage, _Mapping]] = ..., stickerMessage: _Optional[_Union[StickerMessage, _Mapping]] = ..., remoteDeletedMessage: _Optional[_Union[RemoteDeletedMessage, _Mapping]] = ..., updateMessage: _Optional[_Union[ChatUpdateMessage, _Mapping]] = ..., paymentNotification: _Optional[_Union[PaymentNotification, _Mapping]] = ..., giftBadge: _Optional[_Union[GiftBadge, _Mapping]] = ...) -> None: ...
+    viewOnceMessage: ViewOnceMessage
+    def __init__(self, chatId: _Optional[int] = ..., authorId: _Optional[int] = ..., dateSent: _Optional[int] = ..., expireStartDate: _Optional[int] = ..., expiresInMs: _Optional[int] = ..., revisions: _Optional[_Iterable[_Union[ChatItem, _Mapping]]] = ..., sms: bool = ..., incoming: _Optional[_Union[ChatItem.IncomingMessageDetails, _Mapping]] = ..., outgoing: _Optional[_Union[ChatItem.OutgoingMessageDetails, _Mapping]] = ..., directionless: _Optional[_Union[ChatItem.DirectionlessMessageDetails, _Mapping]] = ..., standardMessage: _Optional[_Union[StandardMessage, _Mapping]] = ..., contactMessage: _Optional[_Union[ContactMessage, _Mapping]] = ..., stickerMessage: _Optional[_Union[StickerMessage, _Mapping]] = ..., remoteDeletedMessage: _Optional[_Union[RemoteDeletedMessage, _Mapping]] = ..., updateMessage: _Optional[_Union[ChatUpdateMessage, _Mapping]] = ..., paymentNotification: _Optional[_Union[PaymentNotification, _Mapping]] = ..., giftBadge: _Optional[_Union[GiftBadge, _Mapping]] = ..., viewOnceMessage: _Optional[_Union[ViewOnceMessage, _Mapping]] = ...) -> None: ...
 
 class SendStatus(_message.Message):
     __slots__ = ("recipientId", "timestamp", "pending", "sent", "delivered", "read", "viewed", "skipped", "failed")
@@ -672,6 +676,14 @@ class GiftBadge(_message.Message):
     receiptCredentialPresentation: bytes
     state: GiftBadge.State
     def __init__(self, receiptCredentialPresentation: _Optional[bytes] = ..., state: _Optional[_Union[GiftBadge.State, str]] = ...) -> None: ...
+
+class ViewOnceMessage(_message.Message):
+    __slots__ = ("attachment", "reactions")
+    ATTACHMENT_FIELD_NUMBER: _ClassVar[int]
+    REACTIONS_FIELD_NUMBER: _ClassVar[int]
+    attachment: MessageAttachment
+    reactions: _containers.RepeatedCompositeFieldContainer[Reaction]
+    def __init__(self, attachment: _Optional[_Union[MessageAttachment, _Mapping]] = ..., reactions: _Optional[_Iterable[_Union[Reaction, _Mapping]]] = ...) -> None: ...
 
 class ContactAttachment(_message.Message):
     __slots__ = ("name", "number", "email", "address", "avatar", "organization")

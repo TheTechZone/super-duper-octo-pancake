@@ -170,6 +170,12 @@ class BackfillDigestJobData(_message.Message):
     attachmentId: int
     def __init__(self, attachmentId: _Optional[int] = ...) -> None: ...
 
+class BackfillDigestsForDataFileJobData(_message.Message):
+    __slots__ = ("dataFile",)
+    DATAFILE_FIELD_NUMBER: _ClassVar[int]
+    dataFile: str
+    def __init__(self, dataFile: _Optional[str] = ...) -> None: ...
+
 class RestoreAttachmentJobData(_message.Message):
     __slots__ = ("messageId", "attachmentId", "manual")
     MESSAGEID_FIELD_NUMBER: _ClassVar[int]

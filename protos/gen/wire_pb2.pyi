@@ -78,14 +78,18 @@ class Consistency(_message.Message):
     def __init__(self, last: _Optional[int] = ..., distinguished: _Optional[int] = ...) -> None: ...
 
 class SearchRequest(_message.Message):
-    __slots__ = ("search_key", "version", "consistency")
+    __slots__ = ("search_key", "version", "consistency", "mapped_value", "unidentified_access_key")
     SEARCH_KEY_FIELD_NUMBER: _ClassVar[int]
     VERSION_FIELD_NUMBER: _ClassVar[int]
     CONSISTENCY_FIELD_NUMBER: _ClassVar[int]
+    MAPPED_VALUE_FIELD_NUMBER: _ClassVar[int]
+    UNIDENTIFIED_ACCESS_KEY_FIELD_NUMBER: _ClassVar[int]
     search_key: bytes
     version: int
     consistency: Consistency
-    def __init__(self, search_key: _Optional[bytes] = ..., version: _Optional[int] = ..., consistency: _Optional[_Union[Consistency, _Mapping]] = ...) -> None: ...
+    mapped_value: bytes
+    unidentified_access_key: bytes
+    def __init__(self, search_key: _Optional[bytes] = ..., version: _Optional[int] = ..., consistency: _Optional[_Union[Consistency, _Mapping]] = ..., mapped_value: _Optional[bytes] = ..., unidentified_access_key: _Optional[bytes] = ...) -> None: ...
 
 class SearchResponse(_message.Message):
     __slots__ = ("tree_head", "vrf_proof", "search", "opening", "value")
