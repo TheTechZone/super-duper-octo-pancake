@@ -2374,6 +2374,81 @@ def resp_v1_devices_link(flow: HTTPFlow):
     pass
 
 
+@api.route("/v1/devices/restore_account/{token}", rtype=RouteType.REQUEST)
+def req_v1_devices_restore_account_token(flow: HTTPFlow, token):
+    """
+       Wait for 'restore account' request
+
+    Parameters:
+       token  (required)
+         location: path
+         None
+
+       timeout
+         location: query
+         None
+
+
+
+    """
+    # Implement the function body here
+    pass
+
+
+@api.route("/v1/devices/restore_account/{token}", rtype=RouteType.RESPONSE)
+def resp_v1_devices_restore_account_token(flow: HTTPFlow, token):
+    """
+       Wait for 'restore account' request
+
+    Responses:
+       200 - A 'restore account' request was received for the given token
+       204 - No 'restore account' request for the given token was received before the call completed; clients may repeat the call to continue waiting
+       400 - The given token or timeout was invalid
+       429 - Rate-limited; try again after the prescribed delay
+
+
+    """
+    # Implement the function body here
+    pass
+
+
+@api.route("/v1/devices/restore_account/{token}", rtype=RouteType.REQUEST)
+def req_v1_devices_restore_account_token(flow: HTTPFlow, token):
+    """
+            Signals that a new device is requesting restoration of account data by some method
+            Signals that a new device is requesting restoration of account data by some method. Devices waiting via the
+    "wait for 'restore account' request" endpoint will be notified that the request has been issued.
+
+         Parameters:
+            token  (required)
+              location: path
+              None
+
+
+
+    """
+    # Implement the function body here
+    pass
+
+
+@api.route("/v1/devices/restore_account/{token}", rtype=RouteType.RESPONSE)
+def resp_v1_devices_restore_account_token(flow: HTTPFlow, token):
+    """
+            Signals that a new device is requesting restoration of account data by some method
+            Signals that a new device is requesting restoration of account data by some method. Devices waiting via the
+    "wait for 'restore account' request" endpoint will be notified that the request has been issued.
+
+         Responses:
+            204 - Success
+            422 - The request object could not be parsed or was otherwise invalid
+            429 - Rate-limited; try again after the prescribed delay
+
+
+    """
+    # Implement the function body here
+    pass
+
+
 @api.route("/v1/devices/transfer_archive", rtype=RouteType.REQUEST)
 def req_v1_devices_transfer_archive(flow: HTTPFlow):
     """
@@ -2835,6 +2910,54 @@ def resp_v1_keepalive_provisioning(flow: HTTPFlow):
     pass
 
 
+@api.route("/v1/key-transparency/distinguished", rtype=RouteType.REQUEST)
+def req_v1_key_transparency_distinguished(flow: HTTPFlow):
+    """
+            Get the current value of the distinguished key
+            Enforced unauthenticated endpoint. The response contains the distinguished tree head to prove consistency
+    against for future calls to `/search` and `/distinguished`.
+
+         Parameters:
+            lastTreeHeadSize
+              location: query
+              The distinguished tree head size returned by a previously verified call
+
+
+         Security:
+            authenticatedAccount - basic
+            Account authentication is based on Basic authentication schema,
+    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
+    user's `main` device is assumed.
+
+    """
+    # Implement the function body here
+    pass
+
+
+@api.route("/v1/key-transparency/distinguished", rtype=RouteType.RESPONSE)
+def resp_v1_key_transparency_distinguished(flow: HTTPFlow):
+    """
+            Get the current value of the distinguished key
+            Enforced unauthenticated endpoint. The response contains the distinguished tree head to prove consistency
+    against for future calls to `/search` and `/distinguished`.
+
+         Responses:
+            200 - The `distinguished` search key exists in the log
+            400 - Invalid request. See response for any available details.
+            422 - Invalid request format
+            429 - Rate-limited
+
+         Security:
+            authenticatedAccount - basic
+            Account authentication is based on Basic authentication schema,
+    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
+    user's `main` device is assumed.
+
+    """
+    # Implement the function body here
+    pass
+
+
 @api.route("/v1/key-transparency/monitor", rtype=RouteType.REQUEST)
 def req_v1_key_transparency_monitor(flow: HTTPFlow):
     """
@@ -2865,8 +2988,9 @@ def resp_v1_key_transparency_monitor(flow: HTTPFlow):
 
          Responses:
             200 - All search keys exist in the log
+            400 - Invalid request. See response for any available details.
             404 - At least one search key lookup did not find the key
-            429 - Ratelimited
+            429 - Rate-limited
             422 - Invalid request format
 
          Security:
@@ -2908,9 +3032,10 @@ def resp_v1_key_transparency_search(flow: HTTPFlow):
 
          Responses:
             200 - All search key lookups were successful
+            400 - Invalid request. See response for any available details.
             403 - At least one search key lookup to value mapping was invalid
             404 - At least one search key lookup did not find the key
-            429 - Ratelimited
+            429 - Rate-limited
             422 - Invalid request format
 
          Security:
