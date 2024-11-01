@@ -29,7 +29,7 @@ class ProvisionEnvelope(_message.Message):
     def __init__(self, publicKey: _Optional[bytes] = ..., body: _Optional[bytes] = ...) -> None: ...
 
 class ProvisionMessage(_message.Message):
-    __slots__ = ("aciIdentityKeyPublic", "aciIdentityKeyPrivate", "pniIdentityKeyPublic", "pniIdentityKeyPrivate", "aci", "pni", "number", "provisioningCode", "userAgent", "profileKey", "readReceipts", "provisioningVersion", "masterKey")
+    __slots__ = ("aciIdentityKeyPublic", "aciIdentityKeyPrivate", "pniIdentityKeyPublic", "pniIdentityKeyPrivate", "aci", "pni", "number", "provisioningCode", "userAgent", "profileKey", "readReceipts", "provisioningVersion", "masterKey", "ephemeralBackupKey", "accountEntropyPool", "mediaRootBackupKey")
     ACIIDENTITYKEYPUBLIC_FIELD_NUMBER: _ClassVar[int]
     ACIIDENTITYKEYPRIVATE_FIELD_NUMBER: _ClassVar[int]
     PNIIDENTITYKEYPUBLIC_FIELD_NUMBER: _ClassVar[int]
@@ -43,6 +43,9 @@ class ProvisionMessage(_message.Message):
     READRECEIPTS_FIELD_NUMBER: _ClassVar[int]
     PROVISIONINGVERSION_FIELD_NUMBER: _ClassVar[int]
     MASTERKEY_FIELD_NUMBER: _ClassVar[int]
+    EPHEMERALBACKUPKEY_FIELD_NUMBER: _ClassVar[int]
+    ACCOUNTENTROPYPOOL_FIELD_NUMBER: _ClassVar[int]
+    MEDIAROOTBACKUPKEY_FIELD_NUMBER: _ClassVar[int]
     aciIdentityKeyPublic: bytes
     aciIdentityKeyPrivate: bytes
     pniIdentityKeyPublic: bytes
@@ -56,4 +59,7 @@ class ProvisionMessage(_message.Message):
     readReceipts: bool
     provisioningVersion: int
     masterKey: bytes
-    def __init__(self, aciIdentityKeyPublic: _Optional[bytes] = ..., aciIdentityKeyPrivate: _Optional[bytes] = ..., pniIdentityKeyPublic: _Optional[bytes] = ..., pniIdentityKeyPrivate: _Optional[bytes] = ..., aci: _Optional[str] = ..., pni: _Optional[str] = ..., number: _Optional[str] = ..., provisioningCode: _Optional[str] = ..., userAgent: _Optional[str] = ..., profileKey: _Optional[bytes] = ..., readReceipts: bool = ..., provisioningVersion: _Optional[int] = ..., masterKey: _Optional[bytes] = ...) -> None: ...
+    ephemeralBackupKey: bytes
+    accountEntropyPool: str
+    mediaRootBackupKey: bytes
+    def __init__(self, aciIdentityKeyPublic: _Optional[bytes] = ..., aciIdentityKeyPrivate: _Optional[bytes] = ..., pniIdentityKeyPublic: _Optional[bytes] = ..., pniIdentityKeyPrivate: _Optional[bytes] = ..., aci: _Optional[str] = ..., pni: _Optional[str] = ..., number: _Optional[str] = ..., provisioningCode: _Optional[str] = ..., userAgent: _Optional[str] = ..., profileKey: _Optional[bytes] = ..., readReceipts: bool = ..., provisioningVersion: _Optional[int] = ..., masterKey: _Optional[bytes] = ..., ephemeralBackupKey: _Optional[bytes] = ..., accountEntropyPool: _Optional[str] = ..., mediaRootBackupKey: _Optional[bytes] = ...) -> None: ...
