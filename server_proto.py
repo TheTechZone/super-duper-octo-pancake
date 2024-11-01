@@ -761,9 +761,15 @@ def resp_v1_accounts_attributes(flow: HTTPFlow):
 @api.route("/v1/accounts/name", rtype=RouteType.REQUEST)
 def req_v1_accounts_name(flow: HTTPFlow):
     """
-
+            Set a device's encrypted name
+            Sets the encrypted name for the specified device. Primary devices may change the name of any device associated
+    with their account, but linked devices may only change their own name. If no device ID is specified, then the
+    authenticated device's ID will be used.
 
          Parameters:
+            deviceId
+              location: query
+              None
 
 
          Security:
@@ -780,10 +786,15 @@ def req_v1_accounts_name(flow: HTTPFlow):
 @api.route("/v1/accounts/name", rtype=RouteType.RESPONSE)
 def resp_v1_accounts_name(flow: HTTPFlow):
     """
-
+            Set a device's encrypted name
+            Sets the encrypted name for the specified device. Primary devices may change the name of any device associated
+    with their account, but linked devices may only change their own name. If no device ID is specified, then the
+    authenticated device's ID will be used.
 
          Responses:
-            default - default response
+            204 - Device name changed successfully
+            404 - No device found with the given ID
+            403 - Not authorized to change the name of the device with the given ID
 
          Security:
             authenticatedAccount - basic
@@ -1045,7 +1056,8 @@ def resp_v1_archives_upload_form(flow: HTTPFlow):
             403 - Forbidden. The request had insufficient permissions to perform the requested action
             401 - The provided backup auth credential presentation could not be verified or
     The public key signature was invalid or
-    There is no backup associated with the backup-id in the presentation
+    There is no backup associated with the backup-id in the presentation or
+    The credential was of the wrong type (messages/media)
             400 - Bad arguments. The request may have been made on an authenticated channel
 
          Security:
@@ -1097,7 +1109,8 @@ def resp_v1_archives(flow: HTTPFlow):
             403 - Forbidden. The request had insufficient permissions to perform the requested action
             401 - The provided backup auth credential presentation could not be verified or
     The public key signature was invalid or
-    There is no backup associated with the backup-id in the presentation
+    There is no backup associated with the backup-id in the presentation or
+    The credential was of the wrong type (messages/media)
             400 - Bad arguments. The request may have been made on an authenticated channel
 
          Security:
@@ -1152,7 +1165,8 @@ def resp_v1_archives(flow: HTTPFlow):
             403 - Forbidden. The request had insufficient permissions to perform the requested action
             401 - The provided backup auth credential presentation could not be verified or
     The public key signature was invalid or
-    There is no backup associated with the backup-id in the presentation
+    There is no backup associated with the backup-id in the presentation or
+    The credential was of the wrong type (messages/media)
             400 - Bad arguments. The request may have been made on an authenticated channel
 
          Security:
@@ -1205,7 +1219,8 @@ def resp_v1_archives(flow: HTTPFlow):
             403 - Forbidden. The request had insufficient permissions to perform the requested action
             401 - The provided backup auth credential presentation could not be verified or
     The public key signature was invalid or
-    There is no backup associated with the backup-id in the presentation
+    There is no backup associated with the backup-id in the presentation or
+    The credential was of the wrong type (messages/media)
             400 - Bad arguments. The request may have been made on an authenticated channel
 
          Security:
@@ -1271,7 +1286,8 @@ def resp_v1_archives_media_batch(flow: HTTPFlow):
             403 - Forbidden. The request had insufficient permissions to perform the requested action
             401 - The provided backup auth credential presentation could not be verified or
     The public key signature was invalid or
-    There is no backup associated with the backup-id in the presentation
+    There is no backup associated with the backup-id in the presentation or
+    The credential was of the wrong type (messages/media)
             400 - Bad arguments. The request may have been made on an authenticated channel
 
          Security:
@@ -1337,7 +1353,8 @@ def resp_v1_archives_media(flow: HTTPFlow):
             403 - Forbidden. The request had insufficient permissions to perform the requested action
             401 - The provided backup auth credential presentation could not be verified or
     The public key signature was invalid or
-    There is no backup associated with the backup-id in the presentation
+    There is no backup associated with the backup-id in the presentation or
+    The credential was of the wrong type (messages/media)
 
          Security:
             authenticatedAccount - basic
@@ -1402,7 +1419,8 @@ def resp_v1_archives_media(flow: HTTPFlow):
             403 - Forbidden. The request had insufficient permissions to perform the requested action
             401 - The provided backup auth credential presentation could not be verified or
     The public key signature was invalid or
-    There is no backup associated with the backup-id in the presentation
+    There is no backup associated with the backup-id in the presentation or
+    The credential was of the wrong type (messages/media)
 
          Security:
             authenticatedAccount - basic
@@ -1451,7 +1469,8 @@ def resp_v1_archives_media_delete(flow: HTTPFlow):
             403 - Forbidden. The request had insufficient permissions to perform the requested action
             401 - The provided backup auth credential presentation could not be verified or
     The public key signature was invalid or
-    There is no backup associated with the backup-id in the presentation
+    There is no backup associated with the backup-id in the presentation or
+    The credential was of the wrong type (messages/media)
             400 - Bad arguments. The request may have been made on an authenticated channel
 
          Security:
@@ -1574,7 +1593,8 @@ def resp_v1_archives_auth_read(flow: HTTPFlow):
             403 - Forbidden. The request had insufficient permissions to perform the requested action
             401 - The provided backup auth credential presentation could not be verified or
     The public key signature was invalid or
-    There is no backup associated with the backup-id in the presentation
+    There is no backup associated with the backup-id in the presentation or
+    The credential was of the wrong type (messages/media)
             400 - Bad arguments. The request may have been made on an authenticated channel
 
          Security:
@@ -1731,7 +1751,8 @@ def resp_v1_archives_keys(flow: HTTPFlow):
             403 - Forbidden. The request had insufficient permissions to perform the requested action
             401 - The provided backup auth credential presentation could not be verified or
     The public key signature was invalid or
-    There is no backup associated with the backup-id in the presentation
+    There is no backup associated with the backup-id in the presentation or
+    The credential was of the wrong type (messages/media)
             400 - Bad arguments. The request may have been made on an authenticated channel
 
          Security:
@@ -1790,7 +1811,8 @@ def resp_v1_archives_media_upload_form(flow: HTTPFlow):
             403 - Forbidden. The request had insufficient permissions to perform the requested action
             401 - The provided backup auth credential presentation could not be verified or
     The public key signature was invalid or
-    There is no backup associated with the backup-id in the presentation
+    There is no backup associated with the backup-id in the presentation or
+    The credential was of the wrong type (messages/media)
             400 - Bad arguments. The request may have been made on an authenticated channel
 
          Security:
@@ -2914,8 +2936,9 @@ def resp_v1_keepalive_provisioning(flow: HTTPFlow):
 def req_v1_key_transparency_distinguished(flow: HTTPFlow):
     """
             Get the current value of the distinguished key
-            Enforced unauthenticated endpoint. The response contains the distinguished tree head to prove consistency
-    against for future calls to `/search` and `/distinguished`.
+            The response contains the distinguished tree head to prove consistency
+    against for future calls to `/search`, `/monitor`, and `/distinguished`.
+    Enforced unauthenticated endpoint.
 
          Parameters:
             lastTreeHeadSize
@@ -2938,8 +2961,9 @@ def req_v1_key_transparency_distinguished(flow: HTTPFlow):
 def resp_v1_key_transparency_distinguished(flow: HTTPFlow):
     """
             Get the current value of the distinguished key
-            Enforced unauthenticated endpoint. The response contains the distinguished tree head to prove consistency
-    against for future calls to `/search` and `/distinguished`.
+            The response contains the distinguished tree head to prove consistency
+    against for future calls to `/search`, `/monitor`, and `/distinguished`.
+    Enforced unauthenticated endpoint.
 
          Responses:
             200 - The `distinguished` search key exists in the log
@@ -2961,9 +2985,9 @@ def resp_v1_key_transparency_distinguished(flow: HTTPFlow):
 @api.route("/v1/key-transparency/monitor", rtype=RouteType.REQUEST)
 def req_v1_key_transparency_monitor(flow: HTTPFlow):
     """
-            Monitor the given search keys in the key transparency log
-            Enforced unauthenticated endpoint. Return proofs proving that the log tree
-    has been constructed correctly in later entries for each of the given search keys .
+            Monitor the given identifiers in the key transparency log
+            Return proofs proving that the log tree has been constructed correctly in later entries for each of the given
+    identifiers. Enforced unauthenticated endpoint.
 
          Parameters:
 
@@ -2982,9 +3006,9 @@ def req_v1_key_transparency_monitor(flow: HTTPFlow):
 @api.route("/v1/key-transparency/monitor", rtype=RouteType.RESPONSE)
 def resp_v1_key_transparency_monitor(flow: HTTPFlow):
     """
-            Monitor the given search keys in the key transparency log
-            Enforced unauthenticated endpoint. Return proofs proving that the log tree
-    has been constructed correctly in later entries for each of the given search keys .
+            Monitor the given identifiers in the key transparency log
+            Return proofs proving that the log tree has been constructed correctly in later entries for each of the given
+    identifiers. Enforced unauthenticated endpoint.
 
          Responses:
             200 - All search keys exist in the log
@@ -3007,8 +3031,16 @@ def resp_v1_key_transparency_monitor(flow: HTTPFlow):
 @api.route("/v1/key-transparency/search", rtype=RouteType.REQUEST)
 def req_v1_key_transparency_search(flow: HTTPFlow):
     """
-            Search for the given search keys in the key transparency log
-            Enforced unauthenticated endpoint. Returns a response if all search keys exist in the key transparency log.
+            Search for the given identifiers in the key transparency log
+            Returns a response if the ACI exists in the transparency log and its mapped value matches the provided
+    ACI identity key.
+
+    The username hash search response field is populated if it is found in the log and its mapped value matches
+    the provided ACI. The E164 search response is populated similarly, with some additional requirements:
+    - The account associated with the provided ACI must be discoverable by phone number.
+    - The provided unidentified access key must match the one on the account.
+
+    Enforced unauthenticated endpoint.
 
          Parameters:
 
@@ -3027,16 +3059,24 @@ def req_v1_key_transparency_search(flow: HTTPFlow):
 @api.route("/v1/key-transparency/search", rtype=RouteType.RESPONSE)
 def resp_v1_key_transparency_search(flow: HTTPFlow):
     """
-            Search for the given search keys in the key transparency log
-            Enforced unauthenticated endpoint. Returns a response if all search keys exist in the key transparency log.
+            Search for the given identifiers in the key transparency log
+            Returns a response if the ACI exists in the transparency log and its mapped value matches the provided
+    ACI identity key.
+
+    The username hash search response field is populated if it is found in the log and its mapped value matches
+    the provided ACI. The E164 search response is populated similarly, with some additional requirements:
+    - The account associated with the provided ACI must be discoverable by phone number.
+    - The provided unidentified access key must match the one on the account.
+
+    Enforced unauthenticated endpoint.
 
          Responses:
-            200 - All search key lookups were successful
+            200 - The ACI was found and its mapped value matched the provided ACI identity key
             400 - Invalid request. See response for any available details.
-            403 - At least one search key lookup to value mapping was invalid
-            404 - At least one search key lookup did not find the key
-            429 - Rate-limited
+            403 - The ACI was found but its mapped value did not match the provided ACI identity key
+            404 - The ACI was not found in the log
             422 - Invalid request format
+            429 - Rate-limited
 
          Security:
             authenticatedAccount - basic
@@ -3464,6 +3504,7 @@ def resp_v1_messages_destination(flow: HTTPFlow, destination):
             404 - The message is not a story and some the recipient service ID does not correspond to a registered Signal user
             409 - Incorrect set of devices supplied for recipient
             410 - Mismatched registration ids supplied for some recipient devices
+            428 - The sender should complete a challenge before proceeding
 
          Security:
             authenticatedAccount - basic
