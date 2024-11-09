@@ -3011,9 +3011,10 @@ def resp_v1_key_transparency_monitor(flow: HTTPFlow):
     identifiers. Enforced unauthenticated endpoint.
 
          Responses:
-            200 - All search keys exist in the log
+            200 - All identifiers exist in the log
             400 - Invalid request. See response for any available details.
-            404 - At least one search key lookup did not find the key
+            403 - One or more of the provided commitment indexes did not match
+            404 - At least one identifier was not found
             429 - Rate-limited
             422 - Invalid request format
 
