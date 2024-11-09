@@ -20,12 +20,14 @@ ADMINISTRATOR: GroupV2AccessLevel
 UNSATISFIABLE: GroupV2AccessLevel
 
 class BackupInfo(_message.Message):
-    __slots__ = ("version", "backupTimeMs")
+    __slots__ = ("version", "backupTimeMs", "mediaRootBackupKey")
     VERSION_FIELD_NUMBER: _ClassVar[int]
     BACKUPTIMEMS_FIELD_NUMBER: _ClassVar[int]
+    MEDIAROOTBACKUPKEY_FIELD_NUMBER: _ClassVar[int]
     version: int
     backupTimeMs: int
-    def __init__(self, version: _Optional[int] = ..., backupTimeMs: _Optional[int] = ...) -> None: ...
+    mediaRootBackupKey: bytes
+    def __init__(self, version: _Optional[int] = ..., backupTimeMs: _Optional[int] = ..., mediaRootBackupKey: _Optional[bytes] = ...) -> None: ...
 
 class Frame(_message.Message):
     __slots__ = ("account", "recipient", "chat", "chatItem", "stickerPack", "adHocCall")
