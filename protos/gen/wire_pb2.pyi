@@ -163,6 +163,38 @@ class MonitorResponse(_message.Message):
     inclusion: _containers.RepeatedScalarFieldContainer[bytes]
     def __init__(self, tree_head: _Optional[_Union[FullTreeHead, _Mapping]] = ..., owned_proofs: _Optional[_Iterable[_Union[MonitorProof, _Mapping]]] = ..., contact_proofs: _Optional[_Iterable[_Union[MonitorProof, _Mapping]]] = ..., inclusion: _Optional[_Iterable[bytes]] = ...) -> None: ...
 
+class ChatSearchResponse(_message.Message):
+    __slots__ = ("tree_head", "aci", "e164", "username_hash")
+    TREE_HEAD_FIELD_NUMBER: _ClassVar[int]
+    ACI_FIELD_NUMBER: _ClassVar[int]
+    E164_FIELD_NUMBER: _ClassVar[int]
+    USERNAME_HASH_FIELD_NUMBER: _ClassVar[int]
+    tree_head: FullTreeHead
+    aci: CondensedTreeSearchResponse
+    e164: CondensedTreeSearchResponse
+    username_hash: CondensedTreeSearchResponse
+    def __init__(self, tree_head: _Optional[_Union[FullTreeHead, _Mapping]] = ..., aci: _Optional[_Union[CondensedTreeSearchResponse, _Mapping]] = ..., e164: _Optional[_Union[CondensedTreeSearchResponse, _Mapping]] = ..., username_hash: _Optional[_Union[CondensedTreeSearchResponse, _Mapping]] = ...) -> None: ...
+
+class ChatDistinguishedResponse(_message.Message):
+    __slots__ = ("tree_head", "distinguished")
+    TREE_HEAD_FIELD_NUMBER: _ClassVar[int]
+    DISTINGUISHED_FIELD_NUMBER: _ClassVar[int]
+    tree_head: FullTreeHead
+    distinguished: CondensedTreeSearchResponse
+    def __init__(self, tree_head: _Optional[_Union[FullTreeHead, _Mapping]] = ..., distinguished: _Optional[_Union[CondensedTreeSearchResponse, _Mapping]] = ...) -> None: ...
+
+class CondensedTreeSearchResponse(_message.Message):
+    __slots__ = ("vrf_proof", "search", "opening", "value")
+    VRF_PROOF_FIELD_NUMBER: _ClassVar[int]
+    SEARCH_FIELD_NUMBER: _ClassVar[int]
+    OPENING_FIELD_NUMBER: _ClassVar[int]
+    VALUE_FIELD_NUMBER: _ClassVar[int]
+    vrf_proof: bytes
+    search: SearchProof
+    opening: bytes
+    value: UpdateValue
+    def __init__(self, vrf_proof: _Optional[bytes] = ..., search: _Optional[_Union[SearchProof, _Mapping]] = ..., opening: _Optional[bytes] = ..., value: _Optional[_Union[UpdateValue, _Mapping]] = ...) -> None: ...
+
 class StoredTreeHead(_message.Message):
     __slots__ = ("tree_head", "root")
     TREE_HEAD_FIELD_NUMBER: _ClassVar[int]

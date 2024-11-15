@@ -14,11 +14,11 @@ INITIAL: ProvisioningVersion
 TABLET_SUPPORT: ProvisioningVersion
 CURRENT: ProvisioningVersion
 
-class ProvisioningUuid(_message.Message):
-    __slots__ = ("uuid",)
-    UUID_FIELD_NUMBER: _ClassVar[int]
-    uuid: str
-    def __init__(self, uuid: _Optional[str] = ...) -> None: ...
+class ProvisioningAddress(_message.Message):
+    __slots__ = ("address",)
+    ADDRESS_FIELD_NUMBER: _ClassVar[int]
+    address: str
+    def __init__(self, address: _Optional[str] = ...) -> None: ...
 
 class ProvisionEnvelope(_message.Message):
     __slots__ = ("publicKey", "body")

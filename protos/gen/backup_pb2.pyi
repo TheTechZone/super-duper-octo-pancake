@@ -173,7 +173,15 @@ class Recipient(_message.Message):
     def __init__(self, id: _Optional[int] = ..., contact: _Optional[_Union[Contact, _Mapping]] = ..., group: _Optional[_Union[Group, _Mapping]] = ..., distributionList: _Optional[_Union[DistributionListItem, _Mapping]] = ..., self: _Optional[_Union[Self, _Mapping]] = ..., releaseNotes: _Optional[_Union[ReleaseNotes, _Mapping]] = ..., callLink: _Optional[_Union[CallLink, _Mapping]] = ...) -> None: ...
 
 class Contact(_message.Message):
-    __slots__ = ("aci", "pni", "username", "e164", "blocked", "visibility", "registered", "notRegistered", "profileKey", "profileSharing", "profileGivenName", "profileFamilyName", "hideStory")
+    __slots__ = ("aci", "pni", "username", "e164", "blocked", "visibility", "registered", "notRegistered", "profileKey", "profileSharing", "profileGivenName", "profileFamilyName", "hideStory", "identityKey", "identityState")
+    class IdentityState(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+        __slots__ = ()
+        DEFAULT: _ClassVar[Contact.IdentityState]
+        VERIFIED: _ClassVar[Contact.IdentityState]
+        UNVERIFIED: _ClassVar[Contact.IdentityState]
+    DEFAULT: Contact.IdentityState
+    VERIFIED: Contact.IdentityState
+    UNVERIFIED: Contact.IdentityState
     class Visibility(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = ()
         VISIBLE: _ClassVar[Contact.Visibility]
@@ -203,6 +211,8 @@ class Contact(_message.Message):
     PROFILEGIVENNAME_FIELD_NUMBER: _ClassVar[int]
     PROFILEFAMILYNAME_FIELD_NUMBER: _ClassVar[int]
     HIDESTORY_FIELD_NUMBER: _ClassVar[int]
+    IDENTITYKEY_FIELD_NUMBER: _ClassVar[int]
+    IDENTITYSTATE_FIELD_NUMBER: _ClassVar[int]
     aci: bytes
     pni: bytes
     username: str
@@ -216,7 +226,9 @@ class Contact(_message.Message):
     profileGivenName: str
     profileFamilyName: str
     hideStory: bool
-    def __init__(self, aci: _Optional[bytes] = ..., pni: _Optional[bytes] = ..., username: _Optional[str] = ..., e164: _Optional[int] = ..., blocked: bool = ..., visibility: _Optional[_Union[Contact.Visibility, str]] = ..., registered: _Optional[_Union[Contact.Registered, _Mapping]] = ..., notRegistered: _Optional[_Union[Contact.NotRegistered, _Mapping]] = ..., profileKey: _Optional[bytes] = ..., profileSharing: bool = ..., profileGivenName: _Optional[str] = ..., profileFamilyName: _Optional[str] = ..., hideStory: bool = ...) -> None: ...
+    identityKey: bytes
+    identityState: Contact.IdentityState
+    def __init__(self, aci: _Optional[bytes] = ..., pni: _Optional[bytes] = ..., username: _Optional[str] = ..., e164: _Optional[int] = ..., blocked: bool = ..., visibility: _Optional[_Union[Contact.Visibility, str]] = ..., registered: _Optional[_Union[Contact.Registered, _Mapping]] = ..., notRegistered: _Optional[_Union[Contact.NotRegistered, _Mapping]] = ..., profileKey: _Optional[bytes] = ..., profileSharing: bool = ..., profileGivenName: _Optional[str] = ..., profileFamilyName: _Optional[str] = ..., hideStory: bool = ..., identityKey: _Optional[bytes] = ..., identityState: _Optional[_Union[Contact.IdentityState, str]] = ...) -> None: ...
 
 class Group(_message.Message):
     __slots__ = ("masterKey", "whitelisted", "hideStory", "storySendMode", "snapshot")
@@ -918,10 +930,12 @@ class Quote(_message.Message):
         __slots__ = ()
         UNKNOWN: _ClassVar[Quote.Type]
         NORMAL: _ClassVar[Quote.Type]
-        GIFTBADGE: _ClassVar[Quote.Type]
+        GIFT_BADGE: _ClassVar[Quote.Type]
+        VIEW_ONCE: _ClassVar[Quote.Type]
     UNKNOWN: Quote.Type
     NORMAL: Quote.Type
-    GIFTBADGE: Quote.Type
+    GIFT_BADGE: Quote.Type
+    VIEW_ONCE: Quote.Type
     class QuotedAttachment(_message.Message):
         __slots__ = ("contentType", "fileName", "thumbnail")
         CONTENTTYPE_FIELD_NUMBER: _ClassVar[int]
