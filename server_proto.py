@@ -2101,10 +2101,6 @@ def req_v1_certificate_auth_group(flow: HTTPFlow):
               location: query
               None
 
-            zkcCredential
-              location: query
-              None
-
 
          Security:
             authenticatedAccount - basic
