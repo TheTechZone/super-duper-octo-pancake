@@ -2499,7 +2499,7 @@ def resp_v1_devices_transfer_archive(flow: HTTPFlow):
     archive when available.
 
          Responses:
-            200 - A new transfer archive was uploaded for the authenticated device
+            200 - Either a new transfer archive was uploaded for the authenticated device, or the upload has failed
             204 - No transfer archive was uploaded before the call completed; clients may repeat the call to continue waiting
             400 - The given timeout was invalid
             429 - Rate-limited; try again after the prescribed delay
@@ -2519,8 +2519,10 @@ def resp_v1_devices_transfer_archive(flow: HTTPFlow):
 def req_v1_devices_transfer_archive(flow: HTTPFlow):
     """
             Signals that a transfer archive has been uploaded for a specific linked device
-            Signals that a transfer archive has been uploaded for a specific linked device. Devices waiting via the "wait
-    for transfer archive" endpoint will be notified that the new archive is available.
+            Signals that a transfer archive has been uploaded or failed for a specific linked device. Devices waiting via
+    the "wait for transfer archive" endpoint will be notified that the new archive is available.
+
+    If the uploader cannot upload the transfer archive, they must signal an error.
 
          Parameters:
 
@@ -2540,8 +2542,10 @@ def req_v1_devices_transfer_archive(flow: HTTPFlow):
 def resp_v1_devices_transfer_archive(flow: HTTPFlow):
     """
             Signals that a transfer archive has been uploaded for a specific linked device
-            Signals that a transfer archive has been uploaded for a specific linked device. Devices waiting via the "wait
-    for transfer archive" endpoint will be notified that the new archive is available.
+            Signals that a transfer archive has been uploaded or failed for a specific linked device. Devices waiting via
+    the "wait for transfer archive" endpoint will be notified that the new archive is available.
+
+    If the uploader cannot upload the transfer archive, they must signal an error.
 
          Responses:
             204 - Success
