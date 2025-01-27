@@ -140,44 +140,6 @@ def resp_v1_accounts_me(flow: HTTPFlow):
     pass
 
 
-@api.route("/v1/accounts/me", rtype=RouteType.REQUEST)
-def req_v1_accounts_me(flow: HTTPFlow):
-    """
-
-
-         Parameters:
-
-
-         Security:
-            authenticatedAccount - basic
-            Account authentication is based on Basic authentication schema,
-    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
-    user's `main` device is assumed.
-
-    """
-    # Implement the function body here
-    pass
-
-
-@api.route("/v1/accounts/me", rtype=RouteType.RESPONSE)
-def resp_v1_accounts_me(flow: HTTPFlow):
-    """
-
-
-         Responses:
-            default - default response
-
-         Security:
-            authenticatedAccount - basic
-            Account authentication is based on Basic authentication schema,
-    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
-    user's `main` device is assumed.
-
-    """
-    # Implement the function body here
-    pass
-
-
 @api.route("/v1/accounts/apn", rtype=RouteType.REQUEST)
 def req_v1_accounts_apn(flow: HTTPFlow):
     """
@@ -451,44 +413,6 @@ def resp_v1_accounts_username_link(flow: HTTPFlow):
             204 - Username Link successfully deleted.
             401 - Account authentication check failed.
             429 - Ratelimited.
-
-         Security:
-            authenticatedAccount - basic
-            Account authentication is based on Basic authentication schema,
-    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
-    user's `main` device is assumed.
-
-    """
-    # Implement the function body here
-    pass
-
-
-@api.route("/v1/accounts/turn", rtype=RouteType.REQUEST)
-def req_v1_accounts_turn(flow: HTTPFlow):
-    """
-
-
-         Parameters:
-
-
-         Security:
-            authenticatedAccount - basic
-            Account authentication is based on Basic authentication schema,
-    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
-    user's `main` device is assumed.
-
-    """
-    # Implement the function body here
-    pass
-
-
-@api.route("/v1/accounts/turn", rtype=RouteType.RESPONSE)
-def resp_v1_accounts_turn(flow: HTTPFlow):
-    """
-
-
-         Responses:
-            default - default response
 
          Security:
             authenticatedAccount - basic
@@ -984,7 +908,7 @@ def resp_v2_accounts_data_report(flow: HTTPFlow):
 @api.route("/v2/accounts/phone_number_discoverability", rtype=RouteType.REQUEST)
 def req_v2_accounts_phone_number_discoverability(flow: HTTPFlow):
     """
-
+            Sets whether the account should be discoverable by phone number in the directory.
 
          Parameters:
 
@@ -1003,10 +927,10 @@ def req_v2_accounts_phone_number_discoverability(flow: HTTPFlow):
 @api.route("/v2/accounts/phone_number_discoverability", rtype=RouteType.RESPONSE)
 def resp_v2_accounts_phone_number_discoverability(flow: HTTPFlow):
     """
-
+            Sets whether the account should be discoverable by phone number in the directory.
 
          Responses:
-            default - default response
+            204 - The setting was successfully updated.
 
          Security:
             authenticatedAccount - basic
@@ -1826,44 +1750,6 @@ def resp_v1_archives_media_upload_form(flow: HTTPFlow):
     pass
 
 
-@api.route("/v1/art/auth", rtype=RouteType.REQUEST)
-def req_v1_art_auth(flow: HTTPFlow):
-    """
-
-
-         Parameters:
-
-
-         Security:
-            authenticatedAccount - basic
-            Account authentication is based on Basic authentication schema,
-    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
-    user's `main` device is assumed.
-
-    """
-    # Implement the function body here
-    pass
-
-
-@api.route("/v1/art/auth", rtype=RouteType.RESPONSE)
-def resp_v1_art_auth(flow: HTTPFlow):
-    """
-
-
-         Responses:
-            default - default response
-
-         Security:
-            authenticatedAccount - basic
-            Account authentication is based on Basic authentication schema,
-    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
-    user's `main` device is assumed.
-
-    """
-    # Implement the function body here
-    pass
-
-
 @api.route("/v4/attachments/form/upload", rtype=RouteType.REQUEST)
 def req_v4_attachments_form_upload(flow: HTTPFlow):
     """
@@ -2258,6 +2144,248 @@ def resp_v1_challenge_push(flow: HTTPFlow):
 
             413 - Too many attempts
             429 - Too many attempts
+
+         Security:
+            authenticatedAccount - basic
+            Account authentication is based on Basic authentication schema,
+    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
+    user's `main` device is assumed.
+
+    """
+    # Implement the function body here
+    pass
+
+
+@api.route("/v1/devicecheck/assert", rtype=RouteType.REQUEST)
+def req_v1_devicecheck_assert(flow: HTTPFlow):
+    """
+            Fetch an assert challenge
+            Retrieve a challenge to use in an attestation, which must be provided at `POST /v1/devicecheck/assert`. To produce
+    the `clientDataHash` for [generateAssertion](https://developer.apple.com/documentation/devicecheck/dcappattestservice/generateassertion(_:clientdatahash:completionhandler:)),
+    construct the request you intend to `POST` and include the returned challenge as the "challenge"
+    field. Serialize the request as JSON and take the SHA256 of the request, as described [here](https://developer.apple.com/documentation/devicecheck/establishing-your-app-s-integrity#Assert-your-apps-validity-as-necessary).
+    Note that the JSON body provided to the PUT must exactly match the input to the `clientDataHash` (field order,
+    whitespace, etc matters)
+
+    Repeat calls to retrieve a challenge may return the same challenge until it is used in a `POST`. Callers should
+    attempt to only have a single outstanding challenge at any given time.
+
+         Parameters:
+            action
+              location: query
+              None
+
+
+         Security:
+            authenticatedAccount - basic
+            Account authentication is based on Basic authentication schema,
+    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
+    user's `main` device is assumed.
+
+    """
+    # Implement the function body here
+    pass
+
+
+@api.route("/v1/devicecheck/assert", rtype=RouteType.RESPONSE)
+def resp_v1_devicecheck_assert(flow: HTTPFlow):
+    """
+            Fetch an assert challenge
+            Retrieve a challenge to use in an attestation, which must be provided at `POST /v1/devicecheck/assert`. To produce
+    the `clientDataHash` for [generateAssertion](https://developer.apple.com/documentation/devicecheck/dcappattestservice/generateassertion(_:clientdatahash:completionhandler:)),
+    construct the request you intend to `POST` and include the returned challenge as the "challenge"
+    field. Serialize the request as JSON and take the SHA256 of the request, as described [here](https://developer.apple.com/documentation/devicecheck/establishing-your-app-s-integrity#Assert-your-apps-validity-as-necessary).
+    Note that the JSON body provided to the PUT must exactly match the input to the `clientDataHash` (field order,
+    whitespace, etc matters)
+
+    Repeat calls to retrieve a challenge may return the same challenge until it is used in a `POST`. Callers should
+    attempt to only have a single outstanding challenge at any given time.
+
+         Responses:
+            200 - The response body includes a challenge
+            429 - Ratelimited.
+
+         Security:
+            authenticatedAccount - basic
+            Account authentication is based on Basic authentication schema,
+    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
+    user's `main` device is assumed.
+
+    """
+    # Implement the function body here
+    pass
+
+
+@api.route("/v1/devicecheck/assert", rtype=RouteType.REQUEST)
+def req_v1_devicecheck_assert(flow: HTTPFlow):
+    """
+            Perform an attested action
+            Specify some action to take on the account via the request field. The request must exactly match the request you
+    provide when [generating the assertion](https://developer.apple.com/documentation/devicecheck/dcappattestservice/generateassertion(_:clientdatahash:completionhandler:)).
+    The request must include a challenge previously retrieved from `GET /v1/devicecheck/assert`.
+
+    Each assertion increments the counter associated with the client's device key. This method enforces that no
+    assertion with a counter lower than a counter we've already seen is allowed to execute. If a client issues
+    multiple requests concurrently, or if they retry a request that had an indeterminate outcome, it's possible that
+    the request will not be accepted because the server has already stored the updated counter. In this case the
+    request may return 401, and the client should generate a fresh assert for the request.
+
+         Parameters:
+            keyId  (required)
+              location: query
+              The keyId, encoded with padded url-safe base64
+
+            request  (required)
+              location: query
+              The asserted JSON request data, encoded as a string in padded url-safe base64. This must exactly match the
+    request you use when generating the assertion (including field ordering, whitespace, etc).
+
+
+
+         Security:
+            authenticatedAccount - basic
+            Account authentication is based on Basic authentication schema,
+    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
+    user's `main` device is assumed.
+
+    """
+    # Implement the function body here
+    pass
+
+
+@api.route("/v1/devicecheck/assert", rtype=RouteType.RESPONSE)
+def resp_v1_devicecheck_assert(flow: HTTPFlow):
+    """
+            Perform an attested action
+            Specify some action to take on the account via the request field. The request must exactly match the request you
+    provide when [generating the assertion](https://developer.apple.com/documentation/devicecheck/dcappattestservice/generateassertion(_:clientdatahash:completionhandler:)).
+    The request must include a challenge previously retrieved from `GET /v1/devicecheck/assert`.
+
+    Each assertion increments the counter associated with the client's device key. This method enforces that no
+    assertion with a counter lower than a counter we've already seen is allowed to execute. If a client issues
+    multiple requests concurrently, or if they retry a request that had an indeterminate outcome, it's possible that
+    the request will not be accepted because the server has already stored the updated counter. In this case the
+    request may return 401, and the client should generate a fresh assert for the request.
+
+         Responses:
+            204 - The assertion was valid and the corresponding action was executed
+            404 - The provided keyId was not found
+            410 - There was no challenge associated with the account. It may have expired.
+            401 - The assertion could not be verified
+
+         Security:
+            authenticatedAccount - basic
+            Account authentication is based on Basic authentication schema,
+    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
+    user's `main` device is assumed.
+
+    """
+    # Implement the function body here
+    pass
+
+
+@api.route("/v1/devicecheck/attest", rtype=RouteType.REQUEST)
+def req_v1_devicecheck_attest(flow: HTTPFlow):
+    """
+            Fetch an attest challenge
+            Retrieve a challenge to use in an attestation, which should be provided at `PUT /v1/devicecheck/attest`. To
+    produce the clientDataHash for [attestKey](https://developer.apple.com/documentation/devicecheck/dcappattestservice/attestkey(_:clientdatahash:completionhandler:))
+    take the SHA256 of the UTF-8 bytes of the returned challenge.
+
+    Repeat calls to retrieve a challenge may return the same challenge until it is used in a `PUT`. Callers should
+    have a single outstanding challenge at any given time.
+
+         Parameters:
+
+
+         Security:
+            authenticatedAccount - basic
+            Account authentication is based on Basic authentication schema,
+    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
+    user's `main` device is assumed.
+
+    """
+    # Implement the function body here
+    pass
+
+
+@api.route("/v1/devicecheck/attest", rtype=RouteType.RESPONSE)
+def resp_v1_devicecheck_attest(flow: HTTPFlow):
+    """
+            Fetch an attest challenge
+            Retrieve a challenge to use in an attestation, which should be provided at `PUT /v1/devicecheck/attest`. To
+    produce the clientDataHash for [attestKey](https://developer.apple.com/documentation/devicecheck/dcappattestservice/attestkey(_:clientdatahash:completionhandler:))
+    take the SHA256 of the UTF-8 bytes of the returned challenge.
+
+    Repeat calls to retrieve a challenge may return the same challenge until it is used in a `PUT`. Callers should
+    have a single outstanding challenge at any given time.
+
+         Responses:
+            200 - The response body includes a challenge
+            429 - Ratelimited.
+
+         Security:
+            authenticatedAccount - basic
+            Account authentication is based on Basic authentication schema,
+    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
+    user's `main` device is assumed.
+
+    """
+    # Implement the function body here
+    pass
+
+
+@api.route("/v1/devicecheck/attest", rtype=RouteType.REQUEST)
+def req_v1_devicecheck_attest(flow: HTTPFlow):
+    """
+            Register a keyId
+            Register a keyId with an attestation, which can be used to generate assertions from this account.
+
+    The attestation should use the SHA-256 of a challenge retrieved at `GET /v1/devicecheck/attest` as the
+    `clientDataHash`
+
+    Registration is idempotent, and you should retry network errors with the same challenge as suggested by [device
+    check](https://developer.apple.com/documentation/devicecheck/dcappattestservice/attestkey(_:clientdatahash:completionhandler:)#discussion),
+    as long as your challenge has not expired (410). Even if your challenge is expired, you may continue to retry with
+    your original keyId (and a fresh challenge).
+
+         Parameters:
+            keyId  (required)
+              location: query
+              The keyId, encoded with padded url-safe base64
+
+
+         Security:
+            authenticatedAccount - basic
+            Account authentication is based on Basic authentication schema,
+    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
+    user's `main` device is assumed.
+
+    """
+    # Implement the function body here
+    pass
+
+
+@api.route("/v1/devicecheck/attest", rtype=RouteType.RESPONSE)
+def resp_v1_devicecheck_attest(flow: HTTPFlow):
+    """
+            Register a keyId
+            Register a keyId with an attestation, which can be used to generate assertions from this account.
+
+    The attestation should use the SHA-256 of a challenge retrieved at `GET /v1/devicecheck/attest` as the
+    `clientDataHash`
+
+    Registration is idempotent, and you should retry network errors with the same challenge as suggested by [device
+    check](https://developer.apple.com/documentation/devicecheck/dcappattestservice/attestkey(_:clientdatahash:completionhandler:)#discussion),
+    as long as your challenge has not expired (410). Even if your challenge is expired, you may continue to retry with
+    your original keyId (and a fresh challenge).
+
+         Responses:
+            204 - The keyId was successfully added to the account
+            410 - There was no challenge associated with the account. It may have expired.
+            401 - The attestation could not be verified
+            413 - There are too many unique keyIds associated with this account. This is an unrecoverable error.
+            409 - The provided keyId has already been registered to a different account
 
          Security:
             authenticatedAccount - basic
@@ -2688,44 +2816,6 @@ def resp_v1_devices_public_key(flow: HTTPFlow):
     pass
 
 
-@api.route("/v1/devices/unauthenticated_delivery", rtype=RouteType.REQUEST)
-def req_v1_devices_unauthenticated_delivery(flow: HTTPFlow):
-    """
-
-
-         Parameters:
-
-
-         Security:
-            authenticatedAccount - basic
-            Account authentication is based on Basic authentication schema,
-    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
-    user's `main` device is assumed.
-
-    """
-    # Implement the function body here
-    pass
-
-
-@api.route("/v1/devices/unauthenticated_delivery", rtype=RouteType.RESPONSE)
-def resp_v1_devices_unauthenticated_delivery(flow: HTTPFlow):
-    """
-
-
-         Responses:
-            default - default response
-
-         Security:
-            authenticatedAccount - basic
-            Account authentication is based on Basic authentication schema,
-    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
-    user's `main` device is assumed.
-
-    """
-    # Implement the function body here
-    pass
-
-
 @api.route(
     "/v1/devices/wait_for_linked_device/{tokenIdentifier}", rtype=RouteType.REQUEST
 )
@@ -2793,7 +2883,9 @@ def resp_v1_devices_wait_for_linked_device_tokenIdentifier(
 @api.route("/v2/directory/auth", rtype=RouteType.REQUEST)
 def req_v2_directory_auth(flow: HTTPFlow):
     """
-
+            Generate credentials for Contact Discovery Service
+            Generate Contact Discovery Service credentials. Generated credentials have an expiration time of 24 hours
+    (however, the TTL is fully controlled by the server and may change even for already generated credentials).
 
          Parameters:
 
@@ -2812,10 +2904,12 @@ def req_v2_directory_auth(flow: HTTPFlow):
 @api.route("/v2/directory/auth", rtype=RouteType.RESPONSE)
 def resp_v2_directory_auth(flow: HTTPFlow):
     """
-
+            Generate credentials for Contact Discovery Service
+            Generate Contact Discovery Service credentials. Generated credentials have an expiration time of 24 hours
+    (however, the TTL is fully controlled by the server and may change even for already generated credentials).
 
          Responses:
-            default - default response
+            200 - `JSON` with generated credentials.
 
          Security:
             authenticatedAccount - basic
@@ -3626,7 +3720,10 @@ def resp_v1_subscription_boost_paypal_confirm(flow: HTTPFlow):
 @api.route("/v1/subscription/boost/create", rtype=RouteType.REQUEST)
 def req_v1_subscription_boost_create(flow: HTTPFlow):
     """
+            Create a Stripe payment intent
+            Create a Stripe PaymentIntent and return a client secret that can be used to complete the payment.
 
+    Once the payment is complete, the paymentIntentId can be used at /v1/subscriptions/receipt_credentials
 
          Parameters:
             User-Agent
@@ -3648,10 +3745,20 @@ def req_v1_subscription_boost_create(flow: HTTPFlow):
 @api.route("/v1/subscription/boost/create", rtype=RouteType.RESPONSE)
 def resp_v1_subscription_boost_create(flow: HTTPFlow):
     """
+            Create a Stripe payment intent
+            Create a Stripe PaymentIntent and return a client secret that can be used to complete the payment.
 
+    Once the payment is complete, the paymentIntentId can be used at /v1/subscriptions/receipt_credentials
 
          Responses:
-            default - default response
+            200 - Payment Intent created
+            403 - The request was made on an authenticated channel
+            400 - Invalid argument. The response body may include an error code with more specific information. If the error code
+    is `amount_below_currency_minimum` the body will also include the `minimum` field indicating the minimum amount
+    for the currency. If the error code is `amount_above_sepa_limit` the body will also include the `maximum`
+    field indicating the maximum amount for a SEPA transaction.
+
+            409 - Provided level does not match the currency/amount combination
 
          Security:
             authenticatedAccount - basic
@@ -4173,7 +4280,11 @@ def resp_v1_registration(flow: HTTPFlow):
 @api.route("/v1/config", rtype=RouteType.REQUEST)
 def req_v1_config(flow: HTTPFlow):
     """
+            Fetch remote configuration
+            Remote configuration is a list of namespaced keys that clients may use for consistent configuration or behavior.
 
+    Configuration values change over time, and the list should be refreshed periodically, typically at client
+    launch and every few hours thereafter.
 
          Parameters:
 
@@ -4192,10 +4303,14 @@ def req_v1_config(flow: HTTPFlow):
 @api.route("/v1/config", rtype=RouteType.RESPONSE)
 def resp_v1_config(flow: HTTPFlow):
     """
+            Fetch remote configuration
+            Remote configuration is a list of namespaced keys that clients may use for consistent configuration or behavior.
 
+    Configuration values change over time, and the list should be refreshed periodically, typically at client
+    launch and every few hours thereafter.
 
          Responses:
-            default - default response
+            200 - Remote configuration values for the authenticated user
 
          Security:
             authenticatedAccount - basic
@@ -4211,7 +4326,9 @@ def resp_v1_config(flow: HTTPFlow):
 @api.route("/v1/storage/auth", rtype=RouteType.REQUEST)
 def req_v1_storage_auth(flow: HTTPFlow):
     """
-
+            Generate credentials for Storage Service
+            Generate Storage Service credentials. Generated credentials have an expiration time of 24 hours
+    (however, the TTL is fully controlled by the server and may change even for already generated credentials).
 
          Parameters:
 
@@ -4230,10 +4347,12 @@ def req_v1_storage_auth(flow: HTTPFlow):
 @api.route("/v1/storage/auth", rtype=RouteType.RESPONSE)
 def resp_v1_storage_auth(flow: HTTPFlow):
     """
-
+            Generate credentials for Storage Service
+            Generate Storage Service credentials. Generated credentials have an expiration time of 24 hours
+    (however, the TTL is fully controlled by the server and may change even for already generated credentials).
 
          Responses:
-            default - default response
+            200 - `JSON` with generated credentials.
 
          Security:
             authenticatedAccount - basic
@@ -4314,136 +4433,6 @@ def resp_v2_backup_auth(flow: HTTPFlow):
 
          Responses:
             200 - `JSON` with generated credentials.
-            401 - Account authentication check failed.
-
-         Security:
-            authenticatedAccount - basic
-            Account authentication is based on Basic authentication schema,
-    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
-    user's `main` device is assumed.
-
-    """
-    # Implement the function body here
-    pass
-
-
-@api.route("/v3/backup/auth/check", rtype=RouteType.REQUEST)
-def req_v3_backup_auth_check(flow: HTTPFlow):
-    """
-            Check SVR3 credentials
-            Over time, clients may wind up with multiple sets of SVR3 authentication credentials in cloud storage.
-    To determine which set is most current and should be used to communicate with SVR3 to retrieve a master key
-    (from which a registration recovery password can be derived), clients should call this endpoint
-    with a list of stored credentials. The response will identify which (if any) set of credentials are
-    appropriate for communicating with SVR3.
-
-         Parameters:
-
-
-
-    """
-    # Implement the function body here
-    pass
-
-
-@api.route("/v3/backup/auth/check", rtype=RouteType.RESPONSE)
-def resp_v3_backup_auth_check(flow: HTTPFlow):
-    """
-            Check SVR3 credentials
-            Over time, clients may wind up with multiple sets of SVR3 authentication credentials in cloud storage.
-    To determine which set is most current and should be used to communicate with SVR3 to retrieve a master key
-    (from which a registration recovery password can be derived), clients should call this endpoint
-    with a list of stored credentials. The response will identify which (if any) set of credentials are
-    appropriate for communicating with SVR3.
-
-         Responses:
-            200 - `JSON` with the check results.
-            422 - Provided list of SVR3 credentials could not be parsed
-            400 - `POST` request body is not a valid `JSON`
-
-
-    """
-    # Implement the function body here
-    pass
-
-
-@api.route("/v3/backup/auth", rtype=RouteType.REQUEST)
-def req_v3_backup_auth(flow: HTTPFlow):
-    """
-            Generate credentials for SVR3
-            Generate SVR3 service credentials. Generated credentials have an expiration time of 30 days
-    (however, the TTL is fully controlled by the server side and may change even for already generated credentials).
-
-    If a share-set has been previously set via /v3/backups/share-set, it will be included in the response
-
-         Parameters:
-
-
-         Security:
-            authenticatedAccount - basic
-            Account authentication is based on Basic authentication schema,
-    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
-    user's `main` device is assumed.
-
-    """
-    # Implement the function body here
-    pass
-
-
-@api.route("/v3/backup/auth", rtype=RouteType.RESPONSE)
-def resp_v3_backup_auth(flow: HTTPFlow):
-    """
-            Generate credentials for SVR3
-            Generate SVR3 service credentials. Generated credentials have an expiration time of 30 days
-    (however, the TTL is fully controlled by the server side and may change even for already generated credentials).
-
-    If a share-set has been previously set via /v3/backups/share-set, it will be included in the response
-
-         Responses:
-            200 - `JSON` with generated credentials and share-set
-            401 - Account authentication check failed.
-
-         Security:
-            authenticatedAccount - basic
-            Account authentication is based on Basic authentication schema,
-    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
-    user's `main` device is assumed.
-
-    """
-    # Implement the function body here
-    pass
-
-
-@api.route("/v3/backup/share-set", rtype=RouteType.REQUEST)
-def req_v3_backup_share_set(flow: HTTPFlow):
-    """
-            Set a share-set for the account
-            Add a share-set to the account that can later be retrieved at v3/backups/auth or during registration. After
-    storing a value with SVR3, clients must store the returned share-set so the value can be restored later.
-
-         Parameters:
-
-
-         Security:
-            authenticatedAccount - basic
-            Account authentication is based on Basic authentication schema,
-    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
-    user's `main` device is assumed.
-
-    """
-    # Implement the function body here
-    pass
-
-
-@api.route("/v3/backup/share-set", rtype=RouteType.RESPONSE)
-def resp_v3_backup_share_set(flow: HTTPFlow):
-    """
-            Set a share-set for the account
-            Add a share-set to the account that can later be retrieved at v3/backups/auth or during registration. After
-    storing a value with SVR3, clients must store the returned share-set so the value can be restored later.
-
-         Responses:
-            204 - Successfully set share-set
             401 - Account authentication check failed.
 
          Security:
@@ -5210,9 +5199,11 @@ def resp_v1_subscription_subscriberId_level_level_currency_idempotencyKey(
 @api.route("/v1/verification/session", rtype=RouteType.REQUEST)
 def req_v1_verification_session(flow: HTTPFlow):
     """
+            Creates a new verification session for a specific phone number
+            Initiates a session to be able to verify the phone number for account registration. Check the response and
+    submit requested information at PATCH /session/{sessionId}
 
-
-    Parameters:
+         Parameters:
 
 
 
@@ -5224,10 +5215,14 @@ def req_v1_verification_session(flow: HTTPFlow):
 @api.route("/v1/verification/session", rtype=RouteType.RESPONSE)
 def resp_v1_verification_session(flow: HTTPFlow):
     """
+            Creates a new verification session for a specific phone number
+            Initiates a session to be able to verify the phone number for account registration. Check the response and
+    submit requested information at PATCH /session/{sessionId}
 
-
-    Responses:
-       default - default response
+         Responses:
+            200 - The verification session was created successfully
+            422 - The request did not pass validation
+            429 - Too many attempts
 
 
     """
@@ -5238,7 +5233,8 @@ def resp_v1_verification_session(flow: HTTPFlow):
 @api.route("/v1/verification/session/{sessionId}", rtype=RouteType.REQUEST)
 def req_v1_verification_session_sessionId(flow: HTTPFlow, sessionId):
     """
-
+       Get a registration verification session
+       Retrieve metadata of the registration verification session with the specified ID
 
     Parameters:
        sessionId  (required)
@@ -5255,10 +5251,14 @@ def req_v1_verification_session_sessionId(flow: HTTPFlow, sessionId):
 @api.route("/v1/verification/session/{sessionId}", rtype=RouteType.RESPONSE)
 def resp_v1_verification_session_sessionId(flow: HTTPFlow, sessionId):
     """
-
+       Get a registration verification session
+       Retrieve metadata of the registration verification session with the specified ID
 
     Responses:
-       default - default response
+       200 - Session was retrieved successfully
+       400 - Invalid session ID
+       404 - Session with the specified ID could not be found
+       422 - Malformed session ID encoding
 
 
     """
@@ -5269,16 +5269,20 @@ def resp_v1_verification_session_sessionId(flow: HTTPFlow, sessionId):
 @api.route("/v1/verification/session/{sessionId}", rtype=RouteType.REQUEST)
 def req_v1_verification_session_sessionId(flow: HTTPFlow, sessionId):
     """
+            Update a registration verification session
+            Updates the session with requested information like an answer to a push challenge or captcha.
+    If `requestedInformation` in the response is empty, and `allowedToRequestCode` is `true`, proceed to call
+    `POST /session/{sessionId}/code`. If `requestedInformation` is empty and `allowedToRequestCode` is `false`,
+    then the caller must create a new verification session.
 
+         Parameters:
+            sessionId  (required)
+              location: path
+              None
 
-    Parameters:
-       sessionId  (required)
-         location: path
-         None
-
-       User-Agent
-         location: header
-         None
+            User-Agent
+              location: header
+              None
 
 
 
@@ -5290,10 +5294,17 @@ def req_v1_verification_session_sessionId(flow: HTTPFlow, sessionId):
 @api.route("/v1/verification/session/{sessionId}", rtype=RouteType.RESPONSE)
 def resp_v1_verification_session_sessionId(flow: HTTPFlow, sessionId):
     """
+            Update a registration verification session
+            Updates the session with requested information like an answer to a push challenge or captcha.
+    If `requestedInformation` in the response is empty, and `allowedToRequestCode` is `true`, proceed to call
+    `POST /session/{sessionId}/code`. If `requestedInformation` is empty and `allowedToRequestCode` is `false`,
+    then the caller must create a new verification session.
 
-
-    Responses:
-       default - default response
+         Responses:
+            200 - Session was updated successfully with the information provided
+            403 - The information provided was not accepted (e.g push challenge or captcha verification failed)
+            422 - The request did not pass validation
+            429 - Too many attempts
 
 
     """
@@ -5304,7 +5315,8 @@ def resp_v1_verification_session_sessionId(flow: HTTPFlow, sessionId):
 @api.route("/v1/verification/session/{sessionId}/code", rtype=RouteType.REQUEST)
 def req_v1_verification_session_sessionId_code(flow: HTTPFlow, sessionId):
     """
-
+       Submit a verification code
+       Submits a verification code received via SMS or voice for verification
 
     Parameters:
        sessionId  (required)
@@ -5325,10 +5337,20 @@ def req_v1_verification_session_sessionId_code(flow: HTTPFlow, sessionId):
 @api.route("/v1/verification/session/{sessionId}/code", rtype=RouteType.RESPONSE)
 def resp_v1_verification_session_sessionId_code(flow: HTTPFlow, sessionId):
     """
+            Submit a verification code
+            Submits a verification code received via SMS or voice for verification
 
+         Responses:
+            200 - The request to check a verification code was processed (though the submitted code may not be the correct code);
+    the session metadata will indicate whether the submitted code was correct
 
-    Responses:
-       default - default response
+            400 - Invalid session ID or verification  code
+            404 - Session with the specified ID could not be found
+            409 - The session is already verified or no code has been requested yet for this session
+            429 - Too many attempts; the caller is not permitted to submit a verification code at this time and may need to wait
+    before trying again; if the session metadata does not specify a time at which the caller may try again, then the
+    caller has exhausted their permitted attempts and must create a new verification session.
+
 
 
     """
@@ -5339,20 +5361,22 @@ def resp_v1_verification_session_sessionId_code(flow: HTTPFlow, sessionId):
 @api.route("/v1/verification/session/{sessionId}/code", rtype=RouteType.REQUEST)
 def req_v1_verification_session_sessionId_code(flow: HTTPFlow, sessionId):
     """
+            Request a verification code
+            Sends a verification code to the phone number associated with the specified session via SMS or phone call.
+    This endpoint can only be called when the session metadata includes "allowedToRequestCode = true"
 
+         Parameters:
+            sessionId  (required)
+              location: path
+              None
 
-    Parameters:
-       sessionId  (required)
-         location: path
-         None
+            User-Agent
+              location: header
+              None
 
-       User-Agent
-         location: header
-         None
-
-       Accept-Language
-         location: header
-         None
+            Accept-Language
+              location: header
+              Ordered list of languages in which the client prefers to receive SMS or voice verification messages
 
 
 
@@ -5364,10 +5388,28 @@ def req_v1_verification_session_sessionId_code(flow: HTTPFlow, sessionId):
 @api.route("/v1/verification/session/{sessionId}/code", rtype=RouteType.RESPONSE)
 def resp_v1_verification_session_sessionId_code(flow: HTTPFlow, sessionId):
     """
+            Request a verification code
+            Sends a verification code to the phone number associated with the specified session via SMS or phone call.
+    This endpoint can only be called when the session metadata includes "allowedToRequestCode = true"
 
+         Responses:
+            200 - Verification code was successfully sent
+            400 - Invalid session ID
+            404 - Session with the specified ID could not be found
+            409 - The session is already verified or not in a state to request a code because requested information hasn't been provided yet
+            418 - The request to send a verification code with the given transport could not be fulfilled, but may succeed with a different transport
+            422 - Request did not pass validation
+            429 - Too may attempts; the caller is not permitted to send a verification code via the requested channel at this time
+    and may need to wait before trying again; if the session metadata does not specify a time at which the caller may
+    try again, then the caller has exhausted their permitted attempts and must either try a different transport or
+    create a new verification session.
 
-    Responses:
-       default - default response
+            440 - The attempt to send a verification code failed because an external service (e.g. the SMS provider) refused to
+    deliver the code. This may be a temporary or permanent failure, as indicated in the response body. If temporary,
+    clients may try again after a reasonable delay. If permanent, clients should not retry the request and should
+    communicate the permanent failure to the end user. Permanent failures may result in the server disallowing all
+    future attempts to request or submit verification codes (since those attempts would be all but guaranteed to fail).
+
 
 
     """
