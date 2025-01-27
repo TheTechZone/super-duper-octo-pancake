@@ -199,3 +199,35 @@ class UploadAttachmentToArchiveJobData(_message.Message):
     attachmentId: int
     uploadSpec: _ResumableUploads_pb2.ResumableUpload
     def __init__(self, attachmentId: _Optional[int] = ..., uploadSpec: _Optional[_Union[_ResumableUploads_pb2.ResumableUpload, _Mapping]] = ...) -> None: ...
+
+class BackupMediaSnapshotSyncJobData(_message.Message):
+    __slots__ = ("syncTime",)
+    SYNCTIME_FIELD_NUMBER: _ClassVar[int]
+    syncTime: int
+    def __init__(self, syncTime: _Optional[int] = ...) -> None: ...
+
+class DeviceNameChangeJobData(_message.Message):
+    __slots__ = ("deviceId",)
+    DEVICEID_FIELD_NUMBER: _ClassVar[int]
+    deviceId: int
+    def __init__(self, deviceId: _Optional[int] = ...) -> None: ...
+
+class BackupMessagesJobData(_message.Message):
+    __slots__ = ("syncTime", "dataFile", "uploadSpec", "resumableUri")
+    SYNCTIME_FIELD_NUMBER: _ClassVar[int]
+    DATAFILE_FIELD_NUMBER: _ClassVar[int]
+    UPLOADSPEC_FIELD_NUMBER: _ClassVar[int]
+    RESUMABLEURI_FIELD_NUMBER: _ClassVar[int]
+    syncTime: int
+    dataFile: str
+    uploadSpec: _ResumableUploads_pb2.ResumableUpload
+    resumableUri: str
+    def __init__(self, syncTime: _Optional[int] = ..., dataFile: _Optional[str] = ..., uploadSpec: _Optional[_Union[_ResumableUploads_pb2.ResumableUpload, _Mapping]] = ..., resumableUri: _Optional[str] = ...) -> None: ...
+
+class NewLinkedDeviceNotificationJobData(_message.Message):
+    __slots__ = ("deviceId", "deviceCreatedAt")
+    DEVICEID_FIELD_NUMBER: _ClassVar[int]
+    DEVICECREATEDAT_FIELD_NUMBER: _ClassVar[int]
+    deviceId: int
+    deviceCreatedAt: int
+    def __init__(self, deviceId: _Optional[int] = ..., deviceCreatedAt: _Optional[int] = ...) -> None: ...

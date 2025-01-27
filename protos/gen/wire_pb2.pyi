@@ -77,33 +77,17 @@ class Consistency(_message.Message):
     distinguished: int
     def __init__(self, last: _Optional[int] = ..., distinguished: _Optional[int] = ...) -> None: ...
 
-class SearchRequest(_message.Message):
-    __slots__ = ("search_key", "version", "consistency", "mapped_value", "unidentified_access_key")
-    SEARCH_KEY_FIELD_NUMBER: _ClassVar[int]
-    VERSION_FIELD_NUMBER: _ClassVar[int]
-    CONSISTENCY_FIELD_NUMBER: _ClassVar[int]
-    MAPPED_VALUE_FIELD_NUMBER: _ClassVar[int]
-    UNIDENTIFIED_ACCESS_KEY_FIELD_NUMBER: _ClassVar[int]
-    search_key: bytes
-    version: int
-    consistency: Consistency
-    mapped_value: bytes
-    unidentified_access_key: bytes
-    def __init__(self, search_key: _Optional[bytes] = ..., version: _Optional[int] = ..., consistency: _Optional[_Union[Consistency, _Mapping]] = ..., mapped_value: _Optional[bytes] = ..., unidentified_access_key: _Optional[bytes] = ...) -> None: ...
-
-class SearchResponse(_message.Message):
-    __slots__ = ("tree_head", "vrf_proof", "search", "opening", "value")
-    TREE_HEAD_FIELD_NUMBER: _ClassVar[int]
+class CondensedTreeSearchResponse(_message.Message):
+    __slots__ = ("vrf_proof", "search", "opening", "value")
     VRF_PROOF_FIELD_NUMBER: _ClassVar[int]
     SEARCH_FIELD_NUMBER: _ClassVar[int]
     OPENING_FIELD_NUMBER: _ClassVar[int]
     VALUE_FIELD_NUMBER: _ClassVar[int]
-    tree_head: FullTreeHead
     vrf_proof: bytes
     search: SearchProof
     opening: bytes
     value: UpdateValue
-    def __init__(self, tree_head: _Optional[_Union[FullTreeHead, _Mapping]] = ..., vrf_proof: _Optional[bytes] = ..., search: _Optional[_Union[SearchProof, _Mapping]] = ..., opening: _Optional[bytes] = ..., value: _Optional[_Union[UpdateValue, _Mapping]] = ...) -> None: ...
+    def __init__(self, vrf_proof: _Optional[bytes] = ..., search: _Optional[_Union[SearchProof, _Mapping]] = ..., opening: _Optional[bytes] = ..., value: _Optional[_Union[UpdateValue, _Mapping]] = ...) -> None: ...
 
 class UpdateRequest(_message.Message):
     __slots__ = ("search_key", "value", "consistency")
@@ -128,22 +112,22 @@ class UpdateResponse(_message.Message):
     def __init__(self, tree_head: _Optional[_Union[FullTreeHead, _Mapping]] = ..., vrf_proof: _Optional[bytes] = ..., search: _Optional[_Union[SearchProof, _Mapping]] = ..., opening: _Optional[bytes] = ...) -> None: ...
 
 class MonitorKey(_message.Message):
-    __slots__ = ("search_key", "entries")
+    __slots__ = ("search_key", "entry_position", "commitment_index")
     SEARCH_KEY_FIELD_NUMBER: _ClassVar[int]
-    ENTRIES_FIELD_NUMBER: _ClassVar[int]
+    ENTRY_POSITION_FIELD_NUMBER: _ClassVar[int]
+    COMMITMENT_INDEX_FIELD_NUMBER: _ClassVar[int]
     search_key: bytes
-    entries: _containers.RepeatedScalarFieldContainer[int]
-    def __init__(self, search_key: _Optional[bytes] = ..., entries: _Optional[_Iterable[int]] = ...) -> None: ...
+    entry_position: int
+    commitment_index: bytes
+    def __init__(self, search_key: _Optional[bytes] = ..., entry_position: _Optional[int] = ..., commitment_index: _Optional[bytes] = ...) -> None: ...
 
 class MonitorRequest(_message.Message):
-    __slots__ = ("owned_keys", "contact_keys", "consistency")
-    OWNED_KEYS_FIELD_NUMBER: _ClassVar[int]
-    CONTACT_KEYS_FIELD_NUMBER: _ClassVar[int]
+    __slots__ = ("keys", "consistency")
+    KEYS_FIELD_NUMBER: _ClassVar[int]
     CONSISTENCY_FIELD_NUMBER: _ClassVar[int]
-    owned_keys: _containers.RepeatedCompositeFieldContainer[MonitorKey]
-    contact_keys: _containers.RepeatedCompositeFieldContainer[MonitorKey]
+    keys: _containers.RepeatedCompositeFieldContainer[MonitorKey]
     consistency: Consistency
-    def __init__(self, owned_keys: _Optional[_Iterable[_Union[MonitorKey, _Mapping]]] = ..., contact_keys: _Optional[_Iterable[_Union[MonitorKey, _Mapping]]] = ..., consistency: _Optional[_Union[Consistency, _Mapping]] = ...) -> None: ...
+    def __init__(self, keys: _Optional[_Iterable[_Union[MonitorKey, _Mapping]]] = ..., consistency: _Optional[_Union[Consistency, _Mapping]] = ...) -> None: ...
 
 class MonitorProof(_message.Message):
     __slots__ = ("steps",)
@@ -152,72 +136,11 @@ class MonitorProof(_message.Message):
     def __init__(self, steps: _Optional[_Iterable[_Union[ProofStep, _Mapping]]] = ...) -> None: ...
 
 class MonitorResponse(_message.Message):
-    __slots__ = ("tree_head", "owned_proofs", "contact_proofs", "inclusion")
+    __slots__ = ("tree_head", "proofs", "inclusion")
     TREE_HEAD_FIELD_NUMBER: _ClassVar[int]
-    OWNED_PROOFS_FIELD_NUMBER: _ClassVar[int]
-    CONTACT_PROOFS_FIELD_NUMBER: _ClassVar[int]
+    PROOFS_FIELD_NUMBER: _ClassVar[int]
     INCLUSION_FIELD_NUMBER: _ClassVar[int]
     tree_head: FullTreeHead
-    owned_proofs: _containers.RepeatedCompositeFieldContainer[MonitorProof]
-    contact_proofs: _containers.RepeatedCompositeFieldContainer[MonitorProof]
+    proofs: _containers.RepeatedCompositeFieldContainer[MonitorProof]
     inclusion: _containers.RepeatedScalarFieldContainer[bytes]
-    def __init__(self, tree_head: _Optional[_Union[FullTreeHead, _Mapping]] = ..., owned_proofs: _Optional[_Iterable[_Union[MonitorProof, _Mapping]]] = ..., contact_proofs: _Optional[_Iterable[_Union[MonitorProof, _Mapping]]] = ..., inclusion: _Optional[_Iterable[bytes]] = ...) -> None: ...
-
-class ChatSearchResponse(_message.Message):
-    __slots__ = ("tree_head", "aci", "e164", "username_hash")
-    TREE_HEAD_FIELD_NUMBER: _ClassVar[int]
-    ACI_FIELD_NUMBER: _ClassVar[int]
-    E164_FIELD_NUMBER: _ClassVar[int]
-    USERNAME_HASH_FIELD_NUMBER: _ClassVar[int]
-    tree_head: FullTreeHead
-    aci: CondensedTreeSearchResponse
-    e164: CondensedTreeSearchResponse
-    username_hash: CondensedTreeSearchResponse
-    def __init__(self, tree_head: _Optional[_Union[FullTreeHead, _Mapping]] = ..., aci: _Optional[_Union[CondensedTreeSearchResponse, _Mapping]] = ..., e164: _Optional[_Union[CondensedTreeSearchResponse, _Mapping]] = ..., username_hash: _Optional[_Union[CondensedTreeSearchResponse, _Mapping]] = ...) -> None: ...
-
-class ChatDistinguishedResponse(_message.Message):
-    __slots__ = ("tree_head", "distinguished")
-    TREE_HEAD_FIELD_NUMBER: _ClassVar[int]
-    DISTINGUISHED_FIELD_NUMBER: _ClassVar[int]
-    tree_head: FullTreeHead
-    distinguished: CondensedTreeSearchResponse
-    def __init__(self, tree_head: _Optional[_Union[FullTreeHead, _Mapping]] = ..., distinguished: _Optional[_Union[CondensedTreeSearchResponse, _Mapping]] = ...) -> None: ...
-
-class CondensedTreeSearchResponse(_message.Message):
-    __slots__ = ("vrf_proof", "search", "opening", "value")
-    VRF_PROOF_FIELD_NUMBER: _ClassVar[int]
-    SEARCH_FIELD_NUMBER: _ClassVar[int]
-    OPENING_FIELD_NUMBER: _ClassVar[int]
-    VALUE_FIELD_NUMBER: _ClassVar[int]
-    vrf_proof: bytes
-    search: SearchProof
-    opening: bytes
-    value: UpdateValue
-    def __init__(self, vrf_proof: _Optional[bytes] = ..., search: _Optional[_Union[SearchProof, _Mapping]] = ..., opening: _Optional[bytes] = ..., value: _Optional[_Union[UpdateValue, _Mapping]] = ...) -> None: ...
-
-class StoredTreeHead(_message.Message):
-    __slots__ = ("tree_head", "root")
-    TREE_HEAD_FIELD_NUMBER: _ClassVar[int]
-    ROOT_FIELD_NUMBER: _ClassVar[int]
-    tree_head: TreeHead
-    root: bytes
-    def __init__(self, tree_head: _Optional[_Union[TreeHead, _Mapping]] = ..., root: _Optional[bytes] = ...) -> None: ...
-
-class StoredMonitoringData(_message.Message):
-    __slots__ = ("index", "pos", "ptrs", "owned")
-    class PtrsEntry(_message.Message):
-        __slots__ = ("key", "value")
-        KEY_FIELD_NUMBER: _ClassVar[int]
-        VALUE_FIELD_NUMBER: _ClassVar[int]
-        key: int
-        value: int
-        def __init__(self, key: _Optional[int] = ..., value: _Optional[int] = ...) -> None: ...
-    INDEX_FIELD_NUMBER: _ClassVar[int]
-    POS_FIELD_NUMBER: _ClassVar[int]
-    PTRS_FIELD_NUMBER: _ClassVar[int]
-    OWNED_FIELD_NUMBER: _ClassVar[int]
-    index: bytes
-    pos: int
-    ptrs: _containers.ScalarMap[int, int]
-    owned: bool
-    def __init__(self, index: _Optional[bytes] = ..., pos: _Optional[int] = ..., ptrs: _Optional[_Mapping[int, int]] = ..., owned: bool = ...) -> None: ...
+    def __init__(self, tree_head: _Optional[_Union[FullTreeHead, _Mapping]] = ..., proofs: _Optional[_Iterable[_Union[MonitorProof, _Mapping]]] = ..., inclusion: _Optional[_Iterable[bytes]] = ...) -> None: ...

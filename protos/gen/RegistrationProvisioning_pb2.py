@@ -24,7 +24,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1eRegistrationProvisioning.proto\"@\n\x1dRegistrationProvisionEnvelope\x12\x11\n\tpublicKey\x18\x01 \x01(\x0c\x12\x0c\n\x04\x62ody\x18\x02 \x01(\x0c\"\xc9\x02\n\x1cRegistrationProvisionMessage\x12\x0c\n\x04\x65\x31\x36\x34\x18\x01 \x01(\t\x12\x0b\n\x03\x61\x63i\x18\x02 \x01(\x0c\x12\x1a\n\x12\x61\x63\x63ountEntropyPool\x18\x03 \x01(\t\x12\x0b\n\x03pin\x18\x04 \x01(\t\x12\x38\n\x08platform\x18\x05 \x01(\x0e\x32&.RegistrationProvisionMessage.Platform\x12\x19\n\x11\x62\x61\x63kupTimestampMs\x18\x06 \x01(\x04\x12\x30\n\x04tier\x18\x07 \x01(\x0e\x32\".RegistrationProvisionMessage.Tier\x12\x1a\n\x12restoreMethodToken\x18\x08 \x01(\t\" \n\x08Platform\x12\x0b\n\x07\x41NDROID\x10\x00\x12\x07\n\x03IOS\x10\x01\"\x1a\n\x04Tier\x12\x08\n\x04\x46REE\x10\x00\x12\x08\n\x04PAID\x10\x01J\x04\x08\t\x10\nB!\n\x1dorg.signal.registration.protoP\x01\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1eRegistrationProvisioning.proto\"@\n\x1dRegistrationProvisionEnvelope\x12\x11\n\tpublicKey\x18\x01 \x01(\x0c\x12\x0c\n\x04\x62ody\x18\x02 \x01(\x0c\"\xf0\x02\n\x1cRegistrationProvisionMessage\x12\x0c\n\x04\x65\x31\x36\x34\x18\x01 \x01(\t\x12\x0b\n\x03\x61\x63i\x18\x02 \x01(\x0c\x12\x1a\n\x12\x61\x63\x63ountEntropyPool\x18\x03 \x01(\t\x12\x0b\n\x03pin\x18\x04 \x01(\t\x12\x38\n\x08platform\x18\x05 \x01(\x0e\x32&.RegistrationProvisionMessage.Platform\x12\x19\n\x11\x62\x61\x63kupTimestampMs\x18\x06 \x01(\x04\x12\x35\n\x04tier\x18\x07 \x01(\x0e\x32\".RegistrationProvisionMessage.TierH\x00\x88\x01\x01\x12\x17\n\x0f\x62\x61\x63kupSizeBytes\x18\x08 \x01(\x04\x12\x1a\n\x12restoreMethodToken\x18\t \x01(\t\" \n\x08Platform\x12\x0b\n\x07\x41NDROID\x10\x00\x12\x07\n\x03IOS\x10\x01\"\x1a\n\x04Tier\x12\x08\n\x04\x46REE\x10\x00\x12\x08\n\x04PAID\x10\x01\x42\x07\n\x05_tierJ\x04\x08\n\x10\x0b\x42!\n\x1dorg.signal.registration.protoP\x01\x62\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -35,9 +35,9 @@ if not _descriptor._USE_C_DESCRIPTORS:
   _globals['_REGISTRATIONPROVISIONENVELOPE']._serialized_start=34
   _globals['_REGISTRATIONPROVISIONENVELOPE']._serialized_end=98
   _globals['_REGISTRATIONPROVISIONMESSAGE']._serialized_start=101
-  _globals['_REGISTRATIONPROVISIONMESSAGE']._serialized_end=430
-  _globals['_REGISTRATIONPROVISIONMESSAGE_PLATFORM']._serialized_start=364
-  _globals['_REGISTRATIONPROVISIONMESSAGE_PLATFORM']._serialized_end=396
-  _globals['_REGISTRATIONPROVISIONMESSAGE_TIER']._serialized_start=398
-  _globals['_REGISTRATIONPROVISIONMESSAGE_TIER']._serialized_end=424
+  _globals['_REGISTRATIONPROVISIONMESSAGE']._serialized_end=469
+  _globals['_REGISTRATIONPROVISIONMESSAGE_PLATFORM']._serialized_start=394
+  _globals['_REGISTRATIONPROVISIONMESSAGE_PLATFORM']._serialized_end=426
+  _globals['_REGISTRATIONPROVISIONMESSAGE_TIER']._serialized_start=428
+  _globals['_REGISTRATIONPROVISIONMESSAGE_TIER']._serialized_end=454
 # @@protoc_insertion_point(module_scope)

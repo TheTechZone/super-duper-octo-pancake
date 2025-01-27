@@ -614,7 +614,7 @@ class Verified(_message.Message):
     def __init__(self, destinationAci: _Optional[str] = ..., identityKey: _Optional[bytes] = ..., state: _Optional[_Union[Verified.State, str]] = ..., nullMessage: _Optional[bytes] = ...) -> None: ...
 
 class SyncMessage(_message.Message):
-    __slots__ = ("sent", "contacts", "request", "read", "blocked", "verified", "configuration", "padding", "stickerPackOperation", "viewOnceOpen", "fetchLatest", "keys", "messageRequestResponse", "outgoingPayment", "viewed", "pniChangeNumber", "callEvent", "callLinkUpdate", "callLogEvent", "deleteForMe")
+    __slots__ = ("sent", "contacts", "request", "read", "blocked", "verified", "configuration", "padding", "stickerPackOperation", "viewOnceOpen", "fetchLatest", "keys", "messageRequestResponse", "outgoingPayment", "viewed", "pniChangeNumber", "callEvent", "callLinkUpdate", "callLogEvent", "deleteForMe", "deviceNameChange")
     class Sent(_message.Message):
         __slots__ = ("destinationE164", "destinationServiceId", "timestamp", "message", "expirationStartTimestamp", "unidentifiedStatus", "isRecipientUpdate", "storyMessage", "storyMessageRecipients", "editMessage")
         class UnidentifiedDeliveryStatus(_message.Message):
@@ -756,12 +756,16 @@ class SyncMessage(_message.Message):
         type: SyncMessage.FetchLatest.Type
         def __init__(self, type: _Optional[_Union[SyncMessage.FetchLatest.Type, str]] = ...) -> None: ...
     class Keys(_message.Message):
-        __slots__ = ("storageService", "master")
+        __slots__ = ("storageService", "master", "accountEntropyPool", "mediaRootBackupKey")
         STORAGESERVICE_FIELD_NUMBER: _ClassVar[int]
         MASTER_FIELD_NUMBER: _ClassVar[int]
+        ACCOUNTENTROPYPOOL_FIELD_NUMBER: _ClassVar[int]
+        MEDIAROOTBACKUPKEY_FIELD_NUMBER: _ClassVar[int]
         storageService: bytes
         master: bytes
-        def __init__(self, storageService: _Optional[bytes] = ..., master: _Optional[bytes] = ...) -> None: ...
+        accountEntropyPool: str
+        mediaRootBackupKey: bytes
+        def __init__(self, storageService: _Optional[bytes] = ..., master: _Optional[bytes] = ..., accountEntropyPool: _Optional[str] = ..., mediaRootBackupKey: _Optional[bytes] = ...) -> None: ...
     class MessageRequestResponse(_message.Message):
         __slots__ = ("threadAci", "groupId", "type")
         class Type(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
@@ -972,6 +976,11 @@ class SyncMessage(_message.Message):
         localOnlyConversationDeletes: _containers.RepeatedCompositeFieldContainer[SyncMessage.DeleteForMe.LocalOnlyConversationDelete]
         attachmentDeletes: _containers.RepeatedCompositeFieldContainer[SyncMessage.DeleteForMe.AttachmentDelete]
         def __init__(self, messageDeletes: _Optional[_Iterable[_Union[SyncMessage.DeleteForMe.MessageDeletes, _Mapping]]] = ..., conversationDeletes: _Optional[_Iterable[_Union[SyncMessage.DeleteForMe.ConversationDelete, _Mapping]]] = ..., localOnlyConversationDeletes: _Optional[_Iterable[_Union[SyncMessage.DeleteForMe.LocalOnlyConversationDelete, _Mapping]]] = ..., attachmentDeletes: _Optional[_Iterable[_Union[SyncMessage.DeleteForMe.AttachmentDelete, _Mapping]]] = ...) -> None: ...
+    class DeviceNameChange(_message.Message):
+        __slots__ = ("deviceId",)
+        DEVICEID_FIELD_NUMBER: _ClassVar[int]
+        deviceId: int
+        def __init__(self, deviceId: _Optional[int] = ...) -> None: ...
     SENT_FIELD_NUMBER: _ClassVar[int]
     CONTACTS_FIELD_NUMBER: _ClassVar[int]
     REQUEST_FIELD_NUMBER: _ClassVar[int]
@@ -992,6 +1001,7 @@ class SyncMessage(_message.Message):
     CALLLINKUPDATE_FIELD_NUMBER: _ClassVar[int]
     CALLLOGEVENT_FIELD_NUMBER: _ClassVar[int]
     DELETEFORME_FIELD_NUMBER: _ClassVar[int]
+    DEVICENAMECHANGE_FIELD_NUMBER: _ClassVar[int]
     sent: SyncMessage.Sent
     contacts: SyncMessage.Contacts
     request: SyncMessage.Request
@@ -1012,7 +1022,8 @@ class SyncMessage(_message.Message):
     callLinkUpdate: SyncMessage.CallLinkUpdate
     callLogEvent: SyncMessage.CallLogEvent
     deleteForMe: SyncMessage.DeleteForMe
-    def __init__(self, sent: _Optional[_Union[SyncMessage.Sent, _Mapping]] = ..., contacts: _Optional[_Union[SyncMessage.Contacts, _Mapping]] = ..., request: _Optional[_Union[SyncMessage.Request, _Mapping]] = ..., read: _Optional[_Iterable[_Union[SyncMessage.Read, _Mapping]]] = ..., blocked: _Optional[_Union[SyncMessage.Blocked, _Mapping]] = ..., verified: _Optional[_Union[Verified, _Mapping]] = ..., configuration: _Optional[_Union[SyncMessage.Configuration, _Mapping]] = ..., padding: _Optional[bytes] = ..., stickerPackOperation: _Optional[_Iterable[_Union[SyncMessage.StickerPackOperation, _Mapping]]] = ..., viewOnceOpen: _Optional[_Union[SyncMessage.ViewOnceOpen, _Mapping]] = ..., fetchLatest: _Optional[_Union[SyncMessage.FetchLatest, _Mapping]] = ..., keys: _Optional[_Union[SyncMessage.Keys, _Mapping]] = ..., messageRequestResponse: _Optional[_Union[SyncMessage.MessageRequestResponse, _Mapping]] = ..., outgoingPayment: _Optional[_Union[SyncMessage.OutgoingPayment, _Mapping]] = ..., viewed: _Optional[_Iterable[_Union[SyncMessage.Viewed, _Mapping]]] = ..., pniChangeNumber: _Optional[_Union[SyncMessage.PniChangeNumber, _Mapping]] = ..., callEvent: _Optional[_Union[SyncMessage.CallEvent, _Mapping]] = ..., callLinkUpdate: _Optional[_Union[SyncMessage.CallLinkUpdate, _Mapping]] = ..., callLogEvent: _Optional[_Union[SyncMessage.CallLogEvent, _Mapping]] = ..., deleteForMe: _Optional[_Union[SyncMessage.DeleteForMe, _Mapping]] = ...) -> None: ...
+    deviceNameChange: SyncMessage.DeviceNameChange
+    def __init__(self, sent: _Optional[_Union[SyncMessage.Sent, _Mapping]] = ..., contacts: _Optional[_Union[SyncMessage.Contacts, _Mapping]] = ..., request: _Optional[_Union[SyncMessage.Request, _Mapping]] = ..., read: _Optional[_Iterable[_Union[SyncMessage.Read, _Mapping]]] = ..., blocked: _Optional[_Union[SyncMessage.Blocked, _Mapping]] = ..., verified: _Optional[_Union[Verified, _Mapping]] = ..., configuration: _Optional[_Union[SyncMessage.Configuration, _Mapping]] = ..., padding: _Optional[bytes] = ..., stickerPackOperation: _Optional[_Iterable[_Union[SyncMessage.StickerPackOperation, _Mapping]]] = ..., viewOnceOpen: _Optional[_Union[SyncMessage.ViewOnceOpen, _Mapping]] = ..., fetchLatest: _Optional[_Union[SyncMessage.FetchLatest, _Mapping]] = ..., keys: _Optional[_Union[SyncMessage.Keys, _Mapping]] = ..., messageRequestResponse: _Optional[_Union[SyncMessage.MessageRequestResponse, _Mapping]] = ..., outgoingPayment: _Optional[_Union[SyncMessage.OutgoingPayment, _Mapping]] = ..., viewed: _Optional[_Iterable[_Union[SyncMessage.Viewed, _Mapping]]] = ..., pniChangeNumber: _Optional[_Union[SyncMessage.PniChangeNumber, _Mapping]] = ..., callEvent: _Optional[_Union[SyncMessage.CallEvent, _Mapping]] = ..., callLinkUpdate: _Optional[_Union[SyncMessage.CallLinkUpdate, _Mapping]] = ..., callLogEvent: _Optional[_Union[SyncMessage.CallLogEvent, _Mapping]] = ..., deleteForMe: _Optional[_Union[SyncMessage.DeleteForMe, _Mapping]] = ..., deviceNameChange: _Optional[_Union[SyncMessage.DeviceNameChange, _Mapping]] = ...) -> None: ...
 
 class AttachmentPointer(_message.Message):
     __slots__ = ("cdnId", "cdnKey", "contentType", "key", "size", "thumbnail", "digest", "incrementalMac", "incrementalMacChunkSize", "fileName", "flags", "width", "height", "caption", "blurHash", "uploadTimestamp", "cdnNumber", "uuid")

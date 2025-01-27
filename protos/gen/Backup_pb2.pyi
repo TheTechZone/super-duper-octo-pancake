@@ -20,33 +20,41 @@ ADMINISTRATOR: GroupV2AccessLevel
 UNSATISFIABLE: GroupV2AccessLevel
 
 class BackupInfo(_message.Message):
-    __slots__ = ("version", "backupTimeMs", "mediaRootBackupKey")
+    __slots__ = ("version", "backupTimeMs", "mediaRootBackupKey", "currentAppVersion", "firstAppVersion")
     VERSION_FIELD_NUMBER: _ClassVar[int]
     BACKUPTIMEMS_FIELD_NUMBER: _ClassVar[int]
     MEDIAROOTBACKUPKEY_FIELD_NUMBER: _ClassVar[int]
+    CURRENTAPPVERSION_FIELD_NUMBER: _ClassVar[int]
+    FIRSTAPPVERSION_FIELD_NUMBER: _ClassVar[int]
     version: int
     backupTimeMs: int
     mediaRootBackupKey: bytes
-    def __init__(self, version: _Optional[int] = ..., backupTimeMs: _Optional[int] = ..., mediaRootBackupKey: _Optional[bytes] = ...) -> None: ...
+    currentAppVersion: str
+    firstAppVersion: str
+    def __init__(self, version: _Optional[int] = ..., backupTimeMs: _Optional[int] = ..., mediaRootBackupKey: _Optional[bytes] = ..., currentAppVersion: _Optional[str] = ..., firstAppVersion: _Optional[str] = ...) -> None: ...
 
 class Frame(_message.Message):
-    __slots__ = ("account", "recipient", "chat", "chatItem", "stickerPack", "adHocCall")
+    __slots__ = ("account", "recipient", "chat", "chatItem", "stickerPack", "adHocCall", "notificationProfile", "chatFolder")
     ACCOUNT_FIELD_NUMBER: _ClassVar[int]
     RECIPIENT_FIELD_NUMBER: _ClassVar[int]
     CHAT_FIELD_NUMBER: _ClassVar[int]
     CHATITEM_FIELD_NUMBER: _ClassVar[int]
     STICKERPACK_FIELD_NUMBER: _ClassVar[int]
     ADHOCCALL_FIELD_NUMBER: _ClassVar[int]
+    NOTIFICATIONPROFILE_FIELD_NUMBER: _ClassVar[int]
+    CHATFOLDER_FIELD_NUMBER: _ClassVar[int]
     account: AccountData
     recipient: Recipient
     chat: Chat
     chatItem: ChatItem
     stickerPack: StickerPack
     adHocCall: AdHocCall
-    def __init__(self, account: _Optional[_Union[AccountData, _Mapping]] = ..., recipient: _Optional[_Union[Recipient, _Mapping]] = ..., chat: _Optional[_Union[Chat, _Mapping]] = ..., chatItem: _Optional[_Union[ChatItem, _Mapping]] = ..., stickerPack: _Optional[_Union[StickerPack, _Mapping]] = ..., adHocCall: _Optional[_Union[AdHocCall, _Mapping]] = ...) -> None: ...
+    notificationProfile: NotificationProfile
+    chatFolder: ChatFolder
+    def __init__(self, account: _Optional[_Union[AccountData, _Mapping]] = ..., recipient: _Optional[_Union[Recipient, _Mapping]] = ..., chat: _Optional[_Union[Chat, _Mapping]] = ..., chatItem: _Optional[_Union[ChatItem, _Mapping]] = ..., stickerPack: _Optional[_Union[StickerPack, _Mapping]] = ..., adHocCall: _Optional[_Union[AdHocCall, _Mapping]] = ..., notificationProfile: _Optional[_Union[NotificationProfile, _Mapping]] = ..., chatFolder: _Optional[_Union[ChatFolder, _Mapping]] = ...) -> None: ...
 
 class AccountData(_message.Message):
-    __slots__ = ("profileKey", "username", "usernameLink", "givenName", "familyName", "avatarUrlPath", "donationSubscriberData", "backupsSubscriberData", "accountSettings")
+    __slots__ = ("profileKey", "username", "usernameLink", "givenName", "familyName", "avatarUrlPath", "donationSubscriberData", "accountSettings", "backupsSubscriberData")
     class PhoneNumberSharingMode(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = ()
         UNKNOWN: _ClassVar[AccountData.PhoneNumberSharingMode]
@@ -134,6 +142,15 @@ class AccountData(_message.Message):
         currencyCode: str
         manuallyCancelled: bool
         def __init__(self, subscriberId: _Optional[bytes] = ..., currencyCode: _Optional[str] = ..., manuallyCancelled: bool = ...) -> None: ...
+    class IAPSubscriberData(_message.Message):
+        __slots__ = ("subscriberId", "purchaseToken", "originalTransactionId")
+        SUBSCRIBERID_FIELD_NUMBER: _ClassVar[int]
+        PURCHASETOKEN_FIELD_NUMBER: _ClassVar[int]
+        ORIGINALTRANSACTIONID_FIELD_NUMBER: _ClassVar[int]
+        subscriberId: bytes
+        purchaseToken: str
+        originalTransactionId: int
+        def __init__(self, subscriberId: _Optional[bytes] = ..., purchaseToken: _Optional[str] = ..., originalTransactionId: _Optional[int] = ...) -> None: ...
     PROFILEKEY_FIELD_NUMBER: _ClassVar[int]
     USERNAME_FIELD_NUMBER: _ClassVar[int]
     USERNAMELINK_FIELD_NUMBER: _ClassVar[int]
@@ -141,8 +158,8 @@ class AccountData(_message.Message):
     FAMILYNAME_FIELD_NUMBER: _ClassVar[int]
     AVATARURLPATH_FIELD_NUMBER: _ClassVar[int]
     DONATIONSUBSCRIBERDATA_FIELD_NUMBER: _ClassVar[int]
-    BACKUPSSUBSCRIBERDATA_FIELD_NUMBER: _ClassVar[int]
     ACCOUNTSETTINGS_FIELD_NUMBER: _ClassVar[int]
+    BACKUPSSUBSCRIBERDATA_FIELD_NUMBER: _ClassVar[int]
     profileKey: bytes
     username: str
     usernameLink: AccountData.UsernameLink
@@ -150,9 +167,9 @@ class AccountData(_message.Message):
     familyName: str
     avatarUrlPath: str
     donationSubscriberData: AccountData.SubscriberData
-    backupsSubscriberData: AccountData.SubscriberData
     accountSettings: AccountData.AccountSettings
-    def __init__(self, profileKey: _Optional[bytes] = ..., username: _Optional[str] = ..., usernameLink: _Optional[_Union[AccountData.UsernameLink, _Mapping]] = ..., givenName: _Optional[str] = ..., familyName: _Optional[str] = ..., avatarUrlPath: _Optional[str] = ..., donationSubscriberData: _Optional[_Union[AccountData.SubscriberData, _Mapping]] = ..., backupsSubscriberData: _Optional[_Union[AccountData.SubscriberData, _Mapping]] = ..., accountSettings: _Optional[_Union[AccountData.AccountSettings, _Mapping]] = ...) -> None: ...
+    backupsSubscriberData: AccountData.IAPSubscriberData
+    def __init__(self, profileKey: _Optional[bytes] = ..., username: _Optional[str] = ..., usernameLink: _Optional[_Union[AccountData.UsernameLink, _Mapping]] = ..., givenName: _Optional[str] = ..., familyName: _Optional[str] = ..., avatarUrlPath: _Optional[str] = ..., donationSubscriberData: _Optional[_Union[AccountData.SubscriberData, _Mapping]] = ..., accountSettings: _Optional[_Union[AccountData.AccountSettings, _Mapping]] = ..., backupsSubscriberData: _Optional[_Union[AccountData.IAPSubscriberData, _Mapping]] = ...) -> None: ...
 
 class Recipient(_message.Message):
     __slots__ = ("id", "contact", "group", "distributionList", "self", "releaseNotes", "callLink")
@@ -173,7 +190,15 @@ class Recipient(_message.Message):
     def __init__(self, id: _Optional[int] = ..., contact: _Optional[_Union[Contact, _Mapping]] = ..., group: _Optional[_Union[Group, _Mapping]] = ..., distributionList: _Optional[_Union[DistributionListItem, _Mapping]] = ..., self: _Optional[_Union[Self, _Mapping]] = ..., releaseNotes: _Optional[_Union[ReleaseNotes, _Mapping]] = ..., callLink: _Optional[_Union[CallLink, _Mapping]] = ...) -> None: ...
 
 class Contact(_message.Message):
-    __slots__ = ("aci", "pni", "username", "e164", "blocked", "visibility", "registered", "notRegistered", "profileKey", "profileSharing", "profileGivenName", "profileFamilyName", "hideStory")
+    __slots__ = ("aci", "pni", "username", "e164", "blocked", "visibility", "registered", "notRegistered", "profileKey", "profileSharing", "profileGivenName", "profileFamilyName", "hideStory", "identityKey", "identityState", "nickname", "note")
+    class IdentityState(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+        __slots__ = ()
+        DEFAULT: _ClassVar[Contact.IdentityState]
+        VERIFIED: _ClassVar[Contact.IdentityState]
+        UNVERIFIED: _ClassVar[Contact.IdentityState]
+    DEFAULT: Contact.IdentityState
+    VERIFIED: Contact.IdentityState
+    UNVERIFIED: Contact.IdentityState
     class Visibility(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = ()
         VISIBLE: _ClassVar[Contact.Visibility]
@@ -190,6 +215,13 @@ class Contact(_message.Message):
         UNREGISTEREDTIMESTAMP_FIELD_NUMBER: _ClassVar[int]
         unregisteredTimestamp: int
         def __init__(self, unregisteredTimestamp: _Optional[int] = ...) -> None: ...
+    class Name(_message.Message):
+        __slots__ = ("given", "family")
+        GIVEN_FIELD_NUMBER: _ClassVar[int]
+        FAMILY_FIELD_NUMBER: _ClassVar[int]
+        given: str
+        family: str
+        def __init__(self, given: _Optional[str] = ..., family: _Optional[str] = ...) -> None: ...
     ACI_FIELD_NUMBER: _ClassVar[int]
     PNI_FIELD_NUMBER: _ClassVar[int]
     USERNAME_FIELD_NUMBER: _ClassVar[int]
@@ -203,6 +235,10 @@ class Contact(_message.Message):
     PROFILEGIVENNAME_FIELD_NUMBER: _ClassVar[int]
     PROFILEFAMILYNAME_FIELD_NUMBER: _ClassVar[int]
     HIDESTORY_FIELD_NUMBER: _ClassVar[int]
+    IDENTITYKEY_FIELD_NUMBER: _ClassVar[int]
+    IDENTITYSTATE_FIELD_NUMBER: _ClassVar[int]
+    NICKNAME_FIELD_NUMBER: _ClassVar[int]
+    NOTE_FIELD_NUMBER: _ClassVar[int]
     aci: bytes
     pni: bytes
     username: str
@@ -216,7 +252,11 @@ class Contact(_message.Message):
     profileGivenName: str
     profileFamilyName: str
     hideStory: bool
-    def __init__(self, aci: _Optional[bytes] = ..., pni: _Optional[bytes] = ..., username: _Optional[str] = ..., e164: _Optional[int] = ..., blocked: bool = ..., visibility: _Optional[_Union[Contact.Visibility, str]] = ..., registered: _Optional[_Union[Contact.Registered, _Mapping]] = ..., notRegistered: _Optional[_Union[Contact.NotRegistered, _Mapping]] = ..., profileKey: _Optional[bytes] = ..., profileSharing: bool = ..., profileGivenName: _Optional[str] = ..., profileFamilyName: _Optional[str] = ..., hideStory: bool = ...) -> None: ...
+    identityKey: bytes
+    identityState: Contact.IdentityState
+    nickname: Contact.Name
+    note: str
+    def __init__(self, aci: _Optional[bytes] = ..., pni: _Optional[bytes] = ..., username: _Optional[str] = ..., e164: _Optional[int] = ..., blocked: bool = ..., visibility: _Optional[_Union[Contact.Visibility, str]] = ..., registered: _Optional[_Union[Contact.Registered, _Mapping]] = ..., notRegistered: _Optional[_Union[Contact.NotRegistered, _Mapping]] = ..., profileKey: _Optional[bytes] = ..., profileSharing: bool = ..., profileGivenName: _Optional[str] = ..., profileFamilyName: _Optional[str] = ..., hideStory: bool = ..., identityKey: _Optional[bytes] = ..., identityState: _Optional[_Union[Contact.IdentityState, str]] = ..., nickname: _Optional[_Union[Contact.Name, _Mapping]] = ..., note: _Optional[str] = ...) -> None: ...
 
 class Group(_message.Message):
     __slots__ = ("masterKey", "whitelisted", "hideStory", "storySendMode", "snapshot")
@@ -444,7 +484,7 @@ class DistributionList(_message.Message):
     def __init__(self, name: _Optional[str] = ..., allowReplies: bool = ..., privacyMode: _Optional[_Union[DistributionList.PrivacyMode, str]] = ..., memberRecipientIds: _Optional[_Iterable[int]] = ...) -> None: ...
 
 class ChatItem(_message.Message):
-    __slots__ = ("chatId", "authorId", "dateSent", "expireStartDate", "expiresInMs", "revisions", "sms", "incoming", "outgoing", "directionless", "standardMessage", "contactMessage", "stickerMessage", "remoteDeletedMessage", "updateMessage", "paymentNotification", "giftBadge", "viewOnceMessage")
+    __slots__ = ("chatId", "authorId", "dateSent", "expireStartDate", "expiresInMs", "revisions", "sms", "incoming", "outgoing", "directionless", "standardMessage", "contactMessage", "stickerMessage", "remoteDeletedMessage", "updateMessage", "paymentNotification", "giftBadge", "viewOnceMessage", "directStoryReplyMessage")
     class IncomingMessageDetails(_message.Message):
         __slots__ = ("dateReceived", "dateServerSent", "read", "sealedSender")
         DATERECEIVED_FIELD_NUMBER: _ClassVar[int]
@@ -482,6 +522,7 @@ class ChatItem(_message.Message):
     PAYMENTNOTIFICATION_FIELD_NUMBER: _ClassVar[int]
     GIFTBADGE_FIELD_NUMBER: _ClassVar[int]
     VIEWONCEMESSAGE_FIELD_NUMBER: _ClassVar[int]
+    DIRECTSTORYREPLYMESSAGE_FIELD_NUMBER: _ClassVar[int]
     chatId: int
     authorId: int
     dateSent: int
@@ -500,7 +541,8 @@ class ChatItem(_message.Message):
     paymentNotification: PaymentNotification
     giftBadge: GiftBadge
     viewOnceMessage: ViewOnceMessage
-    def __init__(self, chatId: _Optional[int] = ..., authorId: _Optional[int] = ..., dateSent: _Optional[int] = ..., expireStartDate: _Optional[int] = ..., expiresInMs: _Optional[int] = ..., revisions: _Optional[_Iterable[_Union[ChatItem, _Mapping]]] = ..., sms: bool = ..., incoming: _Optional[_Union[ChatItem.IncomingMessageDetails, _Mapping]] = ..., outgoing: _Optional[_Union[ChatItem.OutgoingMessageDetails, _Mapping]] = ..., directionless: _Optional[_Union[ChatItem.DirectionlessMessageDetails, _Mapping]] = ..., standardMessage: _Optional[_Union[StandardMessage, _Mapping]] = ..., contactMessage: _Optional[_Union[ContactMessage, _Mapping]] = ..., stickerMessage: _Optional[_Union[StickerMessage, _Mapping]] = ..., remoteDeletedMessage: _Optional[_Union[RemoteDeletedMessage, _Mapping]] = ..., updateMessage: _Optional[_Union[ChatUpdateMessage, _Mapping]] = ..., paymentNotification: _Optional[_Union[PaymentNotification, _Mapping]] = ..., giftBadge: _Optional[_Union[GiftBadge, _Mapping]] = ..., viewOnceMessage: _Optional[_Union[ViewOnceMessage, _Mapping]] = ...) -> None: ...
+    directStoryReplyMessage: DirectStoryReplyMessage
+    def __init__(self, chatId: _Optional[int] = ..., authorId: _Optional[int] = ..., dateSent: _Optional[int] = ..., expireStartDate: _Optional[int] = ..., expiresInMs: _Optional[int] = ..., revisions: _Optional[_Iterable[_Union[ChatItem, _Mapping]]] = ..., sms: bool = ..., incoming: _Optional[_Union[ChatItem.IncomingMessageDetails, _Mapping]] = ..., outgoing: _Optional[_Union[ChatItem.OutgoingMessageDetails, _Mapping]] = ..., directionless: _Optional[_Union[ChatItem.DirectionlessMessageDetails, _Mapping]] = ..., standardMessage: _Optional[_Union[StandardMessage, _Mapping]] = ..., contactMessage: _Optional[_Union[ContactMessage, _Mapping]] = ..., stickerMessage: _Optional[_Union[StickerMessage, _Mapping]] = ..., remoteDeletedMessage: _Optional[_Union[RemoteDeletedMessage, _Mapping]] = ..., updateMessage: _Optional[_Union[ChatUpdateMessage, _Mapping]] = ..., paymentNotification: _Optional[_Union[PaymentNotification, _Mapping]] = ..., giftBadge: _Optional[_Union[GiftBadge, _Mapping]] = ..., viewOnceMessage: _Optional[_Union[ViewOnceMessage, _Mapping]] = ..., directStoryReplyMessage: _Optional[_Union[DirectStoryReplyMessage, _Mapping]] = ...) -> None: ...
 
 class SendStatus(_message.Message):
     __slots__ = ("recipientId", "timestamp", "pending", "sent", "delivered", "read", "viewed", "skipped", "failed")
@@ -591,9 +633,26 @@ class ContactMessage(_message.Message):
     __slots__ = ("contact", "reactions")
     CONTACT_FIELD_NUMBER: _ClassVar[int]
     REACTIONS_FIELD_NUMBER: _ClassVar[int]
-    contact: _containers.RepeatedCompositeFieldContainer[ContactAttachment]
+    contact: ContactAttachment
     reactions: _containers.RepeatedCompositeFieldContainer[Reaction]
-    def __init__(self, contact: _Optional[_Iterable[_Union[ContactAttachment, _Mapping]]] = ..., reactions: _Optional[_Iterable[_Union[Reaction, _Mapping]]] = ...) -> None: ...
+    def __init__(self, contact: _Optional[_Union[ContactAttachment, _Mapping]] = ..., reactions: _Optional[_Iterable[_Union[Reaction, _Mapping]]] = ...) -> None: ...
+
+class DirectStoryReplyMessage(_message.Message):
+    __slots__ = ("textReply", "emoji", "reactions")
+    class TextReply(_message.Message):
+        __slots__ = ("text", "longText")
+        TEXT_FIELD_NUMBER: _ClassVar[int]
+        LONGTEXT_FIELD_NUMBER: _ClassVar[int]
+        text: Text
+        longText: FilePointer
+        def __init__(self, text: _Optional[_Union[Text, _Mapping]] = ..., longText: _Optional[_Union[FilePointer, _Mapping]] = ...) -> None: ...
+    TEXTREPLY_FIELD_NUMBER: _ClassVar[int]
+    EMOJI_FIELD_NUMBER: _ClassVar[int]
+    REACTIONS_FIELD_NUMBER: _ClassVar[int]
+    textReply: DirectStoryReplyMessage.TextReply
+    emoji: str
+    reactions: _containers.RepeatedCompositeFieldContainer[Reaction]
+    def __init__(self, textReply: _Optional[_Union[DirectStoryReplyMessage.TextReply, _Mapping]] = ..., emoji: _Optional[str] = ..., reactions: _Optional[_Iterable[_Union[Reaction, _Mapping]]] = ...) -> None: ...
 
 class PaymentNotification(_message.Message):
     __slots__ = ("amountMob", "feeMob", "note", "transactionDetails")
@@ -918,10 +977,12 @@ class Quote(_message.Message):
         __slots__ = ()
         UNKNOWN: _ClassVar[Quote.Type]
         NORMAL: _ClassVar[Quote.Type]
-        GIFTBADGE: _ClassVar[Quote.Type]
+        GIFT_BADGE: _ClassVar[Quote.Type]
+        VIEW_ONCE: _ClassVar[Quote.Type]
     UNKNOWN: Quote.Type
     NORMAL: Quote.Type
-    GIFTBADGE: Quote.Type
+    GIFT_BADGE: Quote.Type
+    VIEW_ONCE: Quote.Type
     class QuotedAttachment(_message.Message):
         __slots__ = ("contentType", "fileName", "thumbnail")
         CONTENTTYPE_FIELD_NUMBER: _ClassVar[int]
@@ -1629,3 +1690,75 @@ class ChatStyle(_message.Message):
     customColorId: int
     dimWallpaperInDarkMode: bool
     def __init__(self, wallpaperPreset: _Optional[_Union[ChatStyle.WallpaperPreset, str]] = ..., wallpaperPhoto: _Optional[_Union[FilePointer, _Mapping]] = ..., autoBubbleColor: _Optional[_Union[ChatStyle.AutomaticBubbleColor, _Mapping]] = ..., bubbleColorPreset: _Optional[_Union[ChatStyle.BubbleColorPreset, str]] = ..., customColorId: _Optional[int] = ..., dimWallpaperInDarkMode: bool = ...) -> None: ...
+
+class NotificationProfile(_message.Message):
+    __slots__ = ("name", "emoji", "color", "createdAtMs", "allowAllCalls", "allowAllMentions", "allowedMembers", "scheduleEnabled", "scheduleStartTime", "scheduleEndTime", "scheduleDaysEnabled")
+    class DayOfWeek(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+        __slots__ = ()
+        UNKNOWN: _ClassVar[NotificationProfile.DayOfWeek]
+        MONDAY: _ClassVar[NotificationProfile.DayOfWeek]
+        TUESDAY: _ClassVar[NotificationProfile.DayOfWeek]
+        WEDNESDAY: _ClassVar[NotificationProfile.DayOfWeek]
+        THURSDAY: _ClassVar[NotificationProfile.DayOfWeek]
+        FRIDAY: _ClassVar[NotificationProfile.DayOfWeek]
+        SATURDAY: _ClassVar[NotificationProfile.DayOfWeek]
+        SUNDAY: _ClassVar[NotificationProfile.DayOfWeek]
+    UNKNOWN: NotificationProfile.DayOfWeek
+    MONDAY: NotificationProfile.DayOfWeek
+    TUESDAY: NotificationProfile.DayOfWeek
+    WEDNESDAY: NotificationProfile.DayOfWeek
+    THURSDAY: NotificationProfile.DayOfWeek
+    FRIDAY: NotificationProfile.DayOfWeek
+    SATURDAY: NotificationProfile.DayOfWeek
+    SUNDAY: NotificationProfile.DayOfWeek
+    NAME_FIELD_NUMBER: _ClassVar[int]
+    EMOJI_FIELD_NUMBER: _ClassVar[int]
+    COLOR_FIELD_NUMBER: _ClassVar[int]
+    CREATEDATMS_FIELD_NUMBER: _ClassVar[int]
+    ALLOWALLCALLS_FIELD_NUMBER: _ClassVar[int]
+    ALLOWALLMENTIONS_FIELD_NUMBER: _ClassVar[int]
+    ALLOWEDMEMBERS_FIELD_NUMBER: _ClassVar[int]
+    SCHEDULEENABLED_FIELD_NUMBER: _ClassVar[int]
+    SCHEDULESTARTTIME_FIELD_NUMBER: _ClassVar[int]
+    SCHEDULEENDTIME_FIELD_NUMBER: _ClassVar[int]
+    SCHEDULEDAYSENABLED_FIELD_NUMBER: _ClassVar[int]
+    name: str
+    emoji: str
+    color: int
+    createdAtMs: int
+    allowAllCalls: bool
+    allowAllMentions: bool
+    allowedMembers: _containers.RepeatedScalarFieldContainer[int]
+    scheduleEnabled: bool
+    scheduleStartTime: int
+    scheduleEndTime: int
+    scheduleDaysEnabled: _containers.RepeatedScalarFieldContainer[NotificationProfile.DayOfWeek]
+    def __init__(self, name: _Optional[str] = ..., emoji: _Optional[str] = ..., color: _Optional[int] = ..., createdAtMs: _Optional[int] = ..., allowAllCalls: bool = ..., allowAllMentions: bool = ..., allowedMembers: _Optional[_Iterable[int]] = ..., scheduleEnabled: bool = ..., scheduleStartTime: _Optional[int] = ..., scheduleEndTime: _Optional[int] = ..., scheduleDaysEnabled: _Optional[_Iterable[_Union[NotificationProfile.DayOfWeek, str]]] = ...) -> None: ...
+
+class ChatFolder(_message.Message):
+    __slots__ = ("name", "showOnlyUnread", "showMutedChats", "includeAllIndividualChats", "includeAllGroupChats", "folderType", "includedRecipientIds", "excludedRecipientIds")
+    class FolderType(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+        __slots__ = ()
+        UNKNOWN: _ClassVar[ChatFolder.FolderType]
+        ALL: _ClassVar[ChatFolder.FolderType]
+        CUSTOM: _ClassVar[ChatFolder.FolderType]
+    UNKNOWN: ChatFolder.FolderType
+    ALL: ChatFolder.FolderType
+    CUSTOM: ChatFolder.FolderType
+    NAME_FIELD_NUMBER: _ClassVar[int]
+    SHOWONLYUNREAD_FIELD_NUMBER: _ClassVar[int]
+    SHOWMUTEDCHATS_FIELD_NUMBER: _ClassVar[int]
+    INCLUDEALLINDIVIDUALCHATS_FIELD_NUMBER: _ClassVar[int]
+    INCLUDEALLGROUPCHATS_FIELD_NUMBER: _ClassVar[int]
+    FOLDERTYPE_FIELD_NUMBER: _ClassVar[int]
+    INCLUDEDRECIPIENTIDS_FIELD_NUMBER: _ClassVar[int]
+    EXCLUDEDRECIPIENTIDS_FIELD_NUMBER: _ClassVar[int]
+    name: str
+    showOnlyUnread: bool
+    showMutedChats: bool
+    includeAllIndividualChats: bool
+    includeAllGroupChats: bool
+    folderType: ChatFolder.FolderType
+    includedRecipientIds: _containers.RepeatedScalarFieldContainer[int]
+    excludedRecipientIds: _containers.RepeatedScalarFieldContainer[int]
+    def __init__(self, name: _Optional[str] = ..., showOnlyUnread: bool = ..., showMutedChats: bool = ..., includeAllIndividualChats: bool = ..., includeAllGroupChats: bool = ..., folderType: _Optional[_Union[ChatFolder.FolderType, str]] = ..., includedRecipientIds: _Optional[_Iterable[int]] = ..., excludedRecipientIds: _Optional[_Iterable[int]] = ...) -> None: ...
