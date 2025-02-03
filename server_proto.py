@@ -2607,6 +2607,10 @@ def req_v1_devices_transfer_archive(flow: HTTPFlow):
               location: query
               None
 
+            User-Agent
+              location: header
+              None
+
 
          Security:
             authenticatedAccount - basic
