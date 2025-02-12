@@ -1840,50 +1840,6 @@ def resp_v1_call_link_create_auth(flow: HTTPFlow):
     pass
 
 
-@api.route("/v1/calling/relays", rtype=RouteType.REQUEST)
-def req_v1_calling_relays(flow: HTTPFlow):
-    """
-            Get 1:1 calling relay options for the client
-            Get 1:1 relay addresses in IpV4, Ipv6, and URL formats.
-
-         Parameters:
-
-
-         Security:
-            authenticatedAccount - basic
-            Account authentication is based on Basic authentication schema,
-    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
-    user's `main` device is assumed.
-
-    """
-    # Implement the function body here
-    pass
-
-
-@api.route("/v1/calling/relays", rtype=RouteType.RESPONSE)
-def resp_v1_calling_relays(flow: HTTPFlow):
-    """
-            Get 1:1 calling relay options for the client
-            Get 1:1 relay addresses in IpV4, Ipv6, and URL formats.
-
-         Responses:
-            200 - `JSON` with call endpoints.
-            400 - Invalid get call endpoint request.
-            401 - Account authentication check failed.
-            422 - Invalid request format.
-            429 - Rate limited.
-
-         Security:
-            authenticatedAccount - basic
-            Account authentication is based on Basic authentication schema,
-    where `username` has a format of `<user_id>[.<device_id>]`. If `device_id` is not specified,
-    user's `main` device is assumed.
-
-    """
-    # Implement the function body here
-    pass
-
-
 @api.route("/v2/calling/relays", rtype=RouteType.REQUEST)
 def req_v2_calling_relays(flow: HTTPFlow):
     """
@@ -3667,7 +3623,7 @@ def resp_v1_messages_multi_recipient(flow: HTTPFlow):
     An unidentifed-access key for all recipients must be provided, unless the message is a story.
 
          Responses:
-            200 - Message was successfully sent to all recipients
+            200 - Message was successfully sent
             400 - The envelope specified delivery to the same recipient device multiple times
             401 - The message is not a story and the unauthorized access key or group send endorsement token is missing or incorrect
             404 - The message is not a story and some of the recipient service IDs do not correspond to registered Signal users
