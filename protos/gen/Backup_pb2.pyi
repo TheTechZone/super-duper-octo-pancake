@@ -259,7 +259,7 @@ class Contact(_message.Message):
     def __init__(self, aci: _Optional[bytes] = ..., pni: _Optional[bytes] = ..., username: _Optional[str] = ..., e164: _Optional[int] = ..., blocked: bool = ..., visibility: _Optional[_Union[Contact.Visibility, str]] = ..., registered: _Optional[_Union[Contact.Registered, _Mapping]] = ..., notRegistered: _Optional[_Union[Contact.NotRegistered, _Mapping]] = ..., profileKey: _Optional[bytes] = ..., profileSharing: bool = ..., profileGivenName: _Optional[str] = ..., profileFamilyName: _Optional[str] = ..., hideStory: bool = ..., identityKey: _Optional[bytes] = ..., identityState: _Optional[_Union[Contact.IdentityState, str]] = ..., nickname: _Optional[_Union[Contact.Name, _Mapping]] = ..., note: _Optional[str] = ...) -> None: ...
 
 class Group(_message.Message):
-    __slots__ = ("masterKey", "whitelisted", "hideStory", "storySendMode", "snapshot")
+    __slots__ = ("masterKey", "whitelisted", "hideStory", "storySendMode", "snapshot", "blocked")
     class StorySendMode(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = ()
         DEFAULT: _ClassVar[Group.StorySendMode]
@@ -372,12 +372,14 @@ class Group(_message.Message):
     HIDESTORY_FIELD_NUMBER: _ClassVar[int]
     STORYSENDMODE_FIELD_NUMBER: _ClassVar[int]
     SNAPSHOT_FIELD_NUMBER: _ClassVar[int]
+    BLOCKED_FIELD_NUMBER: _ClassVar[int]
     masterKey: bytes
     whitelisted: bool
     hideStory: bool
     storySendMode: Group.StorySendMode
     snapshot: Group.GroupSnapshot
-    def __init__(self, masterKey: _Optional[bytes] = ..., whitelisted: bool = ..., hideStory: bool = ..., storySendMode: _Optional[_Union[Group.StorySendMode, str]] = ..., snapshot: _Optional[_Union[Group.GroupSnapshot, _Mapping]] = ...) -> None: ...
+    blocked: bool
+    def __init__(self, masterKey: _Optional[bytes] = ..., whitelisted: bool = ..., hideStory: bool = ..., storySendMode: _Optional[_Union[Group.StorySendMode, str]] = ..., snapshot: _Optional[_Union[Group.GroupSnapshot, _Mapping]] = ..., blocked: bool = ...) -> None: ...
 
 class Self(_message.Message):
     __slots__ = ()
