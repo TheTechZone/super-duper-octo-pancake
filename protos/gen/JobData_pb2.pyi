@@ -84,14 +84,16 @@ class ArchiveThumbnailUploadJobData(_message.Message):
     def __init__(self, attachmentId: _Optional[int] = ...) -> None: ...
 
 class InAppPaymentRedemptionJobData(_message.Message):
-    __slots__ = ("inAppPaymentId", "giftMessageId", "makePrimary")
+    __slots__ = ("inAppPaymentId", "giftMessageId", "makePrimary", "isFromAuthCheck")
     INAPPPAYMENTID_FIELD_NUMBER: _ClassVar[int]
     GIFTMESSAGEID_FIELD_NUMBER: _ClassVar[int]
     MAKEPRIMARY_FIELD_NUMBER: _ClassVar[int]
+    ISFROMAUTHCHECK_FIELD_NUMBER: _ClassVar[int]
     inAppPaymentId: int
     giftMessageId: int
     makePrimary: bool
-    def __init__(self, inAppPaymentId: _Optional[int] = ..., giftMessageId: _Optional[int] = ..., makePrimary: bool = ...) -> None: ...
+    isFromAuthCheck: bool
+    def __init__(self, inAppPaymentId: _Optional[int] = ..., giftMessageId: _Optional[int] = ..., makePrimary: bool = ..., isFromAuthCheck: bool = ...) -> None: ...
 
 class DeleteSyncJobData(_message.Message):
     __slots__ = ("messageDeletes", "threadDeletes", "localOnlyThreadDeletes", "attachmentDeletes")

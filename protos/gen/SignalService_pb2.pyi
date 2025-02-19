@@ -7,22 +7,22 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Map
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class Envelope(_message.Message):
-    __slots__ = ("type", "sourceServiceId", "sourceDevice", "destinationServiceId", "timestamp", "content", "serverGuid", "serverTimestamp", "urgent", "story", "reportingToken")
+    __slots__ = ("type", "sourceServiceId", "sourceDevice", "destinationServiceId", "timestamp", "content", "serverGuid", "serverTimestamp", "ephemeral", "urgent", "updatedPni", "story", "report_spam_token")
     class Type(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = ()
         UNKNOWN: _ClassVar[Envelope.Type]
         CIPHERTEXT: _ClassVar[Envelope.Type]
-        KEY_EXCHANGE: _ClassVar[Envelope.Type]
         PREKEY_BUNDLE: _ClassVar[Envelope.Type]
-        RECEIPT: _ClassVar[Envelope.Type]
+        SERVER_DELIVERY_RECEIPT: _ClassVar[Envelope.Type]
         UNIDENTIFIED_SENDER: _ClassVar[Envelope.Type]
+        SENDERKEY_MESSAGE: _ClassVar[Envelope.Type]
         PLAINTEXT_CONTENT: _ClassVar[Envelope.Type]
     UNKNOWN: Envelope.Type
     CIPHERTEXT: Envelope.Type
-    KEY_EXCHANGE: Envelope.Type
     PREKEY_BUNDLE: Envelope.Type
-    RECEIPT: Envelope.Type
+    SERVER_DELIVERY_RECEIPT: Envelope.Type
     UNIDENTIFIED_SENDER: Envelope.Type
+    SENDERKEY_MESSAGE: Envelope.Type
     PLAINTEXT_CONTENT: Envelope.Type
     TYPE_FIELD_NUMBER: _ClassVar[int]
     SOURCESERVICEID_FIELD_NUMBER: _ClassVar[int]
@@ -32,9 +32,11 @@ class Envelope(_message.Message):
     CONTENT_FIELD_NUMBER: _ClassVar[int]
     SERVERGUID_FIELD_NUMBER: _ClassVar[int]
     SERVERTIMESTAMP_FIELD_NUMBER: _ClassVar[int]
+    EPHEMERAL_FIELD_NUMBER: _ClassVar[int]
     URGENT_FIELD_NUMBER: _ClassVar[int]
+    UPDATEDPNI_FIELD_NUMBER: _ClassVar[int]
     STORY_FIELD_NUMBER: _ClassVar[int]
-    REPORTINGTOKEN_FIELD_NUMBER: _ClassVar[int]
+    REPORT_SPAM_TOKEN_FIELD_NUMBER: _ClassVar[int]
     type: Envelope.Type
     sourceServiceId: str
     sourceDevice: int
@@ -43,10 +45,12 @@ class Envelope(_message.Message):
     content: bytes
     serverGuid: str
     serverTimestamp: int
+    ephemeral: bool
     urgent: bool
+    updatedPni: str
     story: bool
-    reportingToken: bytes
-    def __init__(self, type: _Optional[_Union[Envelope.Type, str]] = ..., sourceServiceId: _Optional[str] = ..., sourceDevice: _Optional[int] = ..., destinationServiceId: _Optional[str] = ..., timestamp: _Optional[int] = ..., content: _Optional[bytes] = ..., serverGuid: _Optional[str] = ..., serverTimestamp: _Optional[int] = ..., urgent: bool = ..., story: bool = ..., reportingToken: _Optional[bytes] = ...) -> None: ...
+    report_spam_token: bytes
+    def __init__(self, type: _Optional[_Union[Envelope.Type, str]] = ..., sourceServiceId: _Optional[str] = ..., sourceDevice: _Optional[int] = ..., destinationServiceId: _Optional[str] = ..., timestamp: _Optional[int] = ..., content: _Optional[bytes] = ..., serverGuid: _Optional[str] = ..., serverTimestamp: _Optional[int] = ..., ephemeral: bool = ..., urgent: bool = ..., updatedPni: _Optional[str] = ..., story: bool = ..., report_spam_token: _Optional[bytes] = ...) -> None: ...
 
 class Content(_message.Message):
     __slots__ = ("dataMessage", "syncMessage", "callMessage", "nullMessage", "receiptMessage", "typingMessage", "senderKeyDistributionMessage", "decryptionErrorMessage", "storyMessage", "pniSignatureMessage", "editMessage")
@@ -160,32 +164,6 @@ class CallMessage(_message.Message):
     opaque: CallMessage.Opaque
     def __init__(self, offer: _Optional[_Union[CallMessage.Offer, _Mapping]] = ..., answer: _Optional[_Union[CallMessage.Answer, _Mapping]] = ..., iceUpdate: _Optional[_Iterable[_Union[CallMessage.IceUpdate, _Mapping]]] = ..., busy: _Optional[_Union[CallMessage.Busy, _Mapping]] = ..., hangup: _Optional[_Union[CallMessage.Hangup, _Mapping]] = ..., destinationDeviceId: _Optional[int] = ..., opaque: _Optional[_Union[CallMessage.Opaque, _Mapping]] = ...) -> None: ...
 
-class BodyRange(_message.Message):
-    __slots__ = ("start", "length", "mentionAci", "style")
-    class Style(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-        __slots__ = ()
-        NONE: _ClassVar[BodyRange.Style]
-        BOLD: _ClassVar[BodyRange.Style]
-        ITALIC: _ClassVar[BodyRange.Style]
-        SPOILER: _ClassVar[BodyRange.Style]
-        STRIKETHROUGH: _ClassVar[BodyRange.Style]
-        MONOSPACE: _ClassVar[BodyRange.Style]
-    NONE: BodyRange.Style
-    BOLD: BodyRange.Style
-    ITALIC: BodyRange.Style
-    SPOILER: BodyRange.Style
-    STRIKETHROUGH: BodyRange.Style
-    MONOSPACE: BodyRange.Style
-    START_FIELD_NUMBER: _ClassVar[int]
-    LENGTH_FIELD_NUMBER: _ClassVar[int]
-    MENTIONACI_FIELD_NUMBER: _ClassVar[int]
-    STYLE_FIELD_NUMBER: _ClassVar[int]
-    start: int
-    length: int
-    mentionAci: str
-    style: BodyRange.Style
-    def __init__(self, start: _Optional[int] = ..., length: _Optional[int] = ..., mentionAci: _Optional[str] = ..., style: _Optional[_Union[BodyRange.Style, str]] = ...) -> None: ...
-
 class DataMessage(_message.Message):
     __slots__ = ("body", "attachments", "groupV2", "flags", "expireTimer", "expireTimerVersion", "profileKey", "timestamp", "quote", "contact", "preview", "sticker", "requiredProtocolVersion", "isViewOnce", "reaction", "delete", "bodyRanges", "groupCallUpdate", "payment", "storyContext", "giftBadge")
     class Flags(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
@@ -193,9 +171,11 @@ class DataMessage(_message.Message):
         END_SESSION: _ClassVar[DataMessage.Flags]
         EXPIRATION_TIMER_UPDATE: _ClassVar[DataMessage.Flags]
         PROFILE_KEY_UPDATE: _ClassVar[DataMessage.Flags]
+        FORWARD: _ClassVar[DataMessage.Flags]
     END_SESSION: DataMessage.Flags
     EXPIRATION_TIMER_UPDATE: DataMessage.Flags
     PROFILE_KEY_UPDATE: DataMessage.Flags
+    FORWARD: DataMessage.Flags
     class ProtocolVersion(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = ()
         INITIAL: _ClassVar[DataMessage.ProtocolVersion]
@@ -216,6 +196,46 @@ class DataMessage(_message.Message):
     MENTIONS: DataMessage.ProtocolVersion
     PAYMENTS: DataMessage.ProtocolVersion
     CURRENT: DataMessage.ProtocolVersion
+    class Payment(_message.Message):
+        __slots__ = ("notification", "activation")
+        class Amount(_message.Message):
+            __slots__ = ("mobileCoin",)
+            class MobileCoin(_message.Message):
+                __slots__ = ("picoMob",)
+                PICOMOB_FIELD_NUMBER: _ClassVar[int]
+                picoMob: int
+                def __init__(self, picoMob: _Optional[int] = ...) -> None: ...
+            MOBILECOIN_FIELD_NUMBER: _ClassVar[int]
+            mobileCoin: DataMessage.Payment.Amount.MobileCoin
+            def __init__(self, mobileCoin: _Optional[_Union[DataMessage.Payment.Amount.MobileCoin, _Mapping]] = ...) -> None: ...
+        class Notification(_message.Message):
+            __slots__ = ("mobileCoin", "note")
+            class MobileCoin(_message.Message):
+                __slots__ = ("receipt",)
+                RECEIPT_FIELD_NUMBER: _ClassVar[int]
+                receipt: bytes
+                def __init__(self, receipt: _Optional[bytes] = ...) -> None: ...
+            MOBILECOIN_FIELD_NUMBER: _ClassVar[int]
+            NOTE_FIELD_NUMBER: _ClassVar[int]
+            mobileCoin: DataMessage.Payment.Notification.MobileCoin
+            note: str
+            def __init__(self, mobileCoin: _Optional[_Union[DataMessage.Payment.Notification.MobileCoin, _Mapping]] = ..., note: _Optional[str] = ...) -> None: ...
+        class Activation(_message.Message):
+            __slots__ = ("type",)
+            class Type(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+                __slots__ = ()
+                REQUEST: _ClassVar[DataMessage.Payment.Activation.Type]
+                ACTIVATED: _ClassVar[DataMessage.Payment.Activation.Type]
+            REQUEST: DataMessage.Payment.Activation.Type
+            ACTIVATED: DataMessage.Payment.Activation.Type
+            TYPE_FIELD_NUMBER: _ClassVar[int]
+            type: DataMessage.Payment.Activation.Type
+            def __init__(self, type: _Optional[_Union[DataMessage.Payment.Activation.Type, str]] = ...) -> None: ...
+        NOTIFICATION_FIELD_NUMBER: _ClassVar[int]
+        ACTIVATION_FIELD_NUMBER: _ClassVar[int]
+        notification: DataMessage.Payment.Notification
+        activation: DataMessage.Payment.Activation
+        def __init__(self, notification: _Optional[_Union[DataMessage.Payment.Notification, _Mapping]] = ..., activation: _Optional[_Union[DataMessage.Payment.Activation, _Mapping]] = ...) -> None: ...
     class Quote(_message.Message):
         __slots__ = ("id", "authorAci", "text", "attachments", "bodyRanges", "type")
         class Type(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
@@ -391,46 +411,6 @@ class DataMessage(_message.Message):
         authorAci: str
         sentTimestamp: int
         def __init__(self, authorAci: _Optional[str] = ..., sentTimestamp: _Optional[int] = ...) -> None: ...
-    class Payment(_message.Message):
-        __slots__ = ("notification", "activation")
-        class Amount(_message.Message):
-            __slots__ = ("mobileCoin",)
-            class MobileCoin(_message.Message):
-                __slots__ = ("picoMob",)
-                PICOMOB_FIELD_NUMBER: _ClassVar[int]
-                picoMob: int
-                def __init__(self, picoMob: _Optional[int] = ...) -> None: ...
-            MOBILECOIN_FIELD_NUMBER: _ClassVar[int]
-            mobileCoin: DataMessage.Payment.Amount.MobileCoin
-            def __init__(self, mobileCoin: _Optional[_Union[DataMessage.Payment.Amount.MobileCoin, _Mapping]] = ...) -> None: ...
-        class Notification(_message.Message):
-            __slots__ = ("mobileCoin", "note")
-            class MobileCoin(_message.Message):
-                __slots__ = ("receipt",)
-                RECEIPT_FIELD_NUMBER: _ClassVar[int]
-                receipt: bytes
-                def __init__(self, receipt: _Optional[bytes] = ...) -> None: ...
-            MOBILECOIN_FIELD_NUMBER: _ClassVar[int]
-            NOTE_FIELD_NUMBER: _ClassVar[int]
-            mobileCoin: DataMessage.Payment.Notification.MobileCoin
-            note: str
-            def __init__(self, mobileCoin: _Optional[_Union[DataMessage.Payment.Notification.MobileCoin, _Mapping]] = ..., note: _Optional[str] = ...) -> None: ...
-        class Activation(_message.Message):
-            __slots__ = ("type",)
-            class Type(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-                __slots__ = ()
-                REQUEST: _ClassVar[DataMessage.Payment.Activation.Type]
-                ACTIVATED: _ClassVar[DataMessage.Payment.Activation.Type]
-            REQUEST: DataMessage.Payment.Activation.Type
-            ACTIVATED: DataMessage.Payment.Activation.Type
-            TYPE_FIELD_NUMBER: _ClassVar[int]
-            type: DataMessage.Payment.Activation.Type
-            def __init__(self, type: _Optional[_Union[DataMessage.Payment.Activation.Type, str]] = ...) -> None: ...
-        NOTIFICATION_FIELD_NUMBER: _ClassVar[int]
-        ACTIVATION_FIELD_NUMBER: _ClassVar[int]
-        notification: DataMessage.Payment.Notification
-        activation: DataMessage.Payment.Activation
-        def __init__(self, notification: _Optional[_Union[DataMessage.Payment.Notification, _Mapping]] = ..., activation: _Optional[_Union[DataMessage.Payment.Activation, _Mapping]] = ...) -> None: ...
     class GiftBadge(_message.Message):
         __slots__ = ("receiptCredentialPresentation",)
         RECEIPTCREDENTIALPRESENTATION_FIELD_NUMBER: _ClassVar[int]
@@ -618,14 +598,14 @@ class SyncMessage(_message.Message):
     class Sent(_message.Message):
         __slots__ = ("destinationE164", "destinationServiceId", "timestamp", "message", "expirationStartTimestamp", "unidentifiedStatus", "isRecipientUpdate", "storyMessage", "storyMessageRecipients", "editMessage")
         class UnidentifiedDeliveryStatus(_message.Message):
-            __slots__ = ("destinationServiceId", "unidentified", "destinationIdentityKey")
+            __slots__ = ("destinationServiceId", "unidentified", "destinationPniIdentityKey")
             DESTINATIONSERVICEID_FIELD_NUMBER: _ClassVar[int]
             UNIDENTIFIED_FIELD_NUMBER: _ClassVar[int]
-            DESTINATIONIDENTITYKEY_FIELD_NUMBER: _ClassVar[int]
+            DESTINATIONPNIIDENTITYKEY_FIELD_NUMBER: _ClassVar[int]
             destinationServiceId: str
             unidentified: bool
-            destinationIdentityKey: bytes
-            def __init__(self, destinationServiceId: _Optional[str] = ..., unidentified: bool = ..., destinationIdentityKey: _Optional[bytes] = ...) -> None: ...
+            destinationPniIdentityKey: bytes
+            def __init__(self, destinationServiceId: _Optional[str] = ..., unidentified: bool = ..., destinationPniIdentityKey: _Optional[bytes] = ...) -> None: ...
         class StoryMessageRecipient(_message.Message):
             __slots__ = ("destinationServiceId", "distributionListIds", "isAllowedToReply")
             DESTINATIONSERVICEID_FIELD_NUMBER: _ClassVar[int]
@@ -681,13 +661,11 @@ class SyncMessage(_message.Message):
             BLOCKED: _ClassVar[SyncMessage.Request.Type]
             CONFIGURATION: _ClassVar[SyncMessage.Request.Type]
             KEYS: _ClassVar[SyncMessage.Request.Type]
-            PNI_IDENTITY: _ClassVar[SyncMessage.Request.Type]
         UNKNOWN: SyncMessage.Request.Type
         CONTACTS: SyncMessage.Request.Type
         BLOCKED: SyncMessage.Request.Type
         CONFIGURATION: SyncMessage.Request.Type
         KEYS: SyncMessage.Request.Type
-        PNI_IDENTITY: SyncMessage.Request.Type
         TYPE_FIELD_NUMBER: _ClassVar[int]
         type: SyncMessage.Request.Type
         def __init__(self, type: _Optional[_Union[SyncMessage.Request.Type, str]] = ...) -> None: ...
@@ -756,16 +734,21 @@ class SyncMessage(_message.Message):
         type: SyncMessage.FetchLatest.Type
         def __init__(self, type: _Optional[_Union[SyncMessage.FetchLatest.Type, str]] = ...) -> None: ...
     class Keys(_message.Message):
-        __slots__ = ("storageService", "master", "accountEntropyPool", "mediaRootBackupKey")
-        STORAGESERVICE_FIELD_NUMBER: _ClassVar[int]
+        __slots__ = ("master", "accountEntropyPool", "mediaRootBackupKey")
         MASTER_FIELD_NUMBER: _ClassVar[int]
         ACCOUNTENTROPYPOOL_FIELD_NUMBER: _ClassVar[int]
         MEDIAROOTBACKUPKEY_FIELD_NUMBER: _ClassVar[int]
-        storageService: bytes
         master: bytes
         accountEntropyPool: str
         mediaRootBackupKey: bytes
-        def __init__(self, storageService: _Optional[bytes] = ..., master: _Optional[bytes] = ..., accountEntropyPool: _Optional[str] = ..., mediaRootBackupKey: _Optional[bytes] = ...) -> None: ...
+        def __init__(self, master: _Optional[bytes] = ..., accountEntropyPool: _Optional[str] = ..., mediaRootBackupKey: _Optional[bytes] = ...) -> None: ...
+    class PniIdentity(_message.Message):
+        __slots__ = ("publicKey", "privateKey")
+        PUBLICKEY_FIELD_NUMBER: _ClassVar[int]
+        PRIVATEKEY_FIELD_NUMBER: _ClassVar[int]
+        publicKey: bytes
+        privateKey: bytes
+        def __init__(self, publicKey: _Optional[bytes] = ..., privateKey: _Optional[bytes] = ...) -> None: ...
     class MessageRequestResponse(_message.Message):
         __slots__ = ("threadAci", "groupId", "type")
         class Type(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
@@ -833,7 +816,7 @@ class SyncMessage(_message.Message):
         newE164: str
         def __init__(self, identityKeyPair: _Optional[bytes] = ..., signedPreKey: _Optional[bytes] = ..., lastResortKyberPreKey: _Optional[bytes] = ..., registrationId: _Optional[int] = ..., newE164: _Optional[str] = ...) -> None: ...
     class CallEvent(_message.Message):
-        __slots__ = ("conversationId", "id", "timestamp", "type", "direction", "event")
+        __slots__ = ("conversationId", "callId", "timestamp", "type", "direction", "event")
         class Type(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
             __slots__ = ()
             UNKNOWN_TYPE: _ClassVar[SyncMessage.CallEvent.Type]
@@ -856,31 +839,31 @@ class SyncMessage(_message.Message):
         OUTGOING: SyncMessage.CallEvent.Direction
         class Event(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
             __slots__ = ()
-            UNKNOWN_ACTION: _ClassVar[SyncMessage.CallEvent.Event]
+            UNKNOWN_EVENT: _ClassVar[SyncMessage.CallEvent.Event]
             ACCEPTED: _ClassVar[SyncMessage.CallEvent.Event]
             NOT_ACCEPTED: _ClassVar[SyncMessage.CallEvent.Event]
             DELETE: _ClassVar[SyncMessage.CallEvent.Event]
             OBSERVED: _ClassVar[SyncMessage.CallEvent.Event]
-        UNKNOWN_ACTION: SyncMessage.CallEvent.Event
+        UNKNOWN_EVENT: SyncMessage.CallEvent.Event
         ACCEPTED: SyncMessage.CallEvent.Event
         NOT_ACCEPTED: SyncMessage.CallEvent.Event
         DELETE: SyncMessage.CallEvent.Event
         OBSERVED: SyncMessage.CallEvent.Event
         CONVERSATIONID_FIELD_NUMBER: _ClassVar[int]
-        ID_FIELD_NUMBER: _ClassVar[int]
+        CALLID_FIELD_NUMBER: _ClassVar[int]
         TIMESTAMP_FIELD_NUMBER: _ClassVar[int]
         TYPE_FIELD_NUMBER: _ClassVar[int]
         DIRECTION_FIELD_NUMBER: _ClassVar[int]
         EVENT_FIELD_NUMBER: _ClassVar[int]
         conversationId: bytes
-        id: int
+        callId: int
         timestamp: int
         type: SyncMessage.CallEvent.Type
         direction: SyncMessage.CallEvent.Direction
         event: SyncMessage.CallEvent.Event
-        def __init__(self, conversationId: _Optional[bytes] = ..., id: _Optional[int] = ..., timestamp: _Optional[int] = ..., type: _Optional[_Union[SyncMessage.CallEvent.Type, str]] = ..., direction: _Optional[_Union[SyncMessage.CallEvent.Direction, str]] = ..., event: _Optional[_Union[SyncMessage.CallEvent.Event, str]] = ...) -> None: ...
+        def __init__(self, conversationId: _Optional[bytes] = ..., callId: _Optional[int] = ..., timestamp: _Optional[int] = ..., type: _Optional[_Union[SyncMessage.CallEvent.Type, str]] = ..., direction: _Optional[_Union[SyncMessage.CallEvent.Direction, str]] = ..., event: _Optional[_Union[SyncMessage.CallEvent.Event, str]] = ...) -> None: ...
     class CallLinkUpdate(_message.Message):
-        __slots__ = ("rootKey", "adminPassKey", "type")
+        __slots__ = ("rootKey", "adminPasskey", "type")
         class Type(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
             __slots__ = ()
             UPDATE: _ClassVar[SyncMessage.CallLinkUpdate.Type]
@@ -889,9 +872,9 @@ class SyncMessage(_message.Message):
         ADMINPASSKEY_FIELD_NUMBER: _ClassVar[int]
         TYPE_FIELD_NUMBER: _ClassVar[int]
         rootKey: bytes
-        adminPassKey: bytes
+        adminPasskey: bytes
         type: SyncMessage.CallLinkUpdate.Type
-        def __init__(self, rootKey: _Optional[bytes] = ..., adminPassKey: _Optional[bytes] = ..., type: _Optional[_Union[SyncMessage.CallLinkUpdate.Type, str]] = ...) -> None: ...
+        def __init__(self, rootKey: _Optional[bytes] = ..., adminPasskey: _Optional[bytes] = ..., type: _Optional[_Union[SyncMessage.CallLinkUpdate.Type, str]] = ...) -> None: ...
     class CallLogEvent(_message.Message):
         __slots__ = ("type", "timestamp", "conversationId", "callId")
         class Type(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
@@ -899,9 +882,11 @@ class SyncMessage(_message.Message):
             CLEAR: _ClassVar[SyncMessage.CallLogEvent.Type]
             MARKED_AS_READ: _ClassVar[SyncMessage.CallLogEvent.Type]
             MARKED_AS_READ_IN_CONVERSATION: _ClassVar[SyncMessage.CallLogEvent.Type]
+            CLEAR_IN_CONVERSATION: _ClassVar[SyncMessage.CallLogEvent.Type]
         CLEAR: SyncMessage.CallLogEvent.Type
         MARKED_AS_READ: SyncMessage.CallLogEvent.Type
         MARKED_AS_READ_IN_CONVERSATION: SyncMessage.CallLogEvent.Type
+        CLEAR_IN_CONVERSATION: SyncMessage.CallLogEvent.Type
         TYPE_FIELD_NUMBER: _ClassVar[int]
         TIMESTAMP_FIELD_NUMBER: _ClassVar[int]
         CONVERSATIONID_FIELD_NUMBER: _ClassVar[int]
@@ -939,29 +924,29 @@ class SyncMessage(_message.Message):
             messages: _containers.RepeatedCompositeFieldContainer[SyncMessage.DeleteForMe.AddressableMessage]
             def __init__(self, conversation: _Optional[_Union[SyncMessage.DeleteForMe.ConversationIdentifier, _Mapping]] = ..., messages: _Optional[_Iterable[_Union[SyncMessage.DeleteForMe.AddressableMessage, _Mapping]]] = ...) -> None: ...
         class AttachmentDelete(_message.Message):
-            __slots__ = ("conversation", "targetMessage", "uuid", "fallbackDigest", "fallbackPlaintextHash")
+            __slots__ = ("conversation", "targetMessage", "clientUuid", "fallbackDigest", "fallbackPlaintextHash")
             CONVERSATION_FIELD_NUMBER: _ClassVar[int]
             TARGETMESSAGE_FIELD_NUMBER: _ClassVar[int]
-            UUID_FIELD_NUMBER: _ClassVar[int]
+            CLIENTUUID_FIELD_NUMBER: _ClassVar[int]
             FALLBACKDIGEST_FIELD_NUMBER: _ClassVar[int]
             FALLBACKPLAINTEXTHASH_FIELD_NUMBER: _ClassVar[int]
             conversation: SyncMessage.DeleteForMe.ConversationIdentifier
             targetMessage: SyncMessage.DeleteForMe.AddressableMessage
-            uuid: bytes
+            clientUuid: bytes
             fallbackDigest: bytes
             fallbackPlaintextHash: bytes
-            def __init__(self, conversation: _Optional[_Union[SyncMessage.DeleteForMe.ConversationIdentifier, _Mapping]] = ..., targetMessage: _Optional[_Union[SyncMessage.DeleteForMe.AddressableMessage, _Mapping]] = ..., uuid: _Optional[bytes] = ..., fallbackDigest: _Optional[bytes] = ..., fallbackPlaintextHash: _Optional[bytes] = ...) -> None: ...
+            def __init__(self, conversation: _Optional[_Union[SyncMessage.DeleteForMe.ConversationIdentifier, _Mapping]] = ..., targetMessage: _Optional[_Union[SyncMessage.DeleteForMe.AddressableMessage, _Mapping]] = ..., clientUuid: _Optional[bytes] = ..., fallbackDigest: _Optional[bytes] = ..., fallbackPlaintextHash: _Optional[bytes] = ...) -> None: ...
         class ConversationDelete(_message.Message):
-            __slots__ = ("conversation", "mostRecentMessages", "mostRecentNonExpiringMessages", "isFullDelete")
+            __slots__ = ("conversation", "mostRecentMessages", "isFullDelete", "mostRecentNonExpiringMessages")
             CONVERSATION_FIELD_NUMBER: _ClassVar[int]
             MOSTRECENTMESSAGES_FIELD_NUMBER: _ClassVar[int]
-            MOSTRECENTNONEXPIRINGMESSAGES_FIELD_NUMBER: _ClassVar[int]
             ISFULLDELETE_FIELD_NUMBER: _ClassVar[int]
+            MOSTRECENTNONEXPIRINGMESSAGES_FIELD_NUMBER: _ClassVar[int]
             conversation: SyncMessage.DeleteForMe.ConversationIdentifier
             mostRecentMessages: _containers.RepeatedCompositeFieldContainer[SyncMessage.DeleteForMe.AddressableMessage]
-            mostRecentNonExpiringMessages: _containers.RepeatedCompositeFieldContainer[SyncMessage.DeleteForMe.AddressableMessage]
             isFullDelete: bool
-            def __init__(self, conversation: _Optional[_Union[SyncMessage.DeleteForMe.ConversationIdentifier, _Mapping]] = ..., mostRecentMessages: _Optional[_Iterable[_Union[SyncMessage.DeleteForMe.AddressableMessage, _Mapping]]] = ..., mostRecentNonExpiringMessages: _Optional[_Iterable[_Union[SyncMessage.DeleteForMe.AddressableMessage, _Mapping]]] = ..., isFullDelete: bool = ...) -> None: ...
+            mostRecentNonExpiringMessages: _containers.RepeatedCompositeFieldContainer[SyncMessage.DeleteForMe.AddressableMessage]
+            def __init__(self, conversation: _Optional[_Union[SyncMessage.DeleteForMe.ConversationIdentifier, _Mapping]] = ..., mostRecentMessages: _Optional[_Iterable[_Union[SyncMessage.DeleteForMe.AddressableMessage, _Mapping]]] = ..., isFullDelete: bool = ..., mostRecentNonExpiringMessages: _Optional[_Iterable[_Union[SyncMessage.DeleteForMe.AddressableMessage, _Mapping]]] = ...) -> None: ...
         class LocalOnlyConversationDelete(_message.Message):
             __slots__ = ("conversation",)
             CONVERSATION_FIELD_NUMBER: _ClassVar[int]
@@ -1026,7 +1011,7 @@ class SyncMessage(_message.Message):
     def __init__(self, sent: _Optional[_Union[SyncMessage.Sent, _Mapping]] = ..., contacts: _Optional[_Union[SyncMessage.Contacts, _Mapping]] = ..., request: _Optional[_Union[SyncMessage.Request, _Mapping]] = ..., read: _Optional[_Iterable[_Union[SyncMessage.Read, _Mapping]]] = ..., blocked: _Optional[_Union[SyncMessage.Blocked, _Mapping]] = ..., verified: _Optional[_Union[Verified, _Mapping]] = ..., configuration: _Optional[_Union[SyncMessage.Configuration, _Mapping]] = ..., padding: _Optional[bytes] = ..., stickerPackOperation: _Optional[_Iterable[_Union[SyncMessage.StickerPackOperation, _Mapping]]] = ..., viewOnceOpen: _Optional[_Union[SyncMessage.ViewOnceOpen, _Mapping]] = ..., fetchLatest: _Optional[_Union[SyncMessage.FetchLatest, _Mapping]] = ..., keys: _Optional[_Union[SyncMessage.Keys, _Mapping]] = ..., messageRequestResponse: _Optional[_Union[SyncMessage.MessageRequestResponse, _Mapping]] = ..., outgoingPayment: _Optional[_Union[SyncMessage.OutgoingPayment, _Mapping]] = ..., viewed: _Optional[_Iterable[_Union[SyncMessage.Viewed, _Mapping]]] = ..., pniChangeNumber: _Optional[_Union[SyncMessage.PniChangeNumber, _Mapping]] = ..., callEvent: _Optional[_Union[SyncMessage.CallEvent, _Mapping]] = ..., callLinkUpdate: _Optional[_Union[SyncMessage.CallLinkUpdate, _Mapping]] = ..., callLogEvent: _Optional[_Union[SyncMessage.CallLogEvent, _Mapping]] = ..., deleteForMe: _Optional[_Union[SyncMessage.DeleteForMe, _Mapping]] = ..., deviceNameChange: _Optional[_Union[SyncMessage.DeviceNameChange, _Mapping]] = ...) -> None: ...
 
 class AttachmentPointer(_message.Message):
-    __slots__ = ("cdnId", "cdnKey", "contentType", "key", "size", "thumbnail", "digest", "incrementalMac", "incrementalMacChunkSize", "fileName", "flags", "width", "height", "caption", "blurHash", "uploadTimestamp", "cdnNumber", "uuid")
+    __slots__ = ("cdnId", "cdnKey", "clientUuid", "contentType", "key", "size", "thumbnail", "digest", "incrementalMac", "chunkSize", "fileName", "flags", "width", "height", "caption", "blurHash", "uploadTimestamp", "cdnNumber")
     class Flags(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = ()
         VOICE_MESSAGE: _ClassVar[AttachmentPointer.Flags]
@@ -1037,13 +1022,14 @@ class AttachmentPointer(_message.Message):
     GIF: AttachmentPointer.Flags
     CDNID_FIELD_NUMBER: _ClassVar[int]
     CDNKEY_FIELD_NUMBER: _ClassVar[int]
+    CLIENTUUID_FIELD_NUMBER: _ClassVar[int]
     CONTENTTYPE_FIELD_NUMBER: _ClassVar[int]
     KEY_FIELD_NUMBER: _ClassVar[int]
     SIZE_FIELD_NUMBER: _ClassVar[int]
     THUMBNAIL_FIELD_NUMBER: _ClassVar[int]
     DIGEST_FIELD_NUMBER: _ClassVar[int]
     INCREMENTALMAC_FIELD_NUMBER: _ClassVar[int]
-    INCREMENTALMACCHUNKSIZE_FIELD_NUMBER: _ClassVar[int]
+    CHUNKSIZE_FIELD_NUMBER: _ClassVar[int]
     FILENAME_FIELD_NUMBER: _ClassVar[int]
     FLAGS_FIELD_NUMBER: _ClassVar[int]
     WIDTH_FIELD_NUMBER: _ClassVar[int]
@@ -1052,16 +1038,16 @@ class AttachmentPointer(_message.Message):
     BLURHASH_FIELD_NUMBER: _ClassVar[int]
     UPLOADTIMESTAMP_FIELD_NUMBER: _ClassVar[int]
     CDNNUMBER_FIELD_NUMBER: _ClassVar[int]
-    UUID_FIELD_NUMBER: _ClassVar[int]
     cdnId: int
     cdnKey: str
+    clientUuid: bytes
     contentType: str
     key: bytes
     size: int
     thumbnail: bytes
     digest: bytes
     incrementalMac: bytes
-    incrementalMacChunkSize: int
+    chunkSize: int
     fileName: str
     flags: int
     width: int
@@ -1070,41 +1056,7 @@ class AttachmentPointer(_message.Message):
     blurHash: str
     uploadTimestamp: int
     cdnNumber: int
-    uuid: bytes
-    def __init__(self, cdnId: _Optional[int] = ..., cdnKey: _Optional[str] = ..., contentType: _Optional[str] = ..., key: _Optional[bytes] = ..., size: _Optional[int] = ..., thumbnail: _Optional[bytes] = ..., digest: _Optional[bytes] = ..., incrementalMac: _Optional[bytes] = ..., incrementalMacChunkSize: _Optional[int] = ..., fileName: _Optional[str] = ..., flags: _Optional[int] = ..., width: _Optional[int] = ..., height: _Optional[int] = ..., caption: _Optional[str] = ..., blurHash: _Optional[str] = ..., uploadTimestamp: _Optional[int] = ..., cdnNumber: _Optional[int] = ..., uuid: _Optional[bytes] = ...) -> None: ...
-
-class GroupContext(_message.Message):
-    __slots__ = ("id", "type", "name", "membersE164", "members", "avatar")
-    class Type(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-        __slots__ = ()
-        UNKNOWN: _ClassVar[GroupContext.Type]
-        UPDATE: _ClassVar[GroupContext.Type]
-        DELIVER: _ClassVar[GroupContext.Type]
-        QUIT: _ClassVar[GroupContext.Type]
-        REQUEST_INFO: _ClassVar[GroupContext.Type]
-    UNKNOWN: GroupContext.Type
-    UPDATE: GroupContext.Type
-    DELIVER: GroupContext.Type
-    QUIT: GroupContext.Type
-    REQUEST_INFO: GroupContext.Type
-    class Member(_message.Message):
-        __slots__ = ("e164",)
-        E164_FIELD_NUMBER: _ClassVar[int]
-        e164: str
-        def __init__(self, e164: _Optional[str] = ...) -> None: ...
-    ID_FIELD_NUMBER: _ClassVar[int]
-    TYPE_FIELD_NUMBER: _ClassVar[int]
-    NAME_FIELD_NUMBER: _ClassVar[int]
-    MEMBERSE164_FIELD_NUMBER: _ClassVar[int]
-    MEMBERS_FIELD_NUMBER: _ClassVar[int]
-    AVATAR_FIELD_NUMBER: _ClassVar[int]
-    id: bytes
-    type: GroupContext.Type
-    name: str
-    membersE164: _containers.RepeatedScalarFieldContainer[str]
-    members: _containers.RepeatedCompositeFieldContainer[GroupContext.Member]
-    avatar: AttachmentPointer
-    def __init__(self, id: _Optional[bytes] = ..., type: _Optional[_Union[GroupContext.Type, str]] = ..., name: _Optional[str] = ..., membersE164: _Optional[_Iterable[str]] = ..., members: _Optional[_Iterable[_Union[GroupContext.Member, _Mapping]]] = ..., avatar: _Optional[_Union[AttachmentPointer, _Mapping]] = ...) -> None: ...
+    def __init__(self, cdnId: _Optional[int] = ..., cdnKey: _Optional[str] = ..., clientUuid: _Optional[bytes] = ..., contentType: _Optional[str] = ..., key: _Optional[bytes] = ..., size: _Optional[int] = ..., thumbnail: _Optional[bytes] = ..., digest: _Optional[bytes] = ..., incrementalMac: _Optional[bytes] = ..., chunkSize: _Optional[int] = ..., fileName: _Optional[str] = ..., flags: _Optional[int] = ..., width: _Optional[int] = ..., height: _Optional[int] = ..., caption: _Optional[str] = ..., blurHash: _Optional[str] = ..., uploadTimestamp: _Optional[int] = ..., cdnNumber: _Optional[int] = ...) -> None: ...
 
 class GroupContextV2(_message.Message):
     __slots__ = ("masterKey", "revision", "groupChange")
@@ -1117,7 +1069,7 @@ class GroupContextV2(_message.Message):
     def __init__(self, masterKey: _Optional[bytes] = ..., revision: _Optional[int] = ..., groupChange: _Optional[bytes] = ...) -> None: ...
 
 class ContactDetails(_message.Message):
-    __slots__ = ("number", "aci", "name", "avatar", "color", "verified", "profileKey", "expireTimer", "expireTimerVersion", "inboxPosition", "archived")
+    __slots__ = ("number", "aci", "name", "avatar", "expireTimer", "expireTimerVersion", "inboxPosition")
     class Avatar(_message.Message):
         __slots__ = ("contentType", "length")
         CONTENTTYPE_FIELD_NUMBER: _ClassVar[int]
@@ -1129,76 +1081,30 @@ class ContactDetails(_message.Message):
     ACI_FIELD_NUMBER: _ClassVar[int]
     NAME_FIELD_NUMBER: _ClassVar[int]
     AVATAR_FIELD_NUMBER: _ClassVar[int]
-    COLOR_FIELD_NUMBER: _ClassVar[int]
-    VERIFIED_FIELD_NUMBER: _ClassVar[int]
-    PROFILEKEY_FIELD_NUMBER: _ClassVar[int]
     EXPIRETIMER_FIELD_NUMBER: _ClassVar[int]
     EXPIRETIMERVERSION_FIELD_NUMBER: _ClassVar[int]
     INBOXPOSITION_FIELD_NUMBER: _ClassVar[int]
-    ARCHIVED_FIELD_NUMBER: _ClassVar[int]
     number: str
     aci: str
     name: str
     avatar: ContactDetails.Avatar
-    color: str
-    verified: Verified
-    profileKey: bytes
     expireTimer: int
     expireTimerVersion: int
     inboxPosition: int
-    archived: bool
-    def __init__(self, number: _Optional[str] = ..., aci: _Optional[str] = ..., name: _Optional[str] = ..., avatar: _Optional[_Union[ContactDetails.Avatar, _Mapping]] = ..., color: _Optional[str] = ..., verified: _Optional[_Union[Verified, _Mapping]] = ..., profileKey: _Optional[bytes] = ..., expireTimer: _Optional[int] = ..., expireTimerVersion: _Optional[int] = ..., inboxPosition: _Optional[int] = ..., archived: bool = ...) -> None: ...
-
-class GroupDetails(_message.Message):
-    __slots__ = ("id", "name", "membersE164", "members", "avatar", "active", "expireTimer", "color", "blocked", "inboxPosition", "archived")
-    class Avatar(_message.Message):
-        __slots__ = ("contentType", "length")
-        CONTENTTYPE_FIELD_NUMBER: _ClassVar[int]
-        LENGTH_FIELD_NUMBER: _ClassVar[int]
-        contentType: str
-        length: int
-        def __init__(self, contentType: _Optional[str] = ..., length: _Optional[int] = ...) -> None: ...
-    class Member(_message.Message):
-        __slots__ = ("e164",)
-        E164_FIELD_NUMBER: _ClassVar[int]
-        e164: str
-        def __init__(self, e164: _Optional[str] = ...) -> None: ...
-    ID_FIELD_NUMBER: _ClassVar[int]
-    NAME_FIELD_NUMBER: _ClassVar[int]
-    MEMBERSE164_FIELD_NUMBER: _ClassVar[int]
-    MEMBERS_FIELD_NUMBER: _ClassVar[int]
-    AVATAR_FIELD_NUMBER: _ClassVar[int]
-    ACTIVE_FIELD_NUMBER: _ClassVar[int]
-    EXPIRETIMER_FIELD_NUMBER: _ClassVar[int]
-    COLOR_FIELD_NUMBER: _ClassVar[int]
-    BLOCKED_FIELD_NUMBER: _ClassVar[int]
-    INBOXPOSITION_FIELD_NUMBER: _ClassVar[int]
-    ARCHIVED_FIELD_NUMBER: _ClassVar[int]
-    id: bytes
-    name: str
-    membersE164: _containers.RepeatedScalarFieldContainer[str]
-    members: _containers.RepeatedCompositeFieldContainer[GroupDetails.Member]
-    avatar: GroupDetails.Avatar
-    active: bool
-    expireTimer: int
-    color: str
-    blocked: bool
-    inboxPosition: int
-    archived: bool
-    def __init__(self, id: _Optional[bytes] = ..., name: _Optional[str] = ..., membersE164: _Optional[_Iterable[str]] = ..., members: _Optional[_Iterable[_Union[GroupDetails.Member, _Mapping]]] = ..., avatar: _Optional[_Union[GroupDetails.Avatar, _Mapping]] = ..., active: bool = ..., expireTimer: _Optional[int] = ..., color: _Optional[str] = ..., blocked: bool = ..., inboxPosition: _Optional[int] = ..., archived: bool = ...) -> None: ...
+    def __init__(self, number: _Optional[str] = ..., aci: _Optional[str] = ..., name: _Optional[str] = ..., avatar: _Optional[_Union[ContactDetails.Avatar, _Mapping]] = ..., expireTimer: _Optional[int] = ..., expireTimerVersion: _Optional[int] = ..., inboxPosition: _Optional[int] = ...) -> None: ...
 
 class PaymentAddress(_message.Message):
-    __slots__ = ("mobileCoinAddress",)
-    class MobileCoinAddress(_message.Message):
-        __slots__ = ("address", "signature")
-        ADDRESS_FIELD_NUMBER: _ClassVar[int]
+    __slots__ = ("mobileCoin",)
+    class MobileCoin(_message.Message):
+        __slots__ = ("publicAddress", "signature")
+        PUBLICADDRESS_FIELD_NUMBER: _ClassVar[int]
         SIGNATURE_FIELD_NUMBER: _ClassVar[int]
-        address: bytes
+        publicAddress: bytes
         signature: bytes
-        def __init__(self, address: _Optional[bytes] = ..., signature: _Optional[bytes] = ...) -> None: ...
-    MOBILECOINADDRESS_FIELD_NUMBER: _ClassVar[int]
-    mobileCoinAddress: PaymentAddress.MobileCoinAddress
-    def __init__(self, mobileCoinAddress: _Optional[_Union[PaymentAddress.MobileCoinAddress, _Mapping]] = ...) -> None: ...
+        def __init__(self, publicAddress: _Optional[bytes] = ..., signature: _Optional[bytes] = ...) -> None: ...
+    MOBILECOIN_FIELD_NUMBER: _ClassVar[int]
+    mobileCoin: PaymentAddress.MobileCoin
+    def __init__(self, mobileCoin: _Optional[_Union[PaymentAddress.MobileCoin, _Mapping]] = ...) -> None: ...
 
 class DecryptionErrorMessage(_message.Message):
     __slots__ = ("ratchetKey", "timestamp", "deviceId")
@@ -1225,3 +1131,29 @@ class EditMessage(_message.Message):
     targetSentTimestamp: int
     dataMessage: DataMessage
     def __init__(self, targetSentTimestamp: _Optional[int] = ..., dataMessage: _Optional[_Union[DataMessage, _Mapping]] = ...) -> None: ...
+
+class BodyRange(_message.Message):
+    __slots__ = ("start", "length", "mentionAci", "style")
+    class Style(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+        __slots__ = ()
+        NONE: _ClassVar[BodyRange.Style]
+        BOLD: _ClassVar[BodyRange.Style]
+        ITALIC: _ClassVar[BodyRange.Style]
+        SPOILER: _ClassVar[BodyRange.Style]
+        STRIKETHROUGH: _ClassVar[BodyRange.Style]
+        MONOSPACE: _ClassVar[BodyRange.Style]
+    NONE: BodyRange.Style
+    BOLD: BodyRange.Style
+    ITALIC: BodyRange.Style
+    SPOILER: BodyRange.Style
+    STRIKETHROUGH: BodyRange.Style
+    MONOSPACE: BodyRange.Style
+    START_FIELD_NUMBER: _ClassVar[int]
+    LENGTH_FIELD_NUMBER: _ClassVar[int]
+    MENTIONACI_FIELD_NUMBER: _ClassVar[int]
+    STYLE_FIELD_NUMBER: _ClassVar[int]
+    start: int
+    length: int
+    mentionAci: str
+    style: BodyRange.Style
+    def __init__(self, start: _Optional[int] = ..., length: _Optional[int] = ..., mentionAci: _Optional[str] = ..., style: _Optional[_Union[BodyRange.Style, str]] = ...) -> None: ...
