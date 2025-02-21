@@ -594,7 +594,7 @@ class Verified(_message.Message):
     def __init__(self, destinationAci: _Optional[str] = ..., identityKey: _Optional[bytes] = ..., state: _Optional[_Union[Verified.State, str]] = ..., nullMessage: _Optional[bytes] = ...) -> None: ...
 
 class SyncMessage(_message.Message):
-    __slots__ = ("sent", "contacts", "request", "read", "blocked", "verified", "configuration", "padding", "stickerPackOperation", "viewOnceOpen", "fetchLatest", "keys", "messageRequestResponse", "outgoingPayment", "viewed", "pniChangeNumber", "callEvent", "callLinkUpdate", "callLogEvent", "deleteForMe", "deviceNameChange")
+    __slots__ = ("sent", "contacts", "request", "read", "blocked", "verified", "configuration", "padding", "stickerPackOperation", "viewOnceOpen", "fetchLatest", "keys", "messageRequestResponse", "outgoingPayment", "viewed", "pniChangeNumber", "callEvent", "callLinkUpdate", "callLogEvent", "deleteForMe", "deviceNameChange", "attachmentBackfillRequest", "attachmentBackfillResponse")
     class Sent(_message.Message):
         __slots__ = ("destinationE164", "destinationServiceId", "timestamp", "message", "expirationStartTimestamp", "unidentifiedStatus", "isRecipientUpdate", "storyMessage", "storyMessageRecipients", "editMessage")
         class UnidentifiedDeliveryStatus(_message.Message):
@@ -898,31 +898,13 @@ class SyncMessage(_message.Message):
         def __init__(self, type: _Optional[_Union[SyncMessage.CallLogEvent.Type, str]] = ..., timestamp: _Optional[int] = ..., conversationId: _Optional[bytes] = ..., callId: _Optional[int] = ...) -> None: ...
     class DeleteForMe(_message.Message):
         __slots__ = ("messageDeletes", "conversationDeletes", "localOnlyConversationDeletes", "attachmentDeletes")
-        class ConversationIdentifier(_message.Message):
-            __slots__ = ("threadServiceId", "threadGroupId", "threadE164")
-            THREADSERVICEID_FIELD_NUMBER: _ClassVar[int]
-            THREADGROUPID_FIELD_NUMBER: _ClassVar[int]
-            THREADE164_FIELD_NUMBER: _ClassVar[int]
-            threadServiceId: str
-            threadGroupId: bytes
-            threadE164: str
-            def __init__(self, threadServiceId: _Optional[str] = ..., threadGroupId: _Optional[bytes] = ..., threadE164: _Optional[str] = ...) -> None: ...
-        class AddressableMessage(_message.Message):
-            __slots__ = ("authorServiceId", "authorE164", "sentTimestamp")
-            AUTHORSERVICEID_FIELD_NUMBER: _ClassVar[int]
-            AUTHORE164_FIELD_NUMBER: _ClassVar[int]
-            SENTTIMESTAMP_FIELD_NUMBER: _ClassVar[int]
-            authorServiceId: str
-            authorE164: str
-            sentTimestamp: int
-            def __init__(self, authorServiceId: _Optional[str] = ..., authorE164: _Optional[str] = ..., sentTimestamp: _Optional[int] = ...) -> None: ...
         class MessageDeletes(_message.Message):
             __slots__ = ("conversation", "messages")
             CONVERSATION_FIELD_NUMBER: _ClassVar[int]
             MESSAGES_FIELD_NUMBER: _ClassVar[int]
-            conversation: SyncMessage.DeleteForMe.ConversationIdentifier
-            messages: _containers.RepeatedCompositeFieldContainer[SyncMessage.DeleteForMe.AddressableMessage]
-            def __init__(self, conversation: _Optional[_Union[SyncMessage.DeleteForMe.ConversationIdentifier, _Mapping]] = ..., messages: _Optional[_Iterable[_Union[SyncMessage.DeleteForMe.AddressableMessage, _Mapping]]] = ...) -> None: ...
+            conversation: ConversationIdentifier
+            messages: _containers.RepeatedCompositeFieldContainer[AddressableMessage]
+            def __init__(self, conversation: _Optional[_Union[ConversationIdentifier, _Mapping]] = ..., messages: _Optional[_Iterable[_Union[AddressableMessage, _Mapping]]] = ...) -> None: ...
         class AttachmentDelete(_message.Message):
             __slots__ = ("conversation", "targetMessage", "clientUuid", "fallbackDigest", "fallbackPlaintextHash")
             CONVERSATION_FIELD_NUMBER: _ClassVar[int]
@@ -930,28 +912,28 @@ class SyncMessage(_message.Message):
             CLIENTUUID_FIELD_NUMBER: _ClassVar[int]
             FALLBACKDIGEST_FIELD_NUMBER: _ClassVar[int]
             FALLBACKPLAINTEXTHASH_FIELD_NUMBER: _ClassVar[int]
-            conversation: SyncMessage.DeleteForMe.ConversationIdentifier
-            targetMessage: SyncMessage.DeleteForMe.AddressableMessage
+            conversation: ConversationIdentifier
+            targetMessage: AddressableMessage
             clientUuid: bytes
             fallbackDigest: bytes
             fallbackPlaintextHash: bytes
-            def __init__(self, conversation: _Optional[_Union[SyncMessage.DeleteForMe.ConversationIdentifier, _Mapping]] = ..., targetMessage: _Optional[_Union[SyncMessage.DeleteForMe.AddressableMessage, _Mapping]] = ..., clientUuid: _Optional[bytes] = ..., fallbackDigest: _Optional[bytes] = ..., fallbackPlaintextHash: _Optional[bytes] = ...) -> None: ...
+            def __init__(self, conversation: _Optional[_Union[ConversationIdentifier, _Mapping]] = ..., targetMessage: _Optional[_Union[AddressableMessage, _Mapping]] = ..., clientUuid: _Optional[bytes] = ..., fallbackDigest: _Optional[bytes] = ..., fallbackPlaintextHash: _Optional[bytes] = ...) -> None: ...
         class ConversationDelete(_message.Message):
             __slots__ = ("conversation", "mostRecentMessages", "isFullDelete", "mostRecentNonExpiringMessages")
             CONVERSATION_FIELD_NUMBER: _ClassVar[int]
             MOSTRECENTMESSAGES_FIELD_NUMBER: _ClassVar[int]
             ISFULLDELETE_FIELD_NUMBER: _ClassVar[int]
             MOSTRECENTNONEXPIRINGMESSAGES_FIELD_NUMBER: _ClassVar[int]
-            conversation: SyncMessage.DeleteForMe.ConversationIdentifier
-            mostRecentMessages: _containers.RepeatedCompositeFieldContainer[SyncMessage.DeleteForMe.AddressableMessage]
+            conversation: ConversationIdentifier
+            mostRecentMessages: _containers.RepeatedCompositeFieldContainer[AddressableMessage]
             isFullDelete: bool
-            mostRecentNonExpiringMessages: _containers.RepeatedCompositeFieldContainer[SyncMessage.DeleteForMe.AddressableMessage]
-            def __init__(self, conversation: _Optional[_Union[SyncMessage.DeleteForMe.ConversationIdentifier, _Mapping]] = ..., mostRecentMessages: _Optional[_Iterable[_Union[SyncMessage.DeleteForMe.AddressableMessage, _Mapping]]] = ..., isFullDelete: bool = ..., mostRecentNonExpiringMessages: _Optional[_Iterable[_Union[SyncMessage.DeleteForMe.AddressableMessage, _Mapping]]] = ...) -> None: ...
+            mostRecentNonExpiringMessages: _containers.RepeatedCompositeFieldContainer[AddressableMessage]
+            def __init__(self, conversation: _Optional[_Union[ConversationIdentifier, _Mapping]] = ..., mostRecentMessages: _Optional[_Iterable[_Union[AddressableMessage, _Mapping]]] = ..., isFullDelete: bool = ..., mostRecentNonExpiringMessages: _Optional[_Iterable[_Union[AddressableMessage, _Mapping]]] = ...) -> None: ...
         class LocalOnlyConversationDelete(_message.Message):
             __slots__ = ("conversation",)
             CONVERSATION_FIELD_NUMBER: _ClassVar[int]
-            conversation: SyncMessage.DeleteForMe.ConversationIdentifier
-            def __init__(self, conversation: _Optional[_Union[SyncMessage.DeleteForMe.ConversationIdentifier, _Mapping]] = ...) -> None: ...
+            conversation: ConversationIdentifier
+            def __init__(self, conversation: _Optional[_Union[ConversationIdentifier, _Mapping]] = ...) -> None: ...
         MESSAGEDELETES_FIELD_NUMBER: _ClassVar[int]
         CONVERSATIONDELETES_FIELD_NUMBER: _ClassVar[int]
         LOCALONLYCONVERSATIONDELETES_FIELD_NUMBER: _ClassVar[int]
@@ -966,6 +948,46 @@ class SyncMessage(_message.Message):
         DEVICEID_FIELD_NUMBER: _ClassVar[int]
         deviceId: int
         def __init__(self, deviceId: _Optional[int] = ...) -> None: ...
+    class AttachmentBackfillRequest(_message.Message):
+        __slots__ = ("targetMessage", "targetConversation")
+        TARGETMESSAGE_FIELD_NUMBER: _ClassVar[int]
+        TARGETCONVERSATION_FIELD_NUMBER: _ClassVar[int]
+        targetMessage: AddressableMessage
+        targetConversation: ConversationIdentifier
+        def __init__(self, targetMessage: _Optional[_Union[AddressableMessage, _Mapping]] = ..., targetConversation: _Optional[_Union[ConversationIdentifier, _Mapping]] = ...) -> None: ...
+    class AttachmentBackfillResponse(_message.Message):
+        __slots__ = ("targetMessage", "targetConversation", "attachments", "error")
+        class Error(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+            __slots__ = ()
+            MESSAGE_NOT_FOUND: _ClassVar[SyncMessage.AttachmentBackfillResponse.Error]
+        MESSAGE_NOT_FOUND: SyncMessage.AttachmentBackfillResponse.Error
+        class AttachmentData(_message.Message):
+            __slots__ = ("attachment", "status")
+            class Status(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+                __slots__ = ()
+                PENDING: _ClassVar[SyncMessage.AttachmentBackfillResponse.AttachmentData.Status]
+                TERMINAL_ERROR: _ClassVar[SyncMessage.AttachmentBackfillResponse.AttachmentData.Status]
+            PENDING: SyncMessage.AttachmentBackfillResponse.AttachmentData.Status
+            TERMINAL_ERROR: SyncMessage.AttachmentBackfillResponse.AttachmentData.Status
+            ATTACHMENT_FIELD_NUMBER: _ClassVar[int]
+            STATUS_FIELD_NUMBER: _ClassVar[int]
+            attachment: AttachmentPointer
+            status: SyncMessage.AttachmentBackfillResponse.AttachmentData.Status
+            def __init__(self, attachment: _Optional[_Union[AttachmentPointer, _Mapping]] = ..., status: _Optional[_Union[SyncMessage.AttachmentBackfillResponse.AttachmentData.Status, str]] = ...) -> None: ...
+        class AttachmentDataList(_message.Message):
+            __slots__ = ("attachments",)
+            ATTACHMENTS_FIELD_NUMBER: _ClassVar[int]
+            attachments: _containers.RepeatedCompositeFieldContainer[SyncMessage.AttachmentBackfillResponse.AttachmentData]
+            def __init__(self, attachments: _Optional[_Iterable[_Union[SyncMessage.AttachmentBackfillResponse.AttachmentData, _Mapping]]] = ...) -> None: ...
+        TARGETMESSAGE_FIELD_NUMBER: _ClassVar[int]
+        TARGETCONVERSATION_FIELD_NUMBER: _ClassVar[int]
+        ATTACHMENTS_FIELD_NUMBER: _ClassVar[int]
+        ERROR_FIELD_NUMBER: _ClassVar[int]
+        targetMessage: AddressableMessage
+        targetConversation: ConversationIdentifier
+        attachments: SyncMessage.AttachmentBackfillResponse.AttachmentDataList
+        error: SyncMessage.AttachmentBackfillResponse.Error
+        def __init__(self, targetMessage: _Optional[_Union[AddressableMessage, _Mapping]] = ..., targetConversation: _Optional[_Union[ConversationIdentifier, _Mapping]] = ..., attachments: _Optional[_Union[SyncMessage.AttachmentBackfillResponse.AttachmentDataList, _Mapping]] = ..., error: _Optional[_Union[SyncMessage.AttachmentBackfillResponse.Error, str]] = ...) -> None: ...
     SENT_FIELD_NUMBER: _ClassVar[int]
     CONTACTS_FIELD_NUMBER: _ClassVar[int]
     REQUEST_FIELD_NUMBER: _ClassVar[int]
@@ -987,6 +1009,8 @@ class SyncMessage(_message.Message):
     CALLLOGEVENT_FIELD_NUMBER: _ClassVar[int]
     DELETEFORME_FIELD_NUMBER: _ClassVar[int]
     DEVICENAMECHANGE_FIELD_NUMBER: _ClassVar[int]
+    ATTACHMENTBACKFILLREQUEST_FIELD_NUMBER: _ClassVar[int]
+    ATTACHMENTBACKFILLRESPONSE_FIELD_NUMBER: _ClassVar[int]
     sent: SyncMessage.Sent
     contacts: SyncMessage.Contacts
     request: SyncMessage.Request
@@ -1008,7 +1032,9 @@ class SyncMessage(_message.Message):
     callLogEvent: SyncMessage.CallLogEvent
     deleteForMe: SyncMessage.DeleteForMe
     deviceNameChange: SyncMessage.DeviceNameChange
-    def __init__(self, sent: _Optional[_Union[SyncMessage.Sent, _Mapping]] = ..., contacts: _Optional[_Union[SyncMessage.Contacts, _Mapping]] = ..., request: _Optional[_Union[SyncMessage.Request, _Mapping]] = ..., read: _Optional[_Iterable[_Union[SyncMessage.Read, _Mapping]]] = ..., blocked: _Optional[_Union[SyncMessage.Blocked, _Mapping]] = ..., verified: _Optional[_Union[Verified, _Mapping]] = ..., configuration: _Optional[_Union[SyncMessage.Configuration, _Mapping]] = ..., padding: _Optional[bytes] = ..., stickerPackOperation: _Optional[_Iterable[_Union[SyncMessage.StickerPackOperation, _Mapping]]] = ..., viewOnceOpen: _Optional[_Union[SyncMessage.ViewOnceOpen, _Mapping]] = ..., fetchLatest: _Optional[_Union[SyncMessage.FetchLatest, _Mapping]] = ..., keys: _Optional[_Union[SyncMessage.Keys, _Mapping]] = ..., messageRequestResponse: _Optional[_Union[SyncMessage.MessageRequestResponse, _Mapping]] = ..., outgoingPayment: _Optional[_Union[SyncMessage.OutgoingPayment, _Mapping]] = ..., viewed: _Optional[_Iterable[_Union[SyncMessage.Viewed, _Mapping]]] = ..., pniChangeNumber: _Optional[_Union[SyncMessage.PniChangeNumber, _Mapping]] = ..., callEvent: _Optional[_Union[SyncMessage.CallEvent, _Mapping]] = ..., callLinkUpdate: _Optional[_Union[SyncMessage.CallLinkUpdate, _Mapping]] = ..., callLogEvent: _Optional[_Union[SyncMessage.CallLogEvent, _Mapping]] = ..., deleteForMe: _Optional[_Union[SyncMessage.DeleteForMe, _Mapping]] = ..., deviceNameChange: _Optional[_Union[SyncMessage.DeviceNameChange, _Mapping]] = ...) -> None: ...
+    attachmentBackfillRequest: SyncMessage.AttachmentBackfillRequest
+    attachmentBackfillResponse: SyncMessage.AttachmentBackfillResponse
+    def __init__(self, sent: _Optional[_Union[SyncMessage.Sent, _Mapping]] = ..., contacts: _Optional[_Union[SyncMessage.Contacts, _Mapping]] = ..., request: _Optional[_Union[SyncMessage.Request, _Mapping]] = ..., read: _Optional[_Iterable[_Union[SyncMessage.Read, _Mapping]]] = ..., blocked: _Optional[_Union[SyncMessage.Blocked, _Mapping]] = ..., verified: _Optional[_Union[Verified, _Mapping]] = ..., configuration: _Optional[_Union[SyncMessage.Configuration, _Mapping]] = ..., padding: _Optional[bytes] = ..., stickerPackOperation: _Optional[_Iterable[_Union[SyncMessage.StickerPackOperation, _Mapping]]] = ..., viewOnceOpen: _Optional[_Union[SyncMessage.ViewOnceOpen, _Mapping]] = ..., fetchLatest: _Optional[_Union[SyncMessage.FetchLatest, _Mapping]] = ..., keys: _Optional[_Union[SyncMessage.Keys, _Mapping]] = ..., messageRequestResponse: _Optional[_Union[SyncMessage.MessageRequestResponse, _Mapping]] = ..., outgoingPayment: _Optional[_Union[SyncMessage.OutgoingPayment, _Mapping]] = ..., viewed: _Optional[_Iterable[_Union[SyncMessage.Viewed, _Mapping]]] = ..., pniChangeNumber: _Optional[_Union[SyncMessage.PniChangeNumber, _Mapping]] = ..., callEvent: _Optional[_Union[SyncMessage.CallEvent, _Mapping]] = ..., callLinkUpdate: _Optional[_Union[SyncMessage.CallLinkUpdate, _Mapping]] = ..., callLogEvent: _Optional[_Union[SyncMessage.CallLogEvent, _Mapping]] = ..., deleteForMe: _Optional[_Union[SyncMessage.DeleteForMe, _Mapping]] = ..., deviceNameChange: _Optional[_Union[SyncMessage.DeviceNameChange, _Mapping]] = ..., attachmentBackfillRequest: _Optional[_Union[SyncMessage.AttachmentBackfillRequest, _Mapping]] = ..., attachmentBackfillResponse: _Optional[_Union[SyncMessage.AttachmentBackfillResponse, _Mapping]] = ...) -> None: ...
 
 class AttachmentPointer(_message.Message):
     __slots__ = ("cdnId", "cdnKey", "clientUuid", "contentType", "key", "size", "thumbnail", "digest", "incrementalMac", "chunkSize", "fileName", "flags", "width", "height", "caption", "blurHash", "uploadTimestamp", "cdnNumber")
@@ -1157,3 +1183,23 @@ class BodyRange(_message.Message):
     mentionAci: str
     style: BodyRange.Style
     def __init__(self, start: _Optional[int] = ..., length: _Optional[int] = ..., mentionAci: _Optional[str] = ..., style: _Optional[_Union[BodyRange.Style, str]] = ...) -> None: ...
+
+class AddressableMessage(_message.Message):
+    __slots__ = ("authorServiceId", "authorE164", "sentTimestamp")
+    AUTHORSERVICEID_FIELD_NUMBER: _ClassVar[int]
+    AUTHORE164_FIELD_NUMBER: _ClassVar[int]
+    SENTTIMESTAMP_FIELD_NUMBER: _ClassVar[int]
+    authorServiceId: str
+    authorE164: str
+    sentTimestamp: int
+    def __init__(self, authorServiceId: _Optional[str] = ..., authorE164: _Optional[str] = ..., sentTimestamp: _Optional[int] = ...) -> None: ...
+
+class ConversationIdentifier(_message.Message):
+    __slots__ = ("threadServiceId", "threadGroupId", "threadE164")
+    THREADSERVICEID_FIELD_NUMBER: _ClassVar[int]
+    THREADGROUPID_FIELD_NUMBER: _ClassVar[int]
+    THREADE164_FIELD_NUMBER: _ClassVar[int]
+    threadServiceId: str
+    threadGroupId: bytes
+    threadE164: str
+    def __init__(self, threadServiceId: _Optional[str] = ..., threadGroupId: _Optional[bytes] = ..., threadE164: _Optional[str] = ...) -> None: ...
