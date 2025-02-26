@@ -1542,6 +1542,9 @@ def req_v1_archives_redeem_receipt(flow: HTTPFlow):
     After successful redemption, subsequent requests to /v1/archive/auth will return credentials with the level on
     the provided receipt until the expiration time on the receipt.
 
+    Accounts must have an existing backup credential request in order to redeem a receipt. This request will fail
+    if the account has not already set a backup credential request via PUT `/v1/archives/backupid`.
+
          Parameters:
 
 
@@ -1566,9 +1569,13 @@ def resp_v1_archives_redeem_receipt(flow: HTTPFlow):
     After successful redemption, subsequent requests to /v1/archive/auth will return credentials with the level on
     the provided receipt until the expiration time on the receipt.
 
+    Accounts must have an existing backup credential request in order to redeem a receipt. This request will fail
+    if the account has not already set a backup credential request via PUT `/v1/archives/backupid`.
+
          Responses:
             204 - The receipt was redeemed
             400 - The provided presentation or receipt was invalid
+            409 - The target account does not have a backup-id commitment
             429 - Rate limited.
 
          Security:
