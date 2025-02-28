@@ -190,7 +190,7 @@ class Recipient(_message.Message):
     def __init__(self, id: _Optional[int] = ..., contact: _Optional[_Union[Contact, _Mapping]] = ..., group: _Optional[_Union[Group, _Mapping]] = ..., distributionList: _Optional[_Union[DistributionListItem, _Mapping]] = ..., self: _Optional[_Union[Self, _Mapping]] = ..., releaseNotes: _Optional[_Union[ReleaseNotes, _Mapping]] = ..., callLink: _Optional[_Union[CallLink, _Mapping]] = ...) -> None: ...
 
 class Contact(_message.Message):
-    __slots__ = ("aci", "pni", "username", "e164", "blocked", "visibility", "registered", "notRegistered", "profileKey", "profileSharing", "profileGivenName", "profileFamilyName", "hideStory", "identityKey", "identityState", "nickname", "note")
+    __slots__ = ("aci", "pni", "username", "e164", "blocked", "visibility", "registered", "notRegistered", "profileKey", "profileSharing", "profileGivenName", "profileFamilyName", "hideStory", "identityKey", "identityState", "nickname", "note", "systemGivenName", "systemFamilyName", "systemNickname")
     class IdentityState(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = ()
         DEFAULT: _ClassVar[Contact.IdentityState]
@@ -239,6 +239,9 @@ class Contact(_message.Message):
     IDENTITYSTATE_FIELD_NUMBER: _ClassVar[int]
     NICKNAME_FIELD_NUMBER: _ClassVar[int]
     NOTE_FIELD_NUMBER: _ClassVar[int]
+    SYSTEMGIVENNAME_FIELD_NUMBER: _ClassVar[int]
+    SYSTEMFAMILYNAME_FIELD_NUMBER: _ClassVar[int]
+    SYSTEMNICKNAME_FIELD_NUMBER: _ClassVar[int]
     aci: bytes
     pni: bytes
     username: str
@@ -256,7 +259,10 @@ class Contact(_message.Message):
     identityState: Contact.IdentityState
     nickname: Contact.Name
     note: str
-    def __init__(self, aci: _Optional[bytes] = ..., pni: _Optional[bytes] = ..., username: _Optional[str] = ..., e164: _Optional[int] = ..., blocked: bool = ..., visibility: _Optional[_Union[Contact.Visibility, str]] = ..., registered: _Optional[_Union[Contact.Registered, _Mapping]] = ..., notRegistered: _Optional[_Union[Contact.NotRegistered, _Mapping]] = ..., profileKey: _Optional[bytes] = ..., profileSharing: bool = ..., profileGivenName: _Optional[str] = ..., profileFamilyName: _Optional[str] = ..., hideStory: bool = ..., identityKey: _Optional[bytes] = ..., identityState: _Optional[_Union[Contact.IdentityState, str]] = ..., nickname: _Optional[_Union[Contact.Name, _Mapping]] = ..., note: _Optional[str] = ...) -> None: ...
+    systemGivenName: str
+    systemFamilyName: str
+    systemNickname: str
+    def __init__(self, aci: _Optional[bytes] = ..., pni: _Optional[bytes] = ..., username: _Optional[str] = ..., e164: _Optional[int] = ..., blocked: bool = ..., visibility: _Optional[_Union[Contact.Visibility, str]] = ..., registered: _Optional[_Union[Contact.Registered, _Mapping]] = ..., notRegistered: _Optional[_Union[Contact.NotRegistered, _Mapping]] = ..., profileKey: _Optional[bytes] = ..., profileSharing: bool = ..., profileGivenName: _Optional[str] = ..., profileFamilyName: _Optional[str] = ..., hideStory: bool = ..., identityKey: _Optional[bytes] = ..., identityState: _Optional[_Union[Contact.IdentityState, str]] = ..., nickname: _Optional[_Union[Contact.Name, _Mapping]] = ..., note: _Optional[str] = ..., systemGivenName: _Optional[str] = ..., systemFamilyName: _Optional[str] = ..., systemNickname: _Optional[str] = ...) -> None: ...
 
 class Group(_message.Message):
     __slots__ = ("masterKey", "whitelisted", "hideStory", "storySendMode", "snapshot", "blocked")
