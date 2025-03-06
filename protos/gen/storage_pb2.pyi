@@ -17,16 +17,18 @@ class SessionStructure(_message.Message):
             key: bytes
             def __init__(self, index: _Optional[int] = ..., key: _Optional[bytes] = ...) -> None: ...
         class MessageKey(_message.Message):
-            __slots__ = ("index", "cipher_key", "mac_key", "iv")
+            __slots__ = ("index", "cipher_key", "mac_key", "iv", "seed")
             INDEX_FIELD_NUMBER: _ClassVar[int]
             CIPHER_KEY_FIELD_NUMBER: _ClassVar[int]
             MAC_KEY_FIELD_NUMBER: _ClassVar[int]
             IV_FIELD_NUMBER: _ClassVar[int]
+            SEED_FIELD_NUMBER: _ClassVar[int]
             index: int
             cipher_key: bytes
             mac_key: bytes
             iv: bytes
-            def __init__(self, index: _Optional[int] = ..., cipher_key: _Optional[bytes] = ..., mac_key: _Optional[bytes] = ..., iv: _Optional[bytes] = ...) -> None: ...
+            seed: bytes
+            def __init__(self, index: _Optional[int] = ..., cipher_key: _Optional[bytes] = ..., mac_key: _Optional[bytes] = ..., iv: _Optional[bytes] = ..., seed: _Optional[bytes] = ...) -> None: ...
         SENDER_RATCHET_KEY_FIELD_NUMBER: _ClassVar[int]
         SENDER_RATCHET_KEY_PRIVATE_FIELD_NUMBER: _ClassVar[int]
         CHAIN_KEY_FIELD_NUMBER: _ClassVar[int]
