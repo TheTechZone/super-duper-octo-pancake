@@ -6,6 +6,21 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Map
 
 DESCRIPTOR: _descriptor.FileDescriptor
 
+class AvatarColor(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+    __slots__ = ()
+    A100: _ClassVar[AvatarColor]
+    A110: _ClassVar[AvatarColor]
+    A120: _ClassVar[AvatarColor]
+    A130: _ClassVar[AvatarColor]
+    A140: _ClassVar[AvatarColor]
+    A150: _ClassVar[AvatarColor]
+    A160: _ClassVar[AvatarColor]
+    A170: _ClassVar[AvatarColor]
+    A180: _ClassVar[AvatarColor]
+    A190: _ClassVar[AvatarColor]
+    A200: _ClassVar[AvatarColor]
+    A210: _ClassVar[AvatarColor]
+
 class GroupV2AccessLevel(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
     __slots__ = ()
     UNKNOWN: _ClassVar[GroupV2AccessLevel]
@@ -13,6 +28,18 @@ class GroupV2AccessLevel(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
     MEMBER: _ClassVar[GroupV2AccessLevel]
     ADMINISTRATOR: _ClassVar[GroupV2AccessLevel]
     UNSATISFIABLE: _ClassVar[GroupV2AccessLevel]
+A100: AvatarColor
+A110: AvatarColor
+A120: AvatarColor
+A130: AvatarColor
+A140: AvatarColor
+A150: AvatarColor
+A160: AvatarColor
+A170: AvatarColor
+A180: AvatarColor
+A190: AvatarColor
+A200: AvatarColor
+A210: AvatarColor
 UNKNOWN: GroupV2AccessLevel
 ANY: GroupV2AccessLevel
 MEMBER: GroupV2AccessLevel
@@ -54,7 +81,7 @@ class Frame(_message.Message):
     def __init__(self, account: _Optional[_Union[AccountData, _Mapping]] = ..., recipient: _Optional[_Union[Recipient, _Mapping]] = ..., chat: _Optional[_Union[Chat, _Mapping]] = ..., chatItem: _Optional[_Union[ChatItem, _Mapping]] = ..., stickerPack: _Optional[_Union[StickerPack, _Mapping]] = ..., adHocCall: _Optional[_Union[AdHocCall, _Mapping]] = ..., notificationProfile: _Optional[_Union[NotificationProfile, _Mapping]] = ..., chatFolder: _Optional[_Union[ChatFolder, _Mapping]] = ...) -> None: ...
 
 class AccountData(_message.Message):
-    __slots__ = ("profileKey", "username", "usernameLink", "givenName", "familyName", "avatarUrlPath", "donationSubscriberData", "accountSettings", "backupsSubscriberData")
+    __slots__ = ("profileKey", "username", "usernameLink", "givenName", "familyName", "avatarUrlPath", "donationSubscriberData", "accountSettings", "backupsSubscriberData", "svrPin")
     class PhoneNumberSharingMode(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = ()
         UNKNOWN: _ClassVar[AccountData.PhoneNumberSharingMode]
@@ -160,6 +187,7 @@ class AccountData(_message.Message):
     DONATIONSUBSCRIBERDATA_FIELD_NUMBER: _ClassVar[int]
     ACCOUNTSETTINGS_FIELD_NUMBER: _ClassVar[int]
     BACKUPSSUBSCRIBERDATA_FIELD_NUMBER: _ClassVar[int]
+    SVRPIN_FIELD_NUMBER: _ClassVar[int]
     profileKey: bytes
     username: str
     usernameLink: AccountData.UsernameLink
@@ -169,7 +197,8 @@ class AccountData(_message.Message):
     donationSubscriberData: AccountData.SubscriberData
     accountSettings: AccountData.AccountSettings
     backupsSubscriberData: AccountData.IAPSubscriberData
-    def __init__(self, profileKey: _Optional[bytes] = ..., username: _Optional[str] = ..., usernameLink: _Optional[_Union[AccountData.UsernameLink, _Mapping]] = ..., givenName: _Optional[str] = ..., familyName: _Optional[str] = ..., avatarUrlPath: _Optional[str] = ..., donationSubscriberData: _Optional[_Union[AccountData.SubscriberData, _Mapping]] = ..., accountSettings: _Optional[_Union[AccountData.AccountSettings, _Mapping]] = ..., backupsSubscriberData: _Optional[_Union[AccountData.IAPSubscriberData, _Mapping]] = ...) -> None: ...
+    svrPin: str
+    def __init__(self, profileKey: _Optional[bytes] = ..., username: _Optional[str] = ..., usernameLink: _Optional[_Union[AccountData.UsernameLink, _Mapping]] = ..., givenName: _Optional[str] = ..., familyName: _Optional[str] = ..., avatarUrlPath: _Optional[str] = ..., donationSubscriberData: _Optional[_Union[AccountData.SubscriberData, _Mapping]] = ..., accountSettings: _Optional[_Union[AccountData.AccountSettings, _Mapping]] = ..., backupsSubscriberData: _Optional[_Union[AccountData.IAPSubscriberData, _Mapping]] = ..., svrPin: _Optional[str] = ...) -> None: ...
 
 class Recipient(_message.Message):
     __slots__ = ("id", "contact", "group", "distributionList", "self", "releaseNotes", "callLink")
@@ -190,7 +219,7 @@ class Recipient(_message.Message):
     def __init__(self, id: _Optional[int] = ..., contact: _Optional[_Union[Contact, _Mapping]] = ..., group: _Optional[_Union[Group, _Mapping]] = ..., distributionList: _Optional[_Union[DistributionListItem, _Mapping]] = ..., self: _Optional[_Union[Self, _Mapping]] = ..., releaseNotes: _Optional[_Union[ReleaseNotes, _Mapping]] = ..., callLink: _Optional[_Union[CallLink, _Mapping]] = ...) -> None: ...
 
 class Contact(_message.Message):
-    __slots__ = ("aci", "pni", "username", "e164", "blocked", "visibility", "registered", "notRegistered", "profileKey", "profileSharing", "profileGivenName", "profileFamilyName", "hideStory", "identityKey", "identityState", "nickname", "note", "systemGivenName", "systemFamilyName", "systemNickname")
+    __slots__ = ("aci", "pni", "username", "e164", "blocked", "visibility", "registered", "notRegistered", "profileKey", "profileSharing", "profileGivenName", "profileFamilyName", "hideStory", "identityKey", "identityState", "nickname", "note", "systemGivenName", "systemFamilyName", "systemNickname", "avatarColor")
     class IdentityState(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = ()
         DEFAULT: _ClassVar[Contact.IdentityState]
@@ -242,6 +271,7 @@ class Contact(_message.Message):
     SYSTEMGIVENNAME_FIELD_NUMBER: _ClassVar[int]
     SYSTEMFAMILYNAME_FIELD_NUMBER: _ClassVar[int]
     SYSTEMNICKNAME_FIELD_NUMBER: _ClassVar[int]
+    AVATARCOLOR_FIELD_NUMBER: _ClassVar[int]
     aci: bytes
     pni: bytes
     username: str
@@ -262,10 +292,11 @@ class Contact(_message.Message):
     systemGivenName: str
     systemFamilyName: str
     systemNickname: str
-    def __init__(self, aci: _Optional[bytes] = ..., pni: _Optional[bytes] = ..., username: _Optional[str] = ..., e164: _Optional[int] = ..., blocked: bool = ..., visibility: _Optional[_Union[Contact.Visibility, str]] = ..., registered: _Optional[_Union[Contact.Registered, _Mapping]] = ..., notRegistered: _Optional[_Union[Contact.NotRegistered, _Mapping]] = ..., profileKey: _Optional[bytes] = ..., profileSharing: bool = ..., profileGivenName: _Optional[str] = ..., profileFamilyName: _Optional[str] = ..., hideStory: bool = ..., identityKey: _Optional[bytes] = ..., identityState: _Optional[_Union[Contact.IdentityState, str]] = ..., nickname: _Optional[_Union[Contact.Name, _Mapping]] = ..., note: _Optional[str] = ..., systemGivenName: _Optional[str] = ..., systemFamilyName: _Optional[str] = ..., systemNickname: _Optional[str] = ...) -> None: ...
+    avatarColor: AvatarColor
+    def __init__(self, aci: _Optional[bytes] = ..., pni: _Optional[bytes] = ..., username: _Optional[str] = ..., e164: _Optional[int] = ..., blocked: bool = ..., visibility: _Optional[_Union[Contact.Visibility, str]] = ..., registered: _Optional[_Union[Contact.Registered, _Mapping]] = ..., notRegistered: _Optional[_Union[Contact.NotRegistered, _Mapping]] = ..., profileKey: _Optional[bytes] = ..., profileSharing: bool = ..., profileGivenName: _Optional[str] = ..., profileFamilyName: _Optional[str] = ..., hideStory: bool = ..., identityKey: _Optional[bytes] = ..., identityState: _Optional[_Union[Contact.IdentityState, str]] = ..., nickname: _Optional[_Union[Contact.Name, _Mapping]] = ..., note: _Optional[str] = ..., systemGivenName: _Optional[str] = ..., systemFamilyName: _Optional[str] = ..., systemNickname: _Optional[str] = ..., avatarColor: _Optional[_Union[AvatarColor, str]] = ...) -> None: ...
 
 class Group(_message.Message):
-    __slots__ = ("masterKey", "whitelisted", "hideStory", "storySendMode", "snapshot", "blocked")
+    __slots__ = ("masterKey", "whitelisted", "hideStory", "storySendMode", "snapshot", "blocked", "avatarColor")
     class StorySendMode(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = ()
         DEFAULT: _ClassVar[Group.StorySendMode]
@@ -379,17 +410,21 @@ class Group(_message.Message):
     STORYSENDMODE_FIELD_NUMBER: _ClassVar[int]
     SNAPSHOT_FIELD_NUMBER: _ClassVar[int]
     BLOCKED_FIELD_NUMBER: _ClassVar[int]
+    AVATARCOLOR_FIELD_NUMBER: _ClassVar[int]
     masterKey: bytes
     whitelisted: bool
     hideStory: bool
     storySendMode: Group.StorySendMode
     snapshot: Group.GroupSnapshot
     blocked: bool
-    def __init__(self, masterKey: _Optional[bytes] = ..., whitelisted: bool = ..., hideStory: bool = ..., storySendMode: _Optional[_Union[Group.StorySendMode, str]] = ..., snapshot: _Optional[_Union[Group.GroupSnapshot, _Mapping]] = ..., blocked: bool = ...) -> None: ...
+    avatarColor: AvatarColor
+    def __init__(self, masterKey: _Optional[bytes] = ..., whitelisted: bool = ..., hideStory: bool = ..., storySendMode: _Optional[_Union[Group.StorySendMode, str]] = ..., snapshot: _Optional[_Union[Group.GroupSnapshot, _Mapping]] = ..., blocked: bool = ..., avatarColor: _Optional[_Union[AvatarColor, str]] = ...) -> None: ...
 
 class Self(_message.Message):
-    __slots__ = ()
-    def __init__(self) -> None: ...
+    __slots__ = ("avatarColor",)
+    AVATARCOLOR_FIELD_NUMBER: _ClassVar[int]
+    avatarColor: AvatarColor
+    def __init__(self, avatarColor: _Optional[_Union[AvatarColor, str]] = ...) -> None: ...
 
 class ReleaseNotes(_message.Message):
     __slots__ = ()
