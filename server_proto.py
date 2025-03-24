@@ -802,6 +802,7 @@ def resp_v2_accounts_number(flow: HTTPFlow):
             403 - Verification failed for the provided Registration Recovery Password
             409 - Mismatched number of devices or device ids in 'devices to notify' list
             410 - Mismatched registration ids in 'devices to notify' list
+            413 - One or more device messages was too large
             422 - The request did not pass validation
             423 -
             429 - Too many attempts
@@ -855,6 +856,7 @@ def resp_v2_accounts_phone_number_identity_key_distribution(flow: HTTPFlow):
             422 - The request body failed validation.
             409 - The set of devices specified in the request does not match the set of devices active on the account.
             410 - The registration IDs provided for some devices do not match those stored on the server.
+            413 - One or more device messages was too large
 
          Security:
             authenticatedAccount - basic
