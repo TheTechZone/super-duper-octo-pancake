@@ -1172,6 +1172,10 @@ def req_v1_archives_media_batch(flow: HTTPFlow):
     be provided as a separate entry in the response.
 
          Parameters:
+            User-Agent
+              location: header
+              None
+
             X-Signal-ZK-Auth  (required)
               location: header
               Presentation of a ZK backup auth credential acquired from /v1/archives/auth, encoded in standard padded base64
@@ -1305,6 +1309,10 @@ def req_v1_archives_media(flow: HTTPFlow):
     parameters.
 
          Parameters:
+            User-Agent
+              location: header
+              None
+
             X-Signal-ZK-Auth  (required)
               location: header
               Presentation of a ZK backup auth credential acquired from /v1/archives/auth, encoded in standard padded base64
@@ -1391,6 +1399,7 @@ def resp_v1_archives_media_delete(flow: HTTPFlow):
             Delete media objects
             Delete media objects stored with this backup-id
          Responses:
+            204 - The provided objects were successfully deleted or they do not exist
             429 - Rate limited.
             403 - Forbidden. The request had insufficient permissions to perform the requested action
             401 - The provided backup auth credential presentation could not be verified or
@@ -1426,6 +1435,10 @@ def req_v1_archives_auth(flow: HTTPFlow):
     Clients must validate the receipt level on the credential matches a known receipt level before using it.
 
          Parameters:
+            User-Agent
+              location: header
+              None
+
             redemptionStartSeconds  (required)
               location: query
               None
@@ -3596,10 +3609,6 @@ def req_v1_messages_multi_recipient(flow: HTTPFlow):
             Group-Send-Token
               location: header
               A group send endorsement token covering recipients of this message. Must not be combined with `Unidentified-Access-Key` or set on a story message.
-
-            User-Agent
-              location: header
-              None
 
             online
               location: query
