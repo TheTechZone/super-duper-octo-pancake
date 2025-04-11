@@ -95,6 +95,7 @@ class ManifestRecord(_message.Message):
             ACCOUNT: _ClassVar[ManifestRecord.Identifier.Type]
             STORY_DISTRIBUTION_LIST: _ClassVar[ManifestRecord.Identifier.Type]
             CALL_LINK: _ClassVar[ManifestRecord.Identifier.Type]
+            CHAT_FOLDER: _ClassVar[ManifestRecord.Identifier.Type]
         UNKNOWN: ManifestRecord.Identifier.Type
         CONTACT: ManifestRecord.Identifier.Type
         GROUPV1: ManifestRecord.Identifier.Type
@@ -102,6 +103,7 @@ class ManifestRecord(_message.Message):
         ACCOUNT: ManifestRecord.Identifier.Type
         STORY_DISTRIBUTION_LIST: ManifestRecord.Identifier.Type
         CALL_LINK: ManifestRecord.Identifier.Type
+        CHAT_FOLDER: ManifestRecord.Identifier.Type
         RAW_FIELD_NUMBER: _ClassVar[int]
         TYPE_FIELD_NUMBER: _ClassVar[int]
         raw: bytes
@@ -118,20 +120,22 @@ class ManifestRecord(_message.Message):
     def __init__(self, version: _Optional[int] = ..., sourceDevice: _Optional[int] = ..., identifiers: _Optional[_Iterable[_Union[ManifestRecord.Identifier, _Mapping]]] = ..., recordIkm: _Optional[bytes] = ...) -> None: ...
 
 class StorageRecord(_message.Message):
-    __slots__ = ("contact", "groupV1", "groupV2", "account", "storyDistributionList", "callLink")
+    __slots__ = ("contact", "groupV1", "groupV2", "account", "storyDistributionList", "callLink", "chatFolder")
     CONTACT_FIELD_NUMBER: _ClassVar[int]
     GROUPV1_FIELD_NUMBER: _ClassVar[int]
     GROUPV2_FIELD_NUMBER: _ClassVar[int]
     ACCOUNT_FIELD_NUMBER: _ClassVar[int]
     STORYDISTRIBUTIONLIST_FIELD_NUMBER: _ClassVar[int]
     CALLLINK_FIELD_NUMBER: _ClassVar[int]
+    CHATFOLDER_FIELD_NUMBER: _ClassVar[int]
     contact: ContactRecord
     groupV1: GroupV1Record
     groupV2: GroupV2Record
     account: AccountRecord
     storyDistributionList: StoryDistributionListRecord
     callLink: CallLinkRecord
-    def __init__(self, contact: _Optional[_Union[ContactRecord, _Mapping]] = ..., groupV1: _Optional[_Union[GroupV1Record, _Mapping]] = ..., groupV2: _Optional[_Union[GroupV2Record, _Mapping]] = ..., account: _Optional[_Union[AccountRecord, _Mapping]] = ..., storyDistributionList: _Optional[_Union[StoryDistributionListRecord, _Mapping]] = ..., callLink: _Optional[_Union[CallLinkRecord, _Mapping]] = ...) -> None: ...
+    chatFolder: ChatFolderRecord
+    def __init__(self, contact: _Optional[_Union[ContactRecord, _Mapping]] = ..., groupV1: _Optional[_Union[GroupV1Record, _Mapping]] = ..., groupV2: _Optional[_Union[GroupV2Record, _Mapping]] = ..., account: _Optional[_Union[AccountRecord, _Mapping]] = ..., storyDistributionList: _Optional[_Union[StoryDistributionListRecord, _Mapping]] = ..., callLink: _Optional[_Union[CallLinkRecord, _Mapping]] = ..., chatFolder: _Optional[_Union[ChatFolderRecord, _Mapping]] = ...) -> None: ...
 
 class ContactRecord(_message.Message):
     __slots__ = ("aci", "e164", "pni", "profileKey", "identityKey", "identityState", "givenName", "familyName", "username", "blocked", "whitelisted", "archived", "markedUnread", "mutedUntilTimestamp", "hideStory", "unregisteredAtTimestamp", "systemGivenName", "systemFamilyName", "systemNickname", "hidden", "pniSignatureVerified", "nickname", "note", "avatarColor")
@@ -419,3 +423,53 @@ class CallLinkRecord(_message.Message):
     adminPasskey: bytes
     deletedAtTimestampMs: int
     def __init__(self, rootKey: _Optional[bytes] = ..., adminPasskey: _Optional[bytes] = ..., deletedAtTimestampMs: _Optional[int] = ...) -> None: ...
+
+class ChatFolderRecord(_message.Message):
+    __slots__ = ("identifier", "name", "position", "showOnlyUnread", "showMutedChats", "includeAllIndividualChats", "includeAllGroupChats", "folderType", "includedRecipients", "excludedRecipients", "deletedAtTimestampMs")
+    class FolderType(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+        __slots__ = ()
+        UNKNOWN: _ClassVar[ChatFolderRecord.FolderType]
+        ALL: _ClassVar[ChatFolderRecord.FolderType]
+        CUSTOM: _ClassVar[ChatFolderRecord.FolderType]
+    UNKNOWN: ChatFolderRecord.FolderType
+    ALL: ChatFolderRecord.FolderType
+    CUSTOM: ChatFolderRecord.FolderType
+    class Recipient(_message.Message):
+        __slots__ = ("contact", "legacyGroupId", "groupMasterKey")
+        class Contact(_message.Message):
+            __slots__ = ("serviceId", "e164")
+            SERVICEID_FIELD_NUMBER: _ClassVar[int]
+            E164_FIELD_NUMBER: _ClassVar[int]
+            serviceId: str
+            e164: str
+            def __init__(self, serviceId: _Optional[str] = ..., e164: _Optional[str] = ...) -> None: ...
+        CONTACT_FIELD_NUMBER: _ClassVar[int]
+        LEGACYGROUPID_FIELD_NUMBER: _ClassVar[int]
+        GROUPMASTERKEY_FIELD_NUMBER: _ClassVar[int]
+        contact: ChatFolderRecord.Recipient.Contact
+        legacyGroupId: bytes
+        groupMasterKey: bytes
+        def __init__(self, contact: _Optional[_Union[ChatFolderRecord.Recipient.Contact, _Mapping]] = ..., legacyGroupId: _Optional[bytes] = ..., groupMasterKey: _Optional[bytes] = ...) -> None: ...
+    IDENTIFIER_FIELD_NUMBER: _ClassVar[int]
+    NAME_FIELD_NUMBER: _ClassVar[int]
+    POSITION_FIELD_NUMBER: _ClassVar[int]
+    SHOWONLYUNREAD_FIELD_NUMBER: _ClassVar[int]
+    SHOWMUTEDCHATS_FIELD_NUMBER: _ClassVar[int]
+    INCLUDEALLINDIVIDUALCHATS_FIELD_NUMBER: _ClassVar[int]
+    INCLUDEALLGROUPCHATS_FIELD_NUMBER: _ClassVar[int]
+    FOLDERTYPE_FIELD_NUMBER: _ClassVar[int]
+    INCLUDEDRECIPIENTS_FIELD_NUMBER: _ClassVar[int]
+    EXCLUDEDRECIPIENTS_FIELD_NUMBER: _ClassVar[int]
+    DELETEDATTIMESTAMPMS_FIELD_NUMBER: _ClassVar[int]
+    identifier: bytes
+    name: str
+    position: int
+    showOnlyUnread: bool
+    showMutedChats: bool
+    includeAllIndividualChats: bool
+    includeAllGroupChats: bool
+    folderType: ChatFolderRecord.FolderType
+    includedRecipients: _containers.RepeatedCompositeFieldContainer[ChatFolderRecord.Recipient]
+    excludedRecipients: _containers.RepeatedCompositeFieldContainer[ChatFolderRecord.Recipient]
+    deletedAtTimestampMs: int
+    def __init__(self, identifier: _Optional[bytes] = ..., name: _Optional[str] = ..., position: _Optional[int] = ..., showOnlyUnread: bool = ..., showMutedChats: bool = ..., includeAllIndividualChats: bool = ..., includeAllGroupChats: bool = ..., folderType: _Optional[_Union[ChatFolderRecord.FolderType, str]] = ..., includedRecipients: _Optional[_Iterable[_Union[ChatFolderRecord.Recipient, _Mapping]]] = ..., excludedRecipients: _Optional[_Iterable[_Union[ChatFolderRecord.Recipient, _Mapping]]] = ..., deletedAtTimestampMs: _Optional[int] = ...) -> None: ...

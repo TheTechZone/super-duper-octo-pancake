@@ -1779,7 +1779,7 @@ class NotificationProfile(_message.Message):
     def __init__(self, name: _Optional[str] = ..., emoji: _Optional[str] = ..., color: _Optional[int] = ..., createdAtMs: _Optional[int] = ..., allowAllCalls: bool = ..., allowAllMentions: bool = ..., allowedMembers: _Optional[_Iterable[int]] = ..., scheduleEnabled: bool = ..., scheduleStartTime: _Optional[int] = ..., scheduleEndTime: _Optional[int] = ..., scheduleDaysEnabled: _Optional[_Iterable[_Union[NotificationProfile.DayOfWeek, str]]] = ...) -> None: ...
 
 class ChatFolder(_message.Message):
-    __slots__ = ("name", "showOnlyUnread", "showMutedChats", "includeAllIndividualChats", "includeAllGroupChats", "folderType", "includedRecipientIds", "excludedRecipientIds")
+    __slots__ = ("name", "showOnlyUnread", "showMutedChats", "includeAllIndividualChats", "includeAllGroupChats", "folderType", "includedRecipientIds", "excludedRecipientIds", "id")
     class FolderType(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = ()
         UNKNOWN: _ClassVar[ChatFolder.FolderType]
@@ -1796,6 +1796,7 @@ class ChatFolder(_message.Message):
     FOLDERTYPE_FIELD_NUMBER: _ClassVar[int]
     INCLUDEDRECIPIENTIDS_FIELD_NUMBER: _ClassVar[int]
     EXCLUDEDRECIPIENTIDS_FIELD_NUMBER: _ClassVar[int]
+    ID_FIELD_NUMBER: _ClassVar[int]
     name: str
     showOnlyUnread: bool
     showMutedChats: bool
@@ -1804,4 +1805,5 @@ class ChatFolder(_message.Message):
     folderType: ChatFolder.FolderType
     includedRecipientIds: _containers.RepeatedScalarFieldContainer[int]
     excludedRecipientIds: _containers.RepeatedScalarFieldContainer[int]
-    def __init__(self, name: _Optional[str] = ..., showOnlyUnread: bool = ..., showMutedChats: bool = ..., includeAllIndividualChats: bool = ..., includeAllGroupChats: bool = ..., folderType: _Optional[_Union[ChatFolder.FolderType, str]] = ..., includedRecipientIds: _Optional[_Iterable[int]] = ..., excludedRecipientIds: _Optional[_Iterable[int]] = ...) -> None: ...
+    id: bytes
+    def __init__(self, name: _Optional[str] = ..., showOnlyUnread: bool = ..., showMutedChats: bool = ..., includeAllIndividualChats: bool = ..., includeAllGroupChats: bool = ..., folderType: _Optional[_Union[ChatFolder.FolderType, str]] = ..., includedRecipientIds: _Optional[_Iterable[int]] = ..., excludedRecipientIds: _Optional[_Iterable[int]] = ..., id: _Optional[bytes] = ...) -> None: ...

@@ -975,10 +975,12 @@ class SyncMessage(_message.Message):
             status: SyncMessage.AttachmentBackfillResponse.AttachmentData.Status
             def __init__(self, attachment: _Optional[_Union[AttachmentPointer, _Mapping]] = ..., status: _Optional[_Union[SyncMessage.AttachmentBackfillResponse.AttachmentData.Status, str]] = ...) -> None: ...
         class AttachmentDataList(_message.Message):
-            __slots__ = ("attachments",)
+            __slots__ = ("attachments", "longText")
             ATTACHMENTS_FIELD_NUMBER: _ClassVar[int]
+            LONGTEXT_FIELD_NUMBER: _ClassVar[int]
             attachments: _containers.RepeatedCompositeFieldContainer[SyncMessage.AttachmentBackfillResponse.AttachmentData]
-            def __init__(self, attachments: _Optional[_Iterable[_Union[SyncMessage.AttachmentBackfillResponse.AttachmentData, _Mapping]]] = ...) -> None: ...
+            longText: SyncMessage.AttachmentBackfillResponse.AttachmentData
+            def __init__(self, attachments: _Optional[_Iterable[_Union[SyncMessage.AttachmentBackfillResponse.AttachmentData, _Mapping]]] = ..., longText: _Optional[_Union[SyncMessage.AttachmentBackfillResponse.AttachmentData, _Mapping]] = ...) -> None: ...
         TARGETMESSAGE_FIELD_NUMBER: _ClassVar[int]
         TARGETCONVERSATION_FIELD_NUMBER: _ClassVar[int]
         ATTACHMENTS_FIELD_NUMBER: _ClassVar[int]

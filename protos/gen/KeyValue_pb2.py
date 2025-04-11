@@ -24,7 +24,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0eKeyValue.proto\x12\x06signal\"D\n\x17LeastActiveLinkedDevice\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x1b\n\x13lastActiveTimestamp\x18\x02 \x01(\x04\"\xc7\x03\n\x1a\x41rchiveUploadProgressState\x12\x37\n\x05state\x18\x01 \x01(\x0e\x32(.signal.ArchiveUploadProgressState.State\x12\x1c\n\x14\x63ompletedAttachments\x18\x02 \x01(\x04\x12\x18\n\x10totalAttachments\x18\x03 \x01(\x04\x12\x43\n\x0b\x62\x61\x63kupPhase\x18\x04 \x01(\x0e\x32..signal.ArchiveUploadProgressState.BackupPhase\"Y\n\x05State\x12\x08\n\x04None\x10\x00\x12\x15\n\x11\x42\x61\x63kingUpMessages\x10\x01\x12\x15\n\x11UploadingMessages\x10\x02\x12\x18\n\x14UploadingAttachments\x10\x03\"\x97\x01\n\x0b\x42\x61\x63kupPhase\x12\x13\n\x0f\x42\x61\x63kupPhaseNone\x10\x00\x12\x0b\n\x07\x41\x63\x63ount\x10\x01\x12\r\n\tRecipient\x10\x02\x12\n\n\x06Thread\x10\x03\x12\x08\n\x04\x43\x61ll\x10\x04\x12\x0b\n\x07Sticker\x10\x05\x12\x0b\n\x07Message\x10\x06\x12\x17\n\x13NotificationProfile\x10\x07\x12\x0e\n\nChatFolder\x10\x08\x42,\n*org.thoughtcrime.securesms.keyvalue.protosb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0eKeyValue.proto\x12\x06signal\"D\n\x17LeastActiveLinkedDevice\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x1b\n\x13lastActiveTimestamp\x18\x02 \x01(\x04\"\xa1\x04\n\x1a\x41rchiveUploadProgressState\x12\x37\n\x05state\x18\x01 \x01(\x0e\x32(.signal.ArchiveUploadProgressState.State\x12\x43\n\x0b\x62\x61\x63kupPhase\x18\x02 \x01(\x0e\x32..signal.ArchiveUploadProgressState.BackupPhase\x12\x18\n\x10\x66rameExportCount\x18\x03 \x01(\x04\x12\x17\n\x0f\x66rameTotalCount\x18\x04 \x01(\x04\x12\x1f\n\x17\x62\x61\x63kupFileUploadedBytes\x18\x05 \x01(\x04\x12\x1c\n\x14\x62\x61\x63kupFileTotalBytes\x18\x06 \x01(\x04\x12\x1a\n\x12mediaUploadedBytes\x18\x07 \x01(\x04\x12\x17\n\x0fmediaTotalBytes\x18\x08 \x01(\x04\"D\n\x05State\x12\x08\n\x04None\x10\x00\x12\n\n\x06\x45xport\x10\x01\x12\x14\n\x10UploadBackupFile\x10\x02\x12\x0f\n\x0bUploadMedia\x10\x03\"\x97\x01\n\x0b\x42\x61\x63kupPhase\x12\x13\n\x0f\x42\x61\x63kupPhaseNone\x10\x00\x12\x0b\n\x07\x41\x63\x63ount\x10\x01\x12\r\n\tRecipient\x10\x02\x12\n\n\x06Thread\x10\x03\x12\x08\n\x04\x43\x61ll\x10\x04\x12\x0b\n\x07Sticker\x10\x05\x12\x0b\n\x07Message\x10\x06\x12\x17\n\x13NotificationProfile\x10\x07\x12\x0e\n\nChatFolder\x10\x08\x42,\n*org.thoughtcrime.securesms.keyvalue.protosb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -35,9 +35,9 @@ if not _descriptor._USE_C_DESCRIPTORS:
   _globals['_LEASTACTIVELINKEDDEVICE']._serialized_start=26
   _globals['_LEASTACTIVELINKEDDEVICE']._serialized_end=94
   _globals['_ARCHIVEUPLOADPROGRESSSTATE']._serialized_start=97
-  _globals['_ARCHIVEUPLOADPROGRESSSTATE']._serialized_end=552
-  _globals['_ARCHIVEUPLOADPROGRESSSTATE_STATE']._serialized_start=309
-  _globals['_ARCHIVEUPLOADPROGRESSSTATE_STATE']._serialized_end=398
-  _globals['_ARCHIVEUPLOADPROGRESSSTATE_BACKUPPHASE']._serialized_start=401
-  _globals['_ARCHIVEUPLOADPROGRESSSTATE_BACKUPPHASE']._serialized_end=552
+  _globals['_ARCHIVEUPLOADPROGRESSSTATE']._serialized_end=642
+  _globals['_ARCHIVEUPLOADPROGRESSSTATE_STATE']._serialized_start=420
+  _globals['_ARCHIVEUPLOADPROGRESSSTATE_STATE']._serialized_end=488
+  _globals['_ARCHIVEUPLOADPROGRESSSTATE_BACKUPPHASE']._serialized_start=491
+  _globals['_ARCHIVEUPLOADPROGRESSSTATE_BACKUPPHASE']._serialized_end=642
 # @@protoc_insertion_point(module_scope)
