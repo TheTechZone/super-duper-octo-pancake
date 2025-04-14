@@ -1756,7 +1756,7 @@ class ChatStyle(_message.Message):
     def __init__(self, wallpaperPreset: _Optional[_Union[ChatStyle.WallpaperPreset, str]] = ..., wallpaperPhoto: _Optional[_Union[FilePointer, _Mapping]] = ..., autoBubbleColor: _Optional[_Union[ChatStyle.AutomaticBubbleColor, _Mapping]] = ..., bubbleColorPreset: _Optional[_Union[ChatStyle.BubbleColorPreset, str]] = ..., customColorId: _Optional[int] = ..., dimWallpaperInDarkMode: bool = ...) -> None: ...
 
 class NotificationProfile(_message.Message):
-    __slots__ = ("name", "emoji", "color", "createdAtMs", "allowAllCalls", "allowAllMentions", "allowedMembers", "scheduleEnabled", "scheduleStartTime", "scheduleEndTime", "scheduleDaysEnabled")
+    __slots__ = ("name", "emoji", "color", "createdAtMs", "allowAllCalls", "allowAllMentions", "allowedMembers", "scheduleEnabled", "scheduleStartTime", "scheduleEndTime", "scheduleDaysEnabled", "id")
     class DayOfWeek(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = ()
         UNKNOWN: _ClassVar[NotificationProfile.DayOfWeek]
@@ -1786,6 +1786,7 @@ class NotificationProfile(_message.Message):
     SCHEDULESTARTTIME_FIELD_NUMBER: _ClassVar[int]
     SCHEDULEENDTIME_FIELD_NUMBER: _ClassVar[int]
     SCHEDULEDAYSENABLED_FIELD_NUMBER: _ClassVar[int]
+    ID_FIELD_NUMBER: _ClassVar[int]
     name: str
     emoji: str
     color: int
@@ -1797,7 +1798,8 @@ class NotificationProfile(_message.Message):
     scheduleStartTime: int
     scheduleEndTime: int
     scheduleDaysEnabled: _containers.RepeatedScalarFieldContainer[NotificationProfile.DayOfWeek]
-    def __init__(self, name: _Optional[str] = ..., emoji: _Optional[str] = ..., color: _Optional[int] = ..., createdAtMs: _Optional[int] = ..., allowAllCalls: bool = ..., allowAllMentions: bool = ..., allowedMembers: _Optional[_Iterable[int]] = ..., scheduleEnabled: bool = ..., scheduleStartTime: _Optional[int] = ..., scheduleEndTime: _Optional[int] = ..., scheduleDaysEnabled: _Optional[_Iterable[_Union[NotificationProfile.DayOfWeek, str]]] = ...) -> None: ...
+    id: bytes
+    def __init__(self, name: _Optional[str] = ..., emoji: _Optional[str] = ..., color: _Optional[int] = ..., createdAtMs: _Optional[int] = ..., allowAllCalls: bool = ..., allowAllMentions: bool = ..., allowedMembers: _Optional[_Iterable[int]] = ..., scheduleEnabled: bool = ..., scheduleStartTime: _Optional[int] = ..., scheduleEndTime: _Optional[int] = ..., scheduleDaysEnabled: _Optional[_Iterable[_Union[NotificationProfile.DayOfWeek, str]]] = ..., id: _Optional[bytes] = ...) -> None: ...
 
 class ChatFolder(_message.Message):
     __slots__ = ("name", "showOnlyUnread", "showMutedChats", "includeAllIndividualChats", "includeAllGroupChats", "folderType", "includedRecipientIds", "excludedRecipientIds", "id")
