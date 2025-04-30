@@ -3925,6 +3925,10 @@ def req_v1_profile_identifier_version(flow: HTTPFlow, identifier, version):
               location: path
               None
 
+            User-Agent
+              location: header
+              None
+
 
          Security:
             authenticatedAccount - basic
@@ -3986,6 +3990,10 @@ def req_v1_profile_identifier_version_credentialRequest(
               location: query
               None
 
+            User-Agent
+              location: header
+              None
+
 
          Security:
             authenticatedAccount - basic
@@ -4041,10 +4049,6 @@ def req_v1_profile_identifier(flow: HTTPFlow, identifier):
 
             identifier  (required)
               location: path
-              None
-
-            ca
-              location: query
               None
 
 
