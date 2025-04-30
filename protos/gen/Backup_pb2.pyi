@@ -954,7 +954,7 @@ class MessageAttachment(_message.Message):
     def __init__(self, pointer: _Optional[_Union[FilePointer, _Mapping]] = ..., flag: _Optional[_Union[MessageAttachment.Flag, str]] = ..., wasDownloaded: bool = ..., clientUuid: _Optional[bytes] = ...) -> None: ...
 
 class FilePointer(_message.Message):
-    __slots__ = ("backupLocator", "attachmentLocator", "invalidAttachmentLocator", "contentType", "incrementalMac", "incrementalMacChunkSize", "fileName", "width", "height", "caption", "blurHash")
+    __slots__ = ("backupLocator", "attachmentLocator", "invalidAttachmentLocator", "localLocator", "contentType", "incrementalMac", "incrementalMacChunkSize", "fileName", "width", "height", "caption", "blurHash")
     class BackupLocator(_message.Message):
         __slots__ = ("mediaName", "cdnNumber", "key", "digest", "size", "transitCdnKey", "transitCdnNumber")
         MEDIANAME_FIELD_NUMBER: _ClassVar[int]
@@ -990,9 +990,29 @@ class FilePointer(_message.Message):
     class InvalidAttachmentLocator(_message.Message):
         __slots__ = ()
         def __init__(self) -> None: ...
+    class LocalLocator(_message.Message):
+        __slots__ = ("mediaName", "localKey", "remoteKey", "remoteDigest", "size", "backupCdnNumber", "transitCdnKey", "transitCdnNumber")
+        MEDIANAME_FIELD_NUMBER: _ClassVar[int]
+        LOCALKEY_FIELD_NUMBER: _ClassVar[int]
+        REMOTEKEY_FIELD_NUMBER: _ClassVar[int]
+        REMOTEDIGEST_FIELD_NUMBER: _ClassVar[int]
+        SIZE_FIELD_NUMBER: _ClassVar[int]
+        BACKUPCDNNUMBER_FIELD_NUMBER: _ClassVar[int]
+        TRANSITCDNKEY_FIELD_NUMBER: _ClassVar[int]
+        TRANSITCDNNUMBER_FIELD_NUMBER: _ClassVar[int]
+        mediaName: str
+        localKey: bytes
+        remoteKey: bytes
+        remoteDigest: bytes
+        size: int
+        backupCdnNumber: int
+        transitCdnKey: str
+        transitCdnNumber: int
+        def __init__(self, mediaName: _Optional[str] = ..., localKey: _Optional[bytes] = ..., remoteKey: _Optional[bytes] = ..., remoteDigest: _Optional[bytes] = ..., size: _Optional[int] = ..., backupCdnNumber: _Optional[int] = ..., transitCdnKey: _Optional[str] = ..., transitCdnNumber: _Optional[int] = ...) -> None: ...
     BACKUPLOCATOR_FIELD_NUMBER: _ClassVar[int]
     ATTACHMENTLOCATOR_FIELD_NUMBER: _ClassVar[int]
     INVALIDATTACHMENTLOCATOR_FIELD_NUMBER: _ClassVar[int]
+    LOCALLOCATOR_FIELD_NUMBER: _ClassVar[int]
     CONTENTTYPE_FIELD_NUMBER: _ClassVar[int]
     INCREMENTALMAC_FIELD_NUMBER: _ClassVar[int]
     INCREMENTALMACCHUNKSIZE_FIELD_NUMBER: _ClassVar[int]
@@ -1004,6 +1024,7 @@ class FilePointer(_message.Message):
     backupLocator: FilePointer.BackupLocator
     attachmentLocator: FilePointer.AttachmentLocator
     invalidAttachmentLocator: FilePointer.InvalidAttachmentLocator
+    localLocator: FilePointer.LocalLocator
     contentType: str
     incrementalMac: bytes
     incrementalMacChunkSize: int
@@ -1012,7 +1033,7 @@ class FilePointer(_message.Message):
     height: int
     caption: str
     blurHash: str
-    def __init__(self, backupLocator: _Optional[_Union[FilePointer.BackupLocator, _Mapping]] = ..., attachmentLocator: _Optional[_Union[FilePointer.AttachmentLocator, _Mapping]] = ..., invalidAttachmentLocator: _Optional[_Union[FilePointer.InvalidAttachmentLocator, _Mapping]] = ..., contentType: _Optional[str] = ..., incrementalMac: _Optional[bytes] = ..., incrementalMacChunkSize: _Optional[int] = ..., fileName: _Optional[str] = ..., width: _Optional[int] = ..., height: _Optional[int] = ..., caption: _Optional[str] = ..., blurHash: _Optional[str] = ...) -> None: ...
+    def __init__(self, backupLocator: _Optional[_Union[FilePointer.BackupLocator, _Mapping]] = ..., attachmentLocator: _Optional[_Union[FilePointer.AttachmentLocator, _Mapping]] = ..., invalidAttachmentLocator: _Optional[_Union[FilePointer.InvalidAttachmentLocator, _Mapping]] = ..., localLocator: _Optional[_Union[FilePointer.LocalLocator, _Mapping]] = ..., contentType: _Optional[str] = ..., incrementalMac: _Optional[bytes] = ..., incrementalMacChunkSize: _Optional[int] = ..., fileName: _Optional[str] = ..., width: _Optional[int] = ..., height: _Optional[int] = ..., caption: _Optional[str] = ..., blurHash: _Optional[str] = ...) -> None: ...
 
 class Quote(_message.Message):
     __slots__ = ("targetSentTimestamp", "authorId", "text", "attachments", "type")
@@ -1735,7 +1756,7 @@ class ChatStyle(_message.Message):
     def __init__(self, wallpaperPreset: _Optional[_Union[ChatStyle.WallpaperPreset, str]] = ..., wallpaperPhoto: _Optional[_Union[FilePointer, _Mapping]] = ..., autoBubbleColor: _Optional[_Union[ChatStyle.AutomaticBubbleColor, _Mapping]] = ..., bubbleColorPreset: _Optional[_Union[ChatStyle.BubbleColorPreset, str]] = ..., customColorId: _Optional[int] = ..., dimWallpaperInDarkMode: bool = ...) -> None: ...
 
 class NotificationProfile(_message.Message):
-    __slots__ = ("name", "emoji", "color", "createdAtMs", "allowAllCalls", "allowAllMentions", "allowedMembers", "scheduleEnabled", "scheduleStartTime", "scheduleEndTime", "scheduleDaysEnabled")
+    __slots__ = ("name", "emoji", "color", "createdAtMs", "allowAllCalls", "allowAllMentions", "allowedMembers", "scheduleEnabled", "scheduleStartTime", "scheduleEndTime", "scheduleDaysEnabled", "id")
     class DayOfWeek(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = ()
         UNKNOWN: _ClassVar[NotificationProfile.DayOfWeek]
@@ -1765,6 +1786,7 @@ class NotificationProfile(_message.Message):
     SCHEDULESTARTTIME_FIELD_NUMBER: _ClassVar[int]
     SCHEDULEENDTIME_FIELD_NUMBER: _ClassVar[int]
     SCHEDULEDAYSENABLED_FIELD_NUMBER: _ClassVar[int]
+    ID_FIELD_NUMBER: _ClassVar[int]
     name: str
     emoji: str
     color: int
@@ -1776,7 +1798,8 @@ class NotificationProfile(_message.Message):
     scheduleStartTime: int
     scheduleEndTime: int
     scheduleDaysEnabled: _containers.RepeatedScalarFieldContainer[NotificationProfile.DayOfWeek]
-    def __init__(self, name: _Optional[str] = ..., emoji: _Optional[str] = ..., color: _Optional[int] = ..., createdAtMs: _Optional[int] = ..., allowAllCalls: bool = ..., allowAllMentions: bool = ..., allowedMembers: _Optional[_Iterable[int]] = ..., scheduleEnabled: bool = ..., scheduleStartTime: _Optional[int] = ..., scheduleEndTime: _Optional[int] = ..., scheduleDaysEnabled: _Optional[_Iterable[_Union[NotificationProfile.DayOfWeek, str]]] = ...) -> None: ...
+    id: bytes
+    def __init__(self, name: _Optional[str] = ..., emoji: _Optional[str] = ..., color: _Optional[int] = ..., createdAtMs: _Optional[int] = ..., allowAllCalls: bool = ..., allowAllMentions: bool = ..., allowedMembers: _Optional[_Iterable[int]] = ..., scheduleEnabled: bool = ..., scheduleStartTime: _Optional[int] = ..., scheduleEndTime: _Optional[int] = ..., scheduleDaysEnabled: _Optional[_Iterable[_Union[NotificationProfile.DayOfWeek, str]]] = ..., id: _Optional[bytes] = ...) -> None: ...
 
 class ChatFolder(_message.Message):
     __slots__ = ("name", "showOnlyUnread", "showMutedChats", "includeAllIndividualChats", "includeAllGroupChats", "folderType", "includedRecipientIds", "excludedRecipientIds", "id")
