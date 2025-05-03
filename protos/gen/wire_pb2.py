@@ -24,7 +24,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\nwire.proto\x12\x0fsignal.keytrans\"-\n\x0bPrefixProof\x12\r\n\x05proof\x18\x01 \x03(\x0c\x12\x0f\n\x07\x63ounter\x18\x02 \x01(\r\"C\n\x08TreeHead\x12\x11\n\ttree_size\x18\x01 \x01(\x04\x12\x11\n\ttimestamp\x18\x02 \x01(\x03\x12\x11\n\tsignature\x18\x03 \x01(\x0c\"|\n\x0f\x41uditorTreeHead\x12,\n\ttree_head\x18\x01 \x01(\x0b\x32\x19.signal.keytrans.TreeHead\x12\x17\n\nroot_value\x18\x02 \x01(\x0cH\x00\x88\x01\x01\x12\x13\n\x0b\x63onsistency\x18\x03 \x03(\x0c\x42\r\n\x0b_root_value\"\xb9\x01\n\x0c\x46ullTreeHead\x12,\n\ttree_head\x18\x01 \x01(\x0b\x32\x19.signal.keytrans.TreeHead\x12\x0c\n\x04last\x18\x02 \x03(\x0c\x12\x15\n\rdistinguished\x18\x03 \x03(\x0c\x12@\n\x11\x61uditor_tree_head\x18\x04 \x01(\x0b\x32 .signal.keytrans.AuditorTreeHeadH\x00\x88\x01\x01\x42\x14\n\x12_auditor_tree_head\"M\n\tProofStep\x12,\n\x06prefix\x18\x01 \x01(\x0b\x32\x1c.signal.keytrans.PrefixProof\x12\x12\n\ncommitment\x18\x02 \x01(\x0c\"X\n\x0bSearchProof\x12\x0b\n\x03pos\x18\x01 \x01(\x04\x12)\n\x05steps\x18\x02 \x03(\x0b\x32\x1a.signal.keytrans.ProofStep\x12\x11\n\tinclusion\x18\x03 \x03(\x0c\"\x1c\n\x0bUpdateValue\x12\r\n\x05value\x18\x01 \x01(\x0c\"W\n\x0b\x43onsistency\x12\x11\n\x04last\x18\x01 \x01(\x04H\x00\x88\x01\x01\x12\x1a\n\rdistinguished\x18\x02 \x01(\x04H\x01\x88\x01\x01\x42\x07\n\x05_lastB\x10\n\x0e_distinguished\"\x9c\x01\n\x1b\x43ondensedTreeSearchResponse\x12\x11\n\tvrf_proof\x18\x01 \x01(\x0c\x12,\n\x06search\x18\x02 \x01(\x0b\x32\x1c.signal.keytrans.SearchProof\x12\x0f\n\x07opening\x18\x03 \x01(\x0c\x12+\n\x05value\x18\x04 \x01(\x0b\x32\x1c.signal.keytrans.UpdateValue\"e\n\rUpdateRequest\x12\x12\n\nsearch_key\x18\x01 \x01(\x0c\x12\r\n\x05value\x18\x02 \x01(\x0c\x12\x31\n\x0b\x63onsistency\x18\x03 \x01(\x0b\x32\x1c.signal.keytrans.Consistency\"\x94\x01\n\x0eUpdateResponse\x12\x30\n\ttree_head\x18\x01 \x01(\x0b\x32\x1d.signal.keytrans.FullTreeHead\x12\x11\n\tvrf_proof\x18\x02 \x01(\x0c\x12,\n\x06search\x18\x03 \x01(\x0b\x32\x1c.signal.keytrans.SearchProof\x12\x0f\n\x07opening\x18\x04 \x01(\x0c\"R\n\nMonitorKey\x12\x12\n\nsearch_key\x18\x01 \x01(\x0c\x12\x16\n\x0e\x65ntry_position\x18\x02 \x01(\x04\x12\x18\n\x10\x63ommitment_index\x18\x03 \x01(\x0c\"n\n\x0eMonitorRequest\x12)\n\x04keys\x18\x01 \x03(\x0b\x32\x1b.signal.keytrans.MonitorKey\x12\x31\n\x0b\x63onsistency\x18\x02 \x01(\x0b\x32\x1c.signal.keytrans.Consistency\"9\n\x0cMonitorProof\x12)\n\x05steps\x18\x01 \x03(\x0b\x32\x1a.signal.keytrans.ProofStep\"\x85\x01\n\x0fMonitorResponse\x12\x30\n\ttree_head\x18\x01 \x01(\x0b\x32\x1d.signal.keytrans.FullTreeHead\x12-\n\x06proofs\x18\x02 \x03(\x0b\x32\x1d.signal.keytrans.MonitorProof\x12\x11\n\tinclusion\x18\x04 \x03(\x0c\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\nwire.proto\x12\x0fsignal.keytrans\"-\n\x0bPrefixProof\x12\r\n\x05proof\x18\x01 \x03(\x0c\x12\x0f\n\x07\x63ounter\x18\x02 \x01(\r\"J\n\x0f\x41uditorTreeHead\x12\x11\n\ttree_size\x18\x01 \x01(\x04\x12\x11\n\ttimestamp\x18\x02 \x01(\x03\x12\x11\n\tsignature\x18\x03 \x01(\x0c\"`\n\x08TreeHead\x12\x11\n\ttree_size\x18\x01 \x01(\x04\x12\x11\n\ttimestamp\x18\x02 \x01(\x03\x12.\n\nsignatures\x18\x03 \x03(\x0b\x32\x1a.signal.keytrans.Signature\":\n\tSignature\x12\x1a\n\x12\x61uditor_public_key\x18\x01 \x01(\x0c\x12\x11\n\tsignature\x18\x02 \x01(\x0c\"\x9b\x01\n\x13\x46ullAuditorTreeHead\x12\x33\n\ttree_head\x18\x01 \x01(\x0b\x32 .signal.keytrans.AuditorTreeHead\x12\x17\n\nroot_value\x18\x02 \x01(\x0cH\x00\x88\x01\x01\x12\x13\n\x0b\x63onsistency\x18\x03 \x03(\x0c\x12\x12\n\npublic_key\x18\x04 \x01(\x0c\x42\r\n\x0b_root_value\"\xa8\x01\n\x0c\x46ullTreeHead\x12,\n\ttree_head\x18\x01 \x01(\x0b\x32\x19.signal.keytrans.TreeHead\x12\x0c\n\x04last\x18\x02 \x03(\x0c\x12\x15\n\rdistinguished\x18\x03 \x03(\x0c\x12\x45\n\x17\x66ull_auditor_tree_heads\x18\x04 \x03(\x0b\x32$.signal.keytrans.FullAuditorTreeHead\"M\n\tProofStep\x12,\n\x06prefix\x18\x01 \x01(\x0b\x32\x1c.signal.keytrans.PrefixProof\x12\x12\n\ncommitment\x18\x02 \x01(\x0c\"X\n\x0bSearchProof\x12\x0b\n\x03pos\x18\x01 \x01(\x04\x12)\n\x05steps\x18\x02 \x03(\x0b\x32\x1a.signal.keytrans.ProofStep\x12\x11\n\tinclusion\x18\x03 \x03(\x0c\"\x1c\n\x0bUpdateValue\x12\r\n\x05value\x18\x01 \x01(\x0c\"W\n\x0b\x43onsistency\x12\x11\n\x04last\x18\x01 \x01(\x04H\x00\x88\x01\x01\x12\x1a\n\rdistinguished\x18\x02 \x01(\x04H\x01\x88\x01\x01\x42\x07\n\x05_lastB\x10\n\x0e_distinguished\"\x9c\x01\n\x1b\x43ondensedTreeSearchResponse\x12\x11\n\tvrf_proof\x18\x01 \x01(\x0c\x12,\n\x06search\x18\x02 \x01(\x0b\x32\x1c.signal.keytrans.SearchProof\x12\x0f\n\x07opening\x18\x03 \x01(\x0c\x12+\n\x05value\x18\x04 \x01(\x0b\x32\x1c.signal.keytrans.UpdateValue\"e\n\rUpdateRequest\x12\x12\n\nsearch_key\x18\x01 \x01(\x0c\x12\r\n\x05value\x18\x02 \x01(\x0c\x12\x31\n\x0b\x63onsistency\x18\x03 \x01(\x0b\x32\x1c.signal.keytrans.Consistency\"\x94\x01\n\x0eUpdateResponse\x12\x30\n\ttree_head\x18\x01 \x01(\x0b\x32\x1d.signal.keytrans.FullTreeHead\x12\x11\n\tvrf_proof\x18\x02 \x01(\x0c\x12,\n\x06search\x18\x03 \x01(\x0b\x32\x1c.signal.keytrans.SearchProof\x12\x0f\n\x07opening\x18\x04 \x01(\x0c\"R\n\nMonitorKey\x12\x12\n\nsearch_key\x18\x01 \x01(\x0c\x12\x16\n\x0e\x65ntry_position\x18\x02 \x01(\x04\x12\x18\n\x10\x63ommitment_index\x18\x03 \x01(\x0c\"n\n\x0eMonitorRequest\x12)\n\x04keys\x18\x01 \x03(\x0b\x32\x1b.signal.keytrans.MonitorKey\x12\x31\n\x0b\x63onsistency\x18\x02 \x01(\x0b\x32\x1c.signal.keytrans.Consistency\"9\n\x0cMonitorProof\x12)\n\x05steps\x18\x01 \x03(\x0b\x32\x1a.signal.keytrans.ProofStep\"\x85\x01\n\x0fMonitorResponse\x12\x30\n\ttree_head\x18\x01 \x01(\x0b\x32\x1d.signal.keytrans.FullTreeHead\x12-\n\x06proofs\x18\x02 \x03(\x0b\x32\x1d.signal.keytrans.MonitorProof\x12\x11\n\tinclusion\x18\x04 \x03(\x0c\x62\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -33,32 +33,36 @@ if not _descriptor._USE_C_DESCRIPTORS:
   DESCRIPTOR._loaded_options = None
   _globals['_PREFIXPROOF']._serialized_start=31
   _globals['_PREFIXPROOF']._serialized_end=76
-  _globals['_TREEHEAD']._serialized_start=78
-  _globals['_TREEHEAD']._serialized_end=145
-  _globals['_AUDITORTREEHEAD']._serialized_start=147
-  _globals['_AUDITORTREEHEAD']._serialized_end=271
-  _globals['_FULLTREEHEAD']._serialized_start=274
-  _globals['_FULLTREEHEAD']._serialized_end=459
-  _globals['_PROOFSTEP']._serialized_start=461
-  _globals['_PROOFSTEP']._serialized_end=538
-  _globals['_SEARCHPROOF']._serialized_start=540
-  _globals['_SEARCHPROOF']._serialized_end=628
-  _globals['_UPDATEVALUE']._serialized_start=630
-  _globals['_UPDATEVALUE']._serialized_end=658
-  _globals['_CONSISTENCY']._serialized_start=660
-  _globals['_CONSISTENCY']._serialized_end=747
-  _globals['_CONDENSEDTREESEARCHRESPONSE']._serialized_start=750
-  _globals['_CONDENSEDTREESEARCHRESPONSE']._serialized_end=906
-  _globals['_UPDATEREQUEST']._serialized_start=908
-  _globals['_UPDATEREQUEST']._serialized_end=1009
-  _globals['_UPDATERESPONSE']._serialized_start=1012
-  _globals['_UPDATERESPONSE']._serialized_end=1160
-  _globals['_MONITORKEY']._serialized_start=1162
-  _globals['_MONITORKEY']._serialized_end=1244
-  _globals['_MONITORREQUEST']._serialized_start=1246
-  _globals['_MONITORREQUEST']._serialized_end=1356
-  _globals['_MONITORPROOF']._serialized_start=1358
-  _globals['_MONITORPROOF']._serialized_end=1415
-  _globals['_MONITORRESPONSE']._serialized_start=1418
-  _globals['_MONITORRESPONSE']._serialized_end=1551
+  _globals['_AUDITORTREEHEAD']._serialized_start=78
+  _globals['_AUDITORTREEHEAD']._serialized_end=152
+  _globals['_TREEHEAD']._serialized_start=154
+  _globals['_TREEHEAD']._serialized_end=250
+  _globals['_SIGNATURE']._serialized_start=252
+  _globals['_SIGNATURE']._serialized_end=310
+  _globals['_FULLAUDITORTREEHEAD']._serialized_start=313
+  _globals['_FULLAUDITORTREEHEAD']._serialized_end=468
+  _globals['_FULLTREEHEAD']._serialized_start=471
+  _globals['_FULLTREEHEAD']._serialized_end=639
+  _globals['_PROOFSTEP']._serialized_start=641
+  _globals['_PROOFSTEP']._serialized_end=718
+  _globals['_SEARCHPROOF']._serialized_start=720
+  _globals['_SEARCHPROOF']._serialized_end=808
+  _globals['_UPDATEVALUE']._serialized_start=810
+  _globals['_UPDATEVALUE']._serialized_end=838
+  _globals['_CONSISTENCY']._serialized_start=840
+  _globals['_CONSISTENCY']._serialized_end=927
+  _globals['_CONDENSEDTREESEARCHRESPONSE']._serialized_start=930
+  _globals['_CONDENSEDTREESEARCHRESPONSE']._serialized_end=1086
+  _globals['_UPDATEREQUEST']._serialized_start=1088
+  _globals['_UPDATEREQUEST']._serialized_end=1189
+  _globals['_UPDATERESPONSE']._serialized_start=1192
+  _globals['_UPDATERESPONSE']._serialized_end=1340
+  _globals['_MONITORKEY']._serialized_start=1342
+  _globals['_MONITORKEY']._serialized_end=1424
+  _globals['_MONITORREQUEST']._serialized_start=1426
+  _globals['_MONITORREQUEST']._serialized_end=1536
+  _globals['_MONITORPROOF']._serialized_start=1538
+  _globals['_MONITORPROOF']._serialized_end=1595
+  _globals['_MONITORRESPONSE']._serialized_start=1598
+  _globals['_MONITORRESPONSE']._serialized_end=1731
 # @@protoc_insertion_point(module_scope)

@@ -13,7 +13,7 @@ class PrefixProof(_message.Message):
     counter: int
     def __init__(self, proof: _Optional[_Iterable[bytes]] = ..., counter: _Optional[int] = ...) -> None: ...
 
-class TreeHead(_message.Message):
+class AuditorTreeHead(_message.Message):
     __slots__ = ("tree_size", "timestamp", "signature")
     TREE_SIZE_FIELD_NUMBER: _ClassVar[int]
     TIMESTAMP_FIELD_NUMBER: _ClassVar[int]
@@ -23,27 +23,47 @@ class TreeHead(_message.Message):
     signature: bytes
     def __init__(self, tree_size: _Optional[int] = ..., timestamp: _Optional[int] = ..., signature: _Optional[bytes] = ...) -> None: ...
 
-class AuditorTreeHead(_message.Message):
-    __slots__ = ("tree_head", "root_value", "consistency")
+class TreeHead(_message.Message):
+    __slots__ = ("tree_size", "timestamp", "signatures")
+    TREE_SIZE_FIELD_NUMBER: _ClassVar[int]
+    TIMESTAMP_FIELD_NUMBER: _ClassVar[int]
+    SIGNATURES_FIELD_NUMBER: _ClassVar[int]
+    tree_size: int
+    timestamp: int
+    signatures: _containers.RepeatedCompositeFieldContainer[Signature]
+    def __init__(self, tree_size: _Optional[int] = ..., timestamp: _Optional[int] = ..., signatures: _Optional[_Iterable[_Union[Signature, _Mapping]]] = ...) -> None: ...
+
+class Signature(_message.Message):
+    __slots__ = ("auditor_public_key", "signature")
+    AUDITOR_PUBLIC_KEY_FIELD_NUMBER: _ClassVar[int]
+    SIGNATURE_FIELD_NUMBER: _ClassVar[int]
+    auditor_public_key: bytes
+    signature: bytes
+    def __init__(self, auditor_public_key: _Optional[bytes] = ..., signature: _Optional[bytes] = ...) -> None: ...
+
+class FullAuditorTreeHead(_message.Message):
+    __slots__ = ("tree_head", "root_value", "consistency", "public_key")
     TREE_HEAD_FIELD_NUMBER: _ClassVar[int]
     ROOT_VALUE_FIELD_NUMBER: _ClassVar[int]
     CONSISTENCY_FIELD_NUMBER: _ClassVar[int]
-    tree_head: TreeHead
+    PUBLIC_KEY_FIELD_NUMBER: _ClassVar[int]
+    tree_head: AuditorTreeHead
     root_value: bytes
     consistency: _containers.RepeatedScalarFieldContainer[bytes]
-    def __init__(self, tree_head: _Optional[_Union[TreeHead, _Mapping]] = ..., root_value: _Optional[bytes] = ..., consistency: _Optional[_Iterable[bytes]] = ...) -> None: ...
+    public_key: bytes
+    def __init__(self, tree_head: _Optional[_Union[AuditorTreeHead, _Mapping]] = ..., root_value: _Optional[bytes] = ..., consistency: _Optional[_Iterable[bytes]] = ..., public_key: _Optional[bytes] = ...) -> None: ...
 
 class FullTreeHead(_message.Message):
-    __slots__ = ("tree_head", "last", "distinguished", "auditor_tree_head")
+    __slots__ = ("tree_head", "last", "distinguished", "full_auditor_tree_heads")
     TREE_HEAD_FIELD_NUMBER: _ClassVar[int]
     LAST_FIELD_NUMBER: _ClassVar[int]
     DISTINGUISHED_FIELD_NUMBER: _ClassVar[int]
-    AUDITOR_TREE_HEAD_FIELD_NUMBER: _ClassVar[int]
+    FULL_AUDITOR_TREE_HEADS_FIELD_NUMBER: _ClassVar[int]
     tree_head: TreeHead
     last: _containers.RepeatedScalarFieldContainer[bytes]
     distinguished: _containers.RepeatedScalarFieldContainer[bytes]
-    auditor_tree_head: AuditorTreeHead
-    def __init__(self, tree_head: _Optional[_Union[TreeHead, _Mapping]] = ..., last: _Optional[_Iterable[bytes]] = ..., distinguished: _Optional[_Iterable[bytes]] = ..., auditor_tree_head: _Optional[_Union[AuditorTreeHead, _Mapping]] = ...) -> None: ...
+    full_auditor_tree_heads: _containers.RepeatedCompositeFieldContainer[FullAuditorTreeHead]
+    def __init__(self, tree_head: _Optional[_Union[TreeHead, _Mapping]] = ..., last: _Optional[_Iterable[bytes]] = ..., distinguished: _Optional[_Iterable[bytes]] = ..., full_auditor_tree_heads: _Optional[_Iterable[_Union[FullAuditorTreeHead, _Mapping]]] = ...) -> None: ...
 
 class ProofStep(_message.Message):
     __slots__ = ("prefix", "commitment")
