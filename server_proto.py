@@ -3187,9 +3187,6 @@ def req_v2_keys_check(flow: HTTPFlow):
       version byte followed by 1568 bytes of key material for a total of 1569 bytes)
 
          Parameters:
-            User-Agent
-              location: header
-              None
 
 
          Security:
