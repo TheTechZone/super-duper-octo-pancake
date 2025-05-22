@@ -21,10 +21,12 @@ class ArchiveUploadProgressState(_message.Message):
         Export: _ClassVar[ArchiveUploadProgressState.State]
         UploadBackupFile: _ClassVar[ArchiveUploadProgressState.State]
         UploadMedia: _ClassVar[ArchiveUploadProgressState.State]
+        UserCanceled: _ClassVar[ArchiveUploadProgressState.State]
     None: ArchiveUploadProgressState.State
     Export: ArchiveUploadProgressState.State
     UploadBackupFile: ArchiveUploadProgressState.State
     UploadMedia: ArchiveUploadProgressState.State
+    UserCanceled: ArchiveUploadProgressState.State
     class BackupPhase(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = ()
         BackupPhaseNone: _ClassVar[ArchiveUploadProgressState.BackupPhase]

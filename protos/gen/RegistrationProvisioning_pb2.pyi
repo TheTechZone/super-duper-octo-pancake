@@ -14,7 +14,7 @@ class RegistrationProvisionEnvelope(_message.Message):
     def __init__(self, publicKey: _Optional[bytes] = ..., body: _Optional[bytes] = ...) -> None: ...
 
 class RegistrationProvisionMessage(_message.Message):
-    __slots__ = ("e164", "aci", "accountEntropyPool", "pin", "platform", "backupTimestampMs", "tier", "backupSizeBytes", "restoreMethodToken")
+    __slots__ = ("e164", "aci", "accountEntropyPool", "pin", "platform", "backupTimestampMs", "tier", "backupSizeBytes", "restoreMethodToken", "aciIdentityKeyPublic", "aciIdentityKeyPrivate", "pniIdentityKeyPublic", "pniIdentityKeyPrivate")
     class Platform(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = ()
         ANDROID: _ClassVar[RegistrationProvisionMessage.Platform]
@@ -36,6 +36,10 @@ class RegistrationProvisionMessage(_message.Message):
     TIER_FIELD_NUMBER: _ClassVar[int]
     BACKUPSIZEBYTES_FIELD_NUMBER: _ClassVar[int]
     RESTOREMETHODTOKEN_FIELD_NUMBER: _ClassVar[int]
+    ACIIDENTITYKEYPUBLIC_FIELD_NUMBER: _ClassVar[int]
+    ACIIDENTITYKEYPRIVATE_FIELD_NUMBER: _ClassVar[int]
+    PNIIDENTITYKEYPUBLIC_FIELD_NUMBER: _ClassVar[int]
+    PNIIDENTITYKEYPRIVATE_FIELD_NUMBER: _ClassVar[int]
     e164: str
     aci: bytes
     accountEntropyPool: str
@@ -45,4 +49,8 @@ class RegistrationProvisionMessage(_message.Message):
     tier: RegistrationProvisionMessage.Tier
     backupSizeBytes: int
     restoreMethodToken: str
-    def __init__(self, e164: _Optional[str] = ..., aci: _Optional[bytes] = ..., accountEntropyPool: _Optional[str] = ..., pin: _Optional[str] = ..., platform: _Optional[_Union[RegistrationProvisionMessage.Platform, str]] = ..., backupTimestampMs: _Optional[int] = ..., tier: _Optional[_Union[RegistrationProvisionMessage.Tier, str]] = ..., backupSizeBytes: _Optional[int] = ..., restoreMethodToken: _Optional[str] = ...) -> None: ...
+    aciIdentityKeyPublic: bytes
+    aciIdentityKeyPrivate: bytes
+    pniIdentityKeyPublic: bytes
+    pniIdentityKeyPrivate: bytes
+    def __init__(self, e164: _Optional[str] = ..., aci: _Optional[bytes] = ..., accountEntropyPool: _Optional[str] = ..., pin: _Optional[str] = ..., platform: _Optional[_Union[RegistrationProvisionMessage.Platform, str]] = ..., backupTimestampMs: _Optional[int] = ..., tier: _Optional[_Union[RegistrationProvisionMessage.Tier, str]] = ..., backupSizeBytes: _Optional[int] = ..., restoreMethodToken: _Optional[str] = ..., aciIdentityKeyPublic: _Optional[bytes] = ..., aciIdentityKeyPrivate: _Optional[bytes] = ..., pniIdentityKeyPublic: _Optional[bytes] = ..., pniIdentityKeyPrivate: _Optional[bytes] = ...) -> None: ...
