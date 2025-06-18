@@ -64,3 +64,21 @@ class ArchiveUploadProgressState(_message.Message):
     mediaUploadedBytes: int
     mediaTotalBytes: int
     def __init__(self, state: _Optional[_Union[ArchiveUploadProgressState.State, str]] = ..., backupPhase: _Optional[_Union[ArchiveUploadProgressState.BackupPhase, str]] = ..., frameExportCount: _Optional[int] = ..., frameTotalCount: _Optional[int] = ..., backupFileUploadedBytes: _Optional[int] = ..., backupFileTotalBytes: _Optional[int] = ..., mediaUploadedBytes: _Optional[int] = ..., mediaTotalBytes: _Optional[int] = ...) -> None: ...
+
+class BackupDownloadNotifierState(_message.Message):
+    __slots__ = ("entitlementExpirationSeconds", "lastSheetDisplaySeconds", "intervalSeconds", "type")
+    class Type(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+        __slots__ = ()
+        SHEET: _ClassVar[BackupDownloadNotifierState.Type]
+        DIALOG: _ClassVar[BackupDownloadNotifierState.Type]
+    SHEET: BackupDownloadNotifierState.Type
+    DIALOG: BackupDownloadNotifierState.Type
+    ENTITLEMENTEXPIRATIONSECONDS_FIELD_NUMBER: _ClassVar[int]
+    LASTSHEETDISPLAYSECONDS_FIELD_NUMBER: _ClassVar[int]
+    INTERVALSECONDS_FIELD_NUMBER: _ClassVar[int]
+    TYPE_FIELD_NUMBER: _ClassVar[int]
+    entitlementExpirationSeconds: int
+    lastSheetDisplaySeconds: int
+    intervalSeconds: int
+    type: BackupDownloadNotifierState.Type
+    def __init__(self, entitlementExpirationSeconds: _Optional[int] = ..., lastSheetDisplaySeconds: _Optional[int] = ..., intervalSeconds: _Optional[int] = ..., type: _Optional[_Union[BackupDownloadNotifierState.Type, str]] = ...) -> None: ...

@@ -96,6 +96,7 @@ class ManifestRecord(_message.Message):
             STORY_DISTRIBUTION_LIST: _ClassVar[ManifestRecord.Identifier.Type]
             CALL_LINK: _ClassVar[ManifestRecord.Identifier.Type]
             CHAT_FOLDER: _ClassVar[ManifestRecord.Identifier.Type]
+            NOTIFICATION_PROFILE: _ClassVar[ManifestRecord.Identifier.Type]
         UNKNOWN: ManifestRecord.Identifier.Type
         CONTACT: ManifestRecord.Identifier.Type
         GROUPV1: ManifestRecord.Identifier.Type
@@ -104,6 +105,7 @@ class ManifestRecord(_message.Message):
         STORY_DISTRIBUTION_LIST: ManifestRecord.Identifier.Type
         CALL_LINK: ManifestRecord.Identifier.Type
         CHAT_FOLDER: ManifestRecord.Identifier.Type
+        NOTIFICATION_PROFILE: ManifestRecord.Identifier.Type
         RAW_FIELD_NUMBER: _ClassVar[int]
         TYPE_FIELD_NUMBER: _ClassVar[int]
         raw: bytes
@@ -120,7 +122,7 @@ class ManifestRecord(_message.Message):
     def __init__(self, version: _Optional[int] = ..., sourceDevice: _Optional[int] = ..., identifiers: _Optional[_Iterable[_Union[ManifestRecord.Identifier, _Mapping]]] = ..., recordIkm: _Optional[bytes] = ...) -> None: ...
 
 class StorageRecord(_message.Message):
-    __slots__ = ("contact", "groupV1", "groupV2", "account", "storyDistributionList", "callLink", "chatFolder")
+    __slots__ = ("contact", "groupV1", "groupV2", "account", "storyDistributionList", "callLink", "chatFolder", "notificationProfile")
     CONTACT_FIELD_NUMBER: _ClassVar[int]
     GROUPV1_FIELD_NUMBER: _ClassVar[int]
     GROUPV2_FIELD_NUMBER: _ClassVar[int]
@@ -128,6 +130,7 @@ class StorageRecord(_message.Message):
     STORYDISTRIBUTIONLIST_FIELD_NUMBER: _ClassVar[int]
     CALLLINK_FIELD_NUMBER: _ClassVar[int]
     CHATFOLDER_FIELD_NUMBER: _ClassVar[int]
+    NOTIFICATIONPROFILE_FIELD_NUMBER: _ClassVar[int]
     contact: ContactRecord
     groupV1: GroupV1Record
     groupV2: GroupV2Record
@@ -135,7 +138,8 @@ class StorageRecord(_message.Message):
     storyDistributionList: StoryDistributionListRecord
     callLink: CallLinkRecord
     chatFolder: ChatFolderRecord
-    def __init__(self, contact: _Optional[_Union[ContactRecord, _Mapping]] = ..., groupV1: _Optional[_Union[GroupV1Record, _Mapping]] = ..., groupV2: _Optional[_Union[GroupV2Record, _Mapping]] = ..., account: _Optional[_Union[AccountRecord, _Mapping]] = ..., storyDistributionList: _Optional[_Union[StoryDistributionListRecord, _Mapping]] = ..., callLink: _Optional[_Union[CallLinkRecord, _Mapping]] = ..., chatFolder: _Optional[_Union[ChatFolderRecord, _Mapping]] = ...) -> None: ...
+    notificationProfile: NotificationProfile
+    def __init__(self, contact: _Optional[_Union[ContactRecord, _Mapping]] = ..., groupV1: _Optional[_Union[GroupV1Record, _Mapping]] = ..., groupV2: _Optional[_Union[GroupV2Record, _Mapping]] = ..., account: _Optional[_Union[AccountRecord, _Mapping]] = ..., storyDistributionList: _Optional[_Union[StoryDistributionListRecord, _Mapping]] = ..., callLink: _Optional[_Union[CallLinkRecord, _Mapping]] = ..., chatFolder: _Optional[_Union[ChatFolderRecord, _Mapping]] = ..., notificationProfile: _Optional[_Union[NotificationProfile, _Mapping]] = ...) -> None: ...
 
 class ContactRecord(_message.Message):
     __slots__ = ("aci", "e164", "pni", "profileKey", "identityKey", "identityState", "givenName", "familyName", "username", "blocked", "whitelisted", "archived", "markedUnread", "mutedUntilTimestamp", "hideStory", "unregisteredAtTimestamp", "systemGivenName", "systemFamilyName", "systemNickname", "hidden", "pniSignatureVerified", "nickname", "note", "avatarColor")
@@ -261,7 +265,7 @@ class Payments(_message.Message):
     def __init__(self, enabled: bool = ..., entropy: _Optional[bytes] = ...) -> None: ...
 
 class AccountRecord(_message.Message):
-    __slots__ = ("profileKey", "givenName", "familyName", "avatarUrlPath", "noteToSelfArchived", "readReceipts", "sealedSenderIndicators", "typingIndicators", "noteToSelfMarkedUnread", "linkPreviews", "phoneNumberSharingMode", "unlistedPhoneNumber", "pinnedConversations", "preferContactAvatars", "payments", "universalExpireTimer", "primarySendsSms", "e164", "preferredReactionEmoji", "subscriberId", "subscriberCurrencyCode", "displayBadgesOnProfile", "subscriptionManuallyCancelled", "keepMutedChatsArchived", "hasSetMyStoriesPrivacy", "hasViewedOnboardingStory", "storiesDisabled", "storyViewReceiptsEnabled", "hasSeenGroupStoryEducationSheet", "username", "hasCompletedUsernameOnboarding", "usernameLink", "hasBackup", "backupTier", "backupSubscriberData", "avatarColor")
+    __slots__ = ("profileKey", "givenName", "familyName", "avatarUrlPath", "noteToSelfArchived", "readReceipts", "sealedSenderIndicators", "typingIndicators", "noteToSelfMarkedUnread", "linkPreviews", "phoneNumberSharingMode", "unlistedPhoneNumber", "pinnedConversations", "preferContactAvatars", "payments", "universalExpireTimer", "primarySendsSms", "preferredReactionEmoji", "subscriberId", "subscriberCurrencyCode", "displayBadgesOnProfile", "subscriptionManuallyCancelled", "keepMutedChatsArchived", "hasSetMyStoriesPrivacy", "hasViewedOnboardingStory", "storiesDisabled", "storyViewReceiptsEnabled", "hasSeenGroupStoryEducationSheet", "username", "hasCompletedUsernameOnboarding", "usernameLink", "hasBackup", "backupTier", "backupSubscriberData", "avatarColor", "backupTierHistory", "notificationProfileManualOverride")
     class PhoneNumberSharingMode(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = ()
         UNKNOWN: _ClassVar[AccountRecord.PhoneNumberSharingMode]
@@ -324,6 +328,27 @@ class AccountRecord(_message.Message):
         purchaseToken: str
         originalTransactionId: int
         def __init__(self, subscriberId: _Optional[bytes] = ..., purchaseToken: _Optional[str] = ..., originalTransactionId: _Optional[int] = ...) -> None: ...
+    class BackupTierHistory(_message.Message):
+        __slots__ = ("backupTier", "endedAtTimestamp")
+        BACKUPTIER_FIELD_NUMBER: _ClassVar[int]
+        ENDEDATTIMESTAMP_FIELD_NUMBER: _ClassVar[int]
+        backupTier: int
+        endedAtTimestamp: int
+        def __init__(self, backupTier: _Optional[int] = ..., endedAtTimestamp: _Optional[int] = ...) -> None: ...
+    class NotificationProfileManualOverride(_message.Message):
+        __slots__ = ("disabledAtTimestampMs", "enabled")
+        class ManuallyEnabled(_message.Message):
+            __slots__ = ("id", "endAtTimestampMs")
+            ID_FIELD_NUMBER: _ClassVar[int]
+            ENDATTIMESTAMPMS_FIELD_NUMBER: _ClassVar[int]
+            id: bytes
+            endAtTimestampMs: int
+            def __init__(self, id: _Optional[bytes] = ..., endAtTimestampMs: _Optional[int] = ...) -> None: ...
+        DISABLEDATTIMESTAMPMS_FIELD_NUMBER: _ClassVar[int]
+        ENABLED_FIELD_NUMBER: _ClassVar[int]
+        disabledAtTimestampMs: int
+        enabled: AccountRecord.NotificationProfileManualOverride.ManuallyEnabled
+        def __init__(self, disabledAtTimestampMs: _Optional[int] = ..., enabled: _Optional[_Union[AccountRecord.NotificationProfileManualOverride.ManuallyEnabled, _Mapping]] = ...) -> None: ...
     PROFILEKEY_FIELD_NUMBER: _ClassVar[int]
     GIVENNAME_FIELD_NUMBER: _ClassVar[int]
     FAMILYNAME_FIELD_NUMBER: _ClassVar[int]
@@ -341,7 +366,6 @@ class AccountRecord(_message.Message):
     PAYMENTS_FIELD_NUMBER: _ClassVar[int]
     UNIVERSALEXPIRETIMER_FIELD_NUMBER: _ClassVar[int]
     PRIMARYSENDSSMS_FIELD_NUMBER: _ClassVar[int]
-    E164_FIELD_NUMBER: _ClassVar[int]
     PREFERREDREACTIONEMOJI_FIELD_NUMBER: _ClassVar[int]
     SUBSCRIBERID_FIELD_NUMBER: _ClassVar[int]
     SUBSCRIBERCURRENCYCODE_FIELD_NUMBER: _ClassVar[int]
@@ -360,6 +384,8 @@ class AccountRecord(_message.Message):
     BACKUPTIER_FIELD_NUMBER: _ClassVar[int]
     BACKUPSUBSCRIBERDATA_FIELD_NUMBER: _ClassVar[int]
     AVATARCOLOR_FIELD_NUMBER: _ClassVar[int]
+    BACKUPTIERHISTORY_FIELD_NUMBER: _ClassVar[int]
+    NOTIFICATIONPROFILEMANUALOVERRIDE_FIELD_NUMBER: _ClassVar[int]
     profileKey: bytes
     givenName: str
     familyName: str
@@ -377,7 +403,6 @@ class AccountRecord(_message.Message):
     payments: Payments
     universalExpireTimer: int
     primarySendsSms: bool
-    e164: str
     preferredReactionEmoji: _containers.RepeatedScalarFieldContainer[str]
     subscriberId: bytes
     subscriberCurrencyCode: str
@@ -396,7 +421,9 @@ class AccountRecord(_message.Message):
     backupTier: int
     backupSubscriberData: AccountRecord.IAPSubscriberData
     avatarColor: AvatarColor
-    def __init__(self, profileKey: _Optional[bytes] = ..., givenName: _Optional[str] = ..., familyName: _Optional[str] = ..., avatarUrlPath: _Optional[str] = ..., noteToSelfArchived: bool = ..., readReceipts: bool = ..., sealedSenderIndicators: bool = ..., typingIndicators: bool = ..., noteToSelfMarkedUnread: bool = ..., linkPreviews: bool = ..., phoneNumberSharingMode: _Optional[_Union[AccountRecord.PhoneNumberSharingMode, str]] = ..., unlistedPhoneNumber: bool = ..., pinnedConversations: _Optional[_Iterable[_Union[AccountRecord.PinnedConversation, _Mapping]]] = ..., preferContactAvatars: bool = ..., payments: _Optional[_Union[Payments, _Mapping]] = ..., universalExpireTimer: _Optional[int] = ..., primarySendsSms: bool = ..., e164: _Optional[str] = ..., preferredReactionEmoji: _Optional[_Iterable[str]] = ..., subscriberId: _Optional[bytes] = ..., subscriberCurrencyCode: _Optional[str] = ..., displayBadgesOnProfile: bool = ..., subscriptionManuallyCancelled: bool = ..., keepMutedChatsArchived: bool = ..., hasSetMyStoriesPrivacy: bool = ..., hasViewedOnboardingStory: bool = ..., storiesDisabled: bool = ..., storyViewReceiptsEnabled: _Optional[_Union[OptionalBool, str]] = ..., hasSeenGroupStoryEducationSheet: bool = ..., username: _Optional[str] = ..., hasCompletedUsernameOnboarding: bool = ..., usernameLink: _Optional[_Union[AccountRecord.UsernameLink, _Mapping]] = ..., hasBackup: bool = ..., backupTier: _Optional[int] = ..., backupSubscriberData: _Optional[_Union[AccountRecord.IAPSubscriberData, _Mapping]] = ..., avatarColor: _Optional[_Union[AvatarColor, str]] = ...) -> None: ...
+    backupTierHistory: AccountRecord.BackupTierHistory
+    notificationProfileManualOverride: AccountRecord.NotificationProfileManualOverride
+    def __init__(self, profileKey: _Optional[bytes] = ..., givenName: _Optional[str] = ..., familyName: _Optional[str] = ..., avatarUrlPath: _Optional[str] = ..., noteToSelfArchived: bool = ..., readReceipts: bool = ..., sealedSenderIndicators: bool = ..., typingIndicators: bool = ..., noteToSelfMarkedUnread: bool = ..., linkPreviews: bool = ..., phoneNumberSharingMode: _Optional[_Union[AccountRecord.PhoneNumberSharingMode, str]] = ..., unlistedPhoneNumber: bool = ..., pinnedConversations: _Optional[_Iterable[_Union[AccountRecord.PinnedConversation, _Mapping]]] = ..., preferContactAvatars: bool = ..., payments: _Optional[_Union[Payments, _Mapping]] = ..., universalExpireTimer: _Optional[int] = ..., primarySendsSms: bool = ..., preferredReactionEmoji: _Optional[_Iterable[str]] = ..., subscriberId: _Optional[bytes] = ..., subscriberCurrencyCode: _Optional[str] = ..., displayBadgesOnProfile: bool = ..., subscriptionManuallyCancelled: bool = ..., keepMutedChatsArchived: bool = ..., hasSetMyStoriesPrivacy: bool = ..., hasViewedOnboardingStory: bool = ..., storiesDisabled: bool = ..., storyViewReceiptsEnabled: _Optional[_Union[OptionalBool, str]] = ..., hasSeenGroupStoryEducationSheet: bool = ..., username: _Optional[str] = ..., hasCompletedUsernameOnboarding: bool = ..., usernameLink: _Optional[_Union[AccountRecord.UsernameLink, _Mapping]] = ..., hasBackup: bool = ..., backupTier: _Optional[int] = ..., backupSubscriberData: _Optional[_Union[AccountRecord.IAPSubscriberData, _Mapping]] = ..., avatarColor: _Optional[_Union[AvatarColor, str]] = ..., backupTierHistory: _Optional[_Union[AccountRecord.BackupTierHistory, _Mapping]] = ..., notificationProfileManualOverride: _Optional[_Union[AccountRecord.NotificationProfileManualOverride, _Mapping]] = ...) -> None: ...
 
 class StoryDistributionListRecord(_message.Message):
     __slots__ = ("identifier", "name", "recipientServiceIds", "deletedAtTimestamp", "allowsReplies", "isBlockList")
@@ -424,6 +451,23 @@ class CallLinkRecord(_message.Message):
     deletedAtTimestampMs: int
     def __init__(self, rootKey: _Optional[bytes] = ..., adminPasskey: _Optional[bytes] = ..., deletedAtTimestampMs: _Optional[int] = ...) -> None: ...
 
+class Recipient(_message.Message):
+    __slots__ = ("contact", "legacyGroupId", "groupMasterKey")
+    class Contact(_message.Message):
+        __slots__ = ("serviceId", "e164")
+        SERVICEID_FIELD_NUMBER: _ClassVar[int]
+        E164_FIELD_NUMBER: _ClassVar[int]
+        serviceId: str
+        e164: str
+        def __init__(self, serviceId: _Optional[str] = ..., e164: _Optional[str] = ...) -> None: ...
+    CONTACT_FIELD_NUMBER: _ClassVar[int]
+    LEGACYGROUPID_FIELD_NUMBER: _ClassVar[int]
+    GROUPMASTERKEY_FIELD_NUMBER: _ClassVar[int]
+    contact: Recipient.Contact
+    legacyGroupId: bytes
+    groupMasterKey: bytes
+    def __init__(self, contact: _Optional[_Union[Recipient.Contact, _Mapping]] = ..., legacyGroupId: _Optional[bytes] = ..., groupMasterKey: _Optional[bytes] = ...) -> None: ...
+
 class ChatFolderRecord(_message.Message):
     __slots__ = ("identifier", "name", "position", "showOnlyUnread", "showMutedChats", "includeAllIndividualChats", "includeAllGroupChats", "folderType", "includedRecipients", "excludedRecipients", "deletedAtTimestampMs")
     class FolderType(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
@@ -434,22 +478,6 @@ class ChatFolderRecord(_message.Message):
     UNKNOWN: ChatFolderRecord.FolderType
     ALL: ChatFolderRecord.FolderType
     CUSTOM: ChatFolderRecord.FolderType
-    class Recipient(_message.Message):
-        __slots__ = ("contact", "legacyGroupId", "groupMasterKey")
-        class Contact(_message.Message):
-            __slots__ = ("serviceId", "e164")
-            SERVICEID_FIELD_NUMBER: _ClassVar[int]
-            E164_FIELD_NUMBER: _ClassVar[int]
-            serviceId: str
-            e164: str
-            def __init__(self, serviceId: _Optional[str] = ..., e164: _Optional[str] = ...) -> None: ...
-        CONTACT_FIELD_NUMBER: _ClassVar[int]
-        LEGACYGROUPID_FIELD_NUMBER: _ClassVar[int]
-        GROUPMASTERKEY_FIELD_NUMBER: _ClassVar[int]
-        contact: ChatFolderRecord.Recipient.Contact
-        legacyGroupId: bytes
-        groupMasterKey: bytes
-        def __init__(self, contact: _Optional[_Union[ChatFolderRecord.Recipient.Contact, _Mapping]] = ..., legacyGroupId: _Optional[bytes] = ..., groupMasterKey: _Optional[bytes] = ...) -> None: ...
     IDENTIFIER_FIELD_NUMBER: _ClassVar[int]
     NAME_FIELD_NUMBER: _ClassVar[int]
     POSITION_FIELD_NUMBER: _ClassVar[int]
@@ -469,7 +497,55 @@ class ChatFolderRecord(_message.Message):
     includeAllIndividualChats: bool
     includeAllGroupChats: bool
     folderType: ChatFolderRecord.FolderType
-    includedRecipients: _containers.RepeatedCompositeFieldContainer[ChatFolderRecord.Recipient]
-    excludedRecipients: _containers.RepeatedCompositeFieldContainer[ChatFolderRecord.Recipient]
+    includedRecipients: _containers.RepeatedCompositeFieldContainer[Recipient]
+    excludedRecipients: _containers.RepeatedCompositeFieldContainer[Recipient]
     deletedAtTimestampMs: int
-    def __init__(self, identifier: _Optional[bytes] = ..., name: _Optional[str] = ..., position: _Optional[int] = ..., showOnlyUnread: bool = ..., showMutedChats: bool = ..., includeAllIndividualChats: bool = ..., includeAllGroupChats: bool = ..., folderType: _Optional[_Union[ChatFolderRecord.FolderType, str]] = ..., includedRecipients: _Optional[_Iterable[_Union[ChatFolderRecord.Recipient, _Mapping]]] = ..., excludedRecipients: _Optional[_Iterable[_Union[ChatFolderRecord.Recipient, _Mapping]]] = ..., deletedAtTimestampMs: _Optional[int] = ...) -> None: ...
+    def __init__(self, identifier: _Optional[bytes] = ..., name: _Optional[str] = ..., position: _Optional[int] = ..., showOnlyUnread: bool = ..., showMutedChats: bool = ..., includeAllIndividualChats: bool = ..., includeAllGroupChats: bool = ..., folderType: _Optional[_Union[ChatFolderRecord.FolderType, str]] = ..., includedRecipients: _Optional[_Iterable[_Union[Recipient, _Mapping]]] = ..., excludedRecipients: _Optional[_Iterable[_Union[Recipient, _Mapping]]] = ..., deletedAtTimestampMs: _Optional[int] = ...) -> None: ...
+
+class NotificationProfile(_message.Message):
+    __slots__ = ("id", "name", "emoji", "color", "createdAtMs", "allowAllCalls", "allowAllMentions", "allowedMembers", "scheduleEnabled", "scheduleStartTime", "scheduleEndTime", "scheduleDaysEnabled", "deletedAtTimestampMs")
+    class DayOfWeek(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+        __slots__ = ()
+        UNKNOWN: _ClassVar[NotificationProfile.DayOfWeek]
+        MONDAY: _ClassVar[NotificationProfile.DayOfWeek]
+        TUESDAY: _ClassVar[NotificationProfile.DayOfWeek]
+        WEDNESDAY: _ClassVar[NotificationProfile.DayOfWeek]
+        THURSDAY: _ClassVar[NotificationProfile.DayOfWeek]
+        FRIDAY: _ClassVar[NotificationProfile.DayOfWeek]
+        SATURDAY: _ClassVar[NotificationProfile.DayOfWeek]
+        SUNDAY: _ClassVar[NotificationProfile.DayOfWeek]
+    UNKNOWN: NotificationProfile.DayOfWeek
+    MONDAY: NotificationProfile.DayOfWeek
+    TUESDAY: NotificationProfile.DayOfWeek
+    WEDNESDAY: NotificationProfile.DayOfWeek
+    THURSDAY: NotificationProfile.DayOfWeek
+    FRIDAY: NotificationProfile.DayOfWeek
+    SATURDAY: NotificationProfile.DayOfWeek
+    SUNDAY: NotificationProfile.DayOfWeek
+    ID_FIELD_NUMBER: _ClassVar[int]
+    NAME_FIELD_NUMBER: _ClassVar[int]
+    EMOJI_FIELD_NUMBER: _ClassVar[int]
+    COLOR_FIELD_NUMBER: _ClassVar[int]
+    CREATEDATMS_FIELD_NUMBER: _ClassVar[int]
+    ALLOWALLCALLS_FIELD_NUMBER: _ClassVar[int]
+    ALLOWALLMENTIONS_FIELD_NUMBER: _ClassVar[int]
+    ALLOWEDMEMBERS_FIELD_NUMBER: _ClassVar[int]
+    SCHEDULEENABLED_FIELD_NUMBER: _ClassVar[int]
+    SCHEDULESTARTTIME_FIELD_NUMBER: _ClassVar[int]
+    SCHEDULEENDTIME_FIELD_NUMBER: _ClassVar[int]
+    SCHEDULEDAYSENABLED_FIELD_NUMBER: _ClassVar[int]
+    DELETEDATTIMESTAMPMS_FIELD_NUMBER: _ClassVar[int]
+    id: bytes
+    name: str
+    emoji: str
+    color: int
+    createdAtMs: int
+    allowAllCalls: bool
+    allowAllMentions: bool
+    allowedMembers: _containers.RepeatedCompositeFieldContainer[Recipient]
+    scheduleEnabled: bool
+    scheduleStartTime: int
+    scheduleEndTime: int
+    scheduleDaysEnabled: _containers.RepeatedScalarFieldContainer[NotificationProfile.DayOfWeek]
+    deletedAtTimestampMs: int
+    def __init__(self, id: _Optional[bytes] = ..., name: _Optional[str] = ..., emoji: _Optional[str] = ..., color: _Optional[int] = ..., createdAtMs: _Optional[int] = ..., allowAllCalls: bool = ..., allowAllMentions: bool = ..., allowedMembers: _Optional[_Iterable[_Union[Recipient, _Mapping]]] = ..., scheduleEnabled: bool = ..., scheduleStartTime: _Optional[int] = ..., scheduleEndTime: _Optional[int] = ..., scheduleDaysEnabled: _Optional[_Iterable[_Union[NotificationProfile.DayOfWeek, str]]] = ..., deletedAtTimestampMs: _Optional[int] = ...) -> None: ...

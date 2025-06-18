@@ -120,7 +120,7 @@ class AccountData(_message.Message):
         color: AccountData.UsernameLink.Color
         def __init__(self, entropy: _Optional[bytes] = ..., serverId: _Optional[bytes] = ..., color: _Optional[_Union[AccountData.UsernameLink.Color, str]] = ...) -> None: ...
     class AccountSettings(_message.Message):
-        __slots__ = ("readReceipts", "sealedSenderIndicators", "typingIndicators", "linkPreviews", "notDiscoverableByPhoneNumber", "preferContactAvatars", "universalExpireTimerSeconds", "preferredReactionEmoji", "displayBadgesOnProfile", "keepMutedChatsArchived", "hasSetMyStoriesPrivacy", "hasViewedOnboardingStory", "storiesDisabled", "storyViewReceiptsEnabled", "hasSeenGroupStoryEducationSheet", "hasCompletedUsernameOnboarding", "phoneNumberSharingMode", "defaultChatStyle", "customChatColors")
+        __slots__ = ("readReceipts", "sealedSenderIndicators", "typingIndicators", "linkPreviews", "notDiscoverableByPhoneNumber", "preferContactAvatars", "universalExpireTimerSeconds", "preferredReactionEmoji", "displayBadgesOnProfile", "keepMutedChatsArchived", "hasSetMyStoriesPrivacy", "hasViewedOnboardingStory", "storiesDisabled", "storyViewReceiptsEnabled", "hasSeenGroupStoryEducationSheet", "hasCompletedUsernameOnboarding", "phoneNumberSharingMode", "defaultChatStyle", "customChatColors", "optimizeOnDeviceStorage")
         READRECEIPTS_FIELD_NUMBER: _ClassVar[int]
         SEALEDSENDERINDICATORS_FIELD_NUMBER: _ClassVar[int]
         TYPINGINDICATORS_FIELD_NUMBER: _ClassVar[int]
@@ -140,6 +140,7 @@ class AccountData(_message.Message):
         PHONENUMBERSHARINGMODE_FIELD_NUMBER: _ClassVar[int]
         DEFAULTCHATSTYLE_FIELD_NUMBER: _ClassVar[int]
         CUSTOMCHATCOLORS_FIELD_NUMBER: _ClassVar[int]
+        OPTIMIZEONDEVICESTORAGE_FIELD_NUMBER: _ClassVar[int]
         readReceipts: bool
         sealedSenderIndicators: bool
         typingIndicators: bool
@@ -159,7 +160,8 @@ class AccountData(_message.Message):
         phoneNumberSharingMode: AccountData.PhoneNumberSharingMode
         defaultChatStyle: ChatStyle
         customChatColors: _containers.RepeatedCompositeFieldContainer[ChatStyle.CustomChatColor]
-        def __init__(self, readReceipts: bool = ..., sealedSenderIndicators: bool = ..., typingIndicators: bool = ..., linkPreviews: bool = ..., notDiscoverableByPhoneNumber: bool = ..., preferContactAvatars: bool = ..., universalExpireTimerSeconds: _Optional[int] = ..., preferredReactionEmoji: _Optional[_Iterable[str]] = ..., displayBadgesOnProfile: bool = ..., keepMutedChatsArchived: bool = ..., hasSetMyStoriesPrivacy: bool = ..., hasViewedOnboardingStory: bool = ..., storiesDisabled: bool = ..., storyViewReceiptsEnabled: bool = ..., hasSeenGroupStoryEducationSheet: bool = ..., hasCompletedUsernameOnboarding: bool = ..., phoneNumberSharingMode: _Optional[_Union[AccountData.PhoneNumberSharingMode, str]] = ..., defaultChatStyle: _Optional[_Union[ChatStyle, _Mapping]] = ..., customChatColors: _Optional[_Iterable[_Union[ChatStyle.CustomChatColor, _Mapping]]] = ...) -> None: ...
+        optimizeOnDeviceStorage: bool
+        def __init__(self, readReceipts: bool = ..., sealedSenderIndicators: bool = ..., typingIndicators: bool = ..., linkPreviews: bool = ..., notDiscoverableByPhoneNumber: bool = ..., preferContactAvatars: bool = ..., universalExpireTimerSeconds: _Optional[int] = ..., preferredReactionEmoji: _Optional[_Iterable[str]] = ..., displayBadgesOnProfile: bool = ..., keepMutedChatsArchived: bool = ..., hasSetMyStoriesPrivacy: bool = ..., hasViewedOnboardingStory: bool = ..., storiesDisabled: bool = ..., storyViewReceiptsEnabled: bool = ..., hasSeenGroupStoryEducationSheet: bool = ..., hasCompletedUsernameOnboarding: bool = ..., phoneNumberSharingMode: _Optional[_Union[AccountData.PhoneNumberSharingMode, str]] = ..., defaultChatStyle: _Optional[_Union[ChatStyle, _Mapping]] = ..., customChatColors: _Optional[_Iterable[_Union[ChatStyle.CustomChatColor, _Mapping]]] = ..., optimizeOnDeviceStorage: bool = ...) -> None: ...
     class SubscriberData(_message.Message):
         __slots__ = ("subscriberId", "currencyCode", "manuallyCancelled")
         SUBSCRIBERID_FIELD_NUMBER: _ClassVar[int]
@@ -954,7 +956,7 @@ class MessageAttachment(_message.Message):
     def __init__(self, pointer: _Optional[_Union[FilePointer, _Mapping]] = ..., flag: _Optional[_Union[MessageAttachment.Flag, str]] = ..., wasDownloaded: bool = ..., clientUuid: _Optional[bytes] = ...) -> None: ...
 
 class FilePointer(_message.Message):
-    __slots__ = ("backupLocator", "attachmentLocator", "invalidAttachmentLocator", "localLocator", "contentType", "incrementalMac", "incrementalMacChunkSize", "fileName", "width", "height", "caption", "blurHash")
+    __slots__ = ("backupLocator", "attachmentLocator", "invalidAttachmentLocator", "localLocator", "contentType", "incrementalMac", "incrementalMacChunkSize", "fileName", "width", "height", "caption", "blurHash", "locatorInfo")
     class BackupLocator(_message.Message):
         __slots__ = ("mediaName", "cdnNumber", "key", "digest", "size", "transitCdnKey", "transitCdnNumber")
         MEDIANAME_FIELD_NUMBER: _ClassVar[int]
@@ -1009,6 +1011,27 @@ class FilePointer(_message.Message):
         transitCdnKey: str
         transitCdnNumber: int
         def __init__(self, mediaName: _Optional[str] = ..., localKey: _Optional[bytes] = ..., remoteKey: _Optional[bytes] = ..., remoteDigest: _Optional[bytes] = ..., size: _Optional[int] = ..., backupCdnNumber: _Optional[int] = ..., transitCdnKey: _Optional[str] = ..., transitCdnNumber: _Optional[int] = ...) -> None: ...
+    class LocatorInfo(_message.Message):
+        __slots__ = ("key", "digest", "size", "transitCdnKey", "transitCdnNumber", "transitTierUploadTimestamp", "mediaTierCdnNumber", "mediaName", "localKey")
+        KEY_FIELD_NUMBER: _ClassVar[int]
+        DIGEST_FIELD_NUMBER: _ClassVar[int]
+        SIZE_FIELD_NUMBER: _ClassVar[int]
+        TRANSITCDNKEY_FIELD_NUMBER: _ClassVar[int]
+        TRANSITCDNNUMBER_FIELD_NUMBER: _ClassVar[int]
+        TRANSITTIERUPLOADTIMESTAMP_FIELD_NUMBER: _ClassVar[int]
+        MEDIATIERCDNNUMBER_FIELD_NUMBER: _ClassVar[int]
+        MEDIANAME_FIELD_NUMBER: _ClassVar[int]
+        LOCALKEY_FIELD_NUMBER: _ClassVar[int]
+        key: bytes
+        digest: bytes
+        size: int
+        transitCdnKey: str
+        transitCdnNumber: int
+        transitTierUploadTimestamp: int
+        mediaTierCdnNumber: int
+        mediaName: str
+        localKey: bytes
+        def __init__(self, key: _Optional[bytes] = ..., digest: _Optional[bytes] = ..., size: _Optional[int] = ..., transitCdnKey: _Optional[str] = ..., transitCdnNumber: _Optional[int] = ..., transitTierUploadTimestamp: _Optional[int] = ..., mediaTierCdnNumber: _Optional[int] = ..., mediaName: _Optional[str] = ..., localKey: _Optional[bytes] = ...) -> None: ...
     BACKUPLOCATOR_FIELD_NUMBER: _ClassVar[int]
     ATTACHMENTLOCATOR_FIELD_NUMBER: _ClassVar[int]
     INVALIDATTACHMENTLOCATOR_FIELD_NUMBER: _ClassVar[int]
@@ -1021,6 +1044,7 @@ class FilePointer(_message.Message):
     HEIGHT_FIELD_NUMBER: _ClassVar[int]
     CAPTION_FIELD_NUMBER: _ClassVar[int]
     BLURHASH_FIELD_NUMBER: _ClassVar[int]
+    LOCATORINFO_FIELD_NUMBER: _ClassVar[int]
     backupLocator: FilePointer.BackupLocator
     attachmentLocator: FilePointer.AttachmentLocator
     invalidAttachmentLocator: FilePointer.InvalidAttachmentLocator
@@ -1033,7 +1057,8 @@ class FilePointer(_message.Message):
     height: int
     caption: str
     blurHash: str
-    def __init__(self, backupLocator: _Optional[_Union[FilePointer.BackupLocator, _Mapping]] = ..., attachmentLocator: _Optional[_Union[FilePointer.AttachmentLocator, _Mapping]] = ..., invalidAttachmentLocator: _Optional[_Union[FilePointer.InvalidAttachmentLocator, _Mapping]] = ..., localLocator: _Optional[_Union[FilePointer.LocalLocator, _Mapping]] = ..., contentType: _Optional[str] = ..., incrementalMac: _Optional[bytes] = ..., incrementalMacChunkSize: _Optional[int] = ..., fileName: _Optional[str] = ..., width: _Optional[int] = ..., height: _Optional[int] = ..., caption: _Optional[str] = ..., blurHash: _Optional[str] = ...) -> None: ...
+    locatorInfo: FilePointer.LocatorInfo
+    def __init__(self, backupLocator: _Optional[_Union[FilePointer.BackupLocator, _Mapping]] = ..., attachmentLocator: _Optional[_Union[FilePointer.AttachmentLocator, _Mapping]] = ..., invalidAttachmentLocator: _Optional[_Union[FilePointer.InvalidAttachmentLocator, _Mapping]] = ..., localLocator: _Optional[_Union[FilePointer.LocalLocator, _Mapping]] = ..., contentType: _Optional[str] = ..., incrementalMac: _Optional[bytes] = ..., incrementalMacChunkSize: _Optional[int] = ..., fileName: _Optional[str] = ..., width: _Optional[int] = ..., height: _Optional[int] = ..., caption: _Optional[str] = ..., blurHash: _Optional[str] = ..., locatorInfo: _Optional[_Union[FilePointer.LocatorInfo, _Mapping]] = ...) -> None: ...
 
 class Quote(_message.Message):
     __slots__ = ("targetSentTimestamp", "authorId", "text", "attachments", "type")

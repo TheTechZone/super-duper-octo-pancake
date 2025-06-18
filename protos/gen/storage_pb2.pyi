@@ -6,7 +6,7 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Map
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class SessionStructure(_message.Message):
-    __slots__ = ("session_version", "local_identity_public", "remote_identity_public", "root_key", "previous_counter", "sender_chain", "receiver_chains", "pending_pre_key", "pending_kyber_pre_key", "remote_registration_id", "local_registration_id", "alice_base_key")
+    __slots__ = ("session_version", "local_identity_public", "remote_identity_public", "root_key", "previous_counter", "sender_chain", "receiver_chains", "pending_pre_key", "pending_kyber_pre_key", "remote_registration_id", "local_registration_id", "alice_base_key", "pq_ratchet_state")
     class Chain(_message.Message):
         __slots__ = ("sender_ratchet_key", "sender_ratchet_key_private", "chain_key", "message_keys")
         class ChainKey(_message.Message):
@@ -68,6 +68,7 @@ class SessionStructure(_message.Message):
     REMOTE_REGISTRATION_ID_FIELD_NUMBER: _ClassVar[int]
     LOCAL_REGISTRATION_ID_FIELD_NUMBER: _ClassVar[int]
     ALICE_BASE_KEY_FIELD_NUMBER: _ClassVar[int]
+    PQ_RATCHET_STATE_FIELD_NUMBER: _ClassVar[int]
     session_version: int
     local_identity_public: bytes
     remote_identity_public: bytes
@@ -80,7 +81,8 @@ class SessionStructure(_message.Message):
     remote_registration_id: int
     local_registration_id: int
     alice_base_key: bytes
-    def __init__(self, session_version: _Optional[int] = ..., local_identity_public: _Optional[bytes] = ..., remote_identity_public: _Optional[bytes] = ..., root_key: _Optional[bytes] = ..., previous_counter: _Optional[int] = ..., sender_chain: _Optional[_Union[SessionStructure.Chain, _Mapping]] = ..., receiver_chains: _Optional[_Iterable[_Union[SessionStructure.Chain, _Mapping]]] = ..., pending_pre_key: _Optional[_Union[SessionStructure.PendingPreKey, _Mapping]] = ..., pending_kyber_pre_key: _Optional[_Union[SessionStructure.PendingKyberPreKey, _Mapping]] = ..., remote_registration_id: _Optional[int] = ..., local_registration_id: _Optional[int] = ..., alice_base_key: _Optional[bytes] = ...) -> None: ...
+    pq_ratchet_state: bytes
+    def __init__(self, session_version: _Optional[int] = ..., local_identity_public: _Optional[bytes] = ..., remote_identity_public: _Optional[bytes] = ..., root_key: _Optional[bytes] = ..., previous_counter: _Optional[int] = ..., sender_chain: _Optional[_Union[SessionStructure.Chain, _Mapping]] = ..., receiver_chains: _Optional[_Iterable[_Union[SessionStructure.Chain, _Mapping]]] = ..., pending_pre_key: _Optional[_Union[SessionStructure.PendingPreKey, _Mapping]] = ..., pending_kyber_pre_key: _Optional[_Union[SessionStructure.PendingKyberPreKey, _Mapping]] = ..., remote_registration_id: _Optional[int] = ..., local_registration_id: _Optional[int] = ..., alice_base_key: _Optional[bytes] = ..., pq_ratchet_state: _Optional[bytes] = ...) -> None: ...
 
 class RecordStructure(_message.Message):
     __slots__ = ("current_session", "previous_sessions")

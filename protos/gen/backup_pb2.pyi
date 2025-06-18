@@ -1012,26 +1012,30 @@ class FilePointer(_message.Message):
         transitCdnNumber: int
         def __init__(self, mediaName: _Optional[str] = ..., localKey: _Optional[bytes] = ..., remoteKey: _Optional[bytes] = ..., remoteDigest: _Optional[bytes] = ..., size: _Optional[int] = ..., backupCdnNumber: _Optional[int] = ..., transitCdnKey: _Optional[str] = ..., transitCdnNumber: _Optional[int] = ...) -> None: ...
     class LocatorInfo(_message.Message):
-        __slots__ = ("key", "digest", "size", "transitCdnKey", "transitCdnNumber", "transitTierUploadTimestamp", "mediaTierCdnNumber", "mediaName", "localKey")
+        __slots__ = ("key", "legacyDigest", "plaintextHash", "encryptedDigest", "size", "transitCdnKey", "transitCdnNumber", "transitTierUploadTimestamp", "mediaTierCdnNumber", "legacyMediaName", "localKey")
         KEY_FIELD_NUMBER: _ClassVar[int]
-        DIGEST_FIELD_NUMBER: _ClassVar[int]
+        LEGACYDIGEST_FIELD_NUMBER: _ClassVar[int]
+        PLAINTEXTHASH_FIELD_NUMBER: _ClassVar[int]
+        ENCRYPTEDDIGEST_FIELD_NUMBER: _ClassVar[int]
         SIZE_FIELD_NUMBER: _ClassVar[int]
         TRANSITCDNKEY_FIELD_NUMBER: _ClassVar[int]
         TRANSITCDNNUMBER_FIELD_NUMBER: _ClassVar[int]
         TRANSITTIERUPLOADTIMESTAMP_FIELD_NUMBER: _ClassVar[int]
         MEDIATIERCDNNUMBER_FIELD_NUMBER: _ClassVar[int]
-        MEDIANAME_FIELD_NUMBER: _ClassVar[int]
+        LEGACYMEDIANAME_FIELD_NUMBER: _ClassVar[int]
         LOCALKEY_FIELD_NUMBER: _ClassVar[int]
         key: bytes
-        digest: bytes
+        legacyDigest: bytes
+        plaintextHash: bytes
+        encryptedDigest: bytes
         size: int
         transitCdnKey: str
         transitCdnNumber: int
         transitTierUploadTimestamp: int
         mediaTierCdnNumber: int
-        mediaName: str
+        legacyMediaName: str
         localKey: bytes
-        def __init__(self, key: _Optional[bytes] = ..., digest: _Optional[bytes] = ..., size: _Optional[int] = ..., transitCdnKey: _Optional[str] = ..., transitCdnNumber: _Optional[int] = ..., transitTierUploadTimestamp: _Optional[int] = ..., mediaTierCdnNumber: _Optional[int] = ..., mediaName: _Optional[str] = ..., localKey: _Optional[bytes] = ...) -> None: ...
+        def __init__(self, key: _Optional[bytes] = ..., legacyDigest: _Optional[bytes] = ..., plaintextHash: _Optional[bytes] = ..., encryptedDigest: _Optional[bytes] = ..., size: _Optional[int] = ..., transitCdnKey: _Optional[str] = ..., transitCdnNumber: _Optional[int] = ..., transitTierUploadTimestamp: _Optional[int] = ..., mediaTierCdnNumber: _Optional[int] = ..., legacyMediaName: _Optional[str] = ..., localKey: _Optional[bytes] = ...) -> None: ...
     BACKUPLOCATOR_FIELD_NUMBER: _ClassVar[int]
     ATTACHMENTLOCATOR_FIELD_NUMBER: _ClassVar[int]
     INVALIDATTACHMENTLOCATOR_FIELD_NUMBER: _ClassVar[int]
