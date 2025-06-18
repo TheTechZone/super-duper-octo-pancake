@@ -951,6 +951,10 @@ def req_v1_archives_upload_form(flow: HTTPFlow):
             Fetch message backup upload form
             Retrieve an upload form that can be used to perform a resumable upload of a message backup.
          Parameters:
+            User-Agent
+              location: header
+              None
+
             X-Signal-ZK-Auth  (required)
               location: header
               Presentation of a ZK backup auth credential acquired from /v1/archives/auth, encoded in standard padded base64
@@ -1003,6 +1007,10 @@ def req_v1_archives(flow: HTTPFlow):
             Fetch backup info
             Retrieve information about the currently stored backup
          Parameters:
+            User-Agent
+              location: header
+              None
+
             X-Signal-ZK-Auth  (required)
               location: header
               Presentation of a ZK backup auth credential acquired from /v1/archives/auth, encoded in standard padded base64
@@ -1058,6 +1066,10 @@ def req_v1_archives(flow: HTTPFlow):
     via a POST request. If a backup is not refreshed, after 30 days it may be deleted.
 
          Parameters:
+            User-Agent
+              location: header
+              None
+
             X-Signal-ZK-Auth  (required)
               location: header
               Presentation of a ZK backup auth credential acquired from /v1/archives/auth, encoded in standard padded base64
@@ -1113,6 +1125,10 @@ def req_v1_archives(flow: HTTPFlow):
             Delete all backup metadata, objects, and stored public key. To use backups again, a public key must be resupplied.
 
          Parameters:
+            User-Agent
+              location: header
+              None
+
             X-Signal-ZK-Auth  (required)
               location: header
               Presentation of a ZK backup auth credential acquired from /v1/archives/auth, encoded in standard padded base64
@@ -1240,6 +1256,10 @@ def req_v1_archives_media(flow: HTTPFlow):
     objects, perform a list operation and remove any unreferenced media objects via DELETE /v1/backups/<mediaId>.
 
          Parameters:
+            User-Agent
+              location: header
+              None
+
             X-Signal-ZK-Auth  (required)
               location: header
               Presentation of a ZK backup auth credential acquired from /v1/archives/auth, encoded in standard padded base64
@@ -1373,6 +1393,10 @@ def req_v1_archives_media_delete(flow: HTTPFlow):
             Delete media objects
             Delete media objects stored with this backup-id
          Parameters:
+            User-Agent
+              location: header
+              None
+
             X-Signal-ZK-Auth  (required)
               location: header
               Presentation of a ZK backup auth credential acquired from /v1/archives/auth, encoded in standard padded base64
@@ -1497,6 +1521,10 @@ def req_v1_archives_auth_read(flow: HTTPFlow):
             Get CDN read credentials
             Retrieve credentials used to read objects stored on the backup cdn
          Parameters:
+            User-Agent
+              location: header
+              None
+
             X-Signal-ZK-Auth  (required)
               location: header
               Presentation of a ZK backup auth credential acquired from /v1/archives/auth, encoded in standard padded base64
@@ -1722,6 +1750,10 @@ def req_v1_archives_media_upload_form(flow: HTTPFlow):
     Like the account authenticated version at /attachments, the uploaded object is only temporary.
 
          Parameters:
+            User-Agent
+              location: header
+              None
+
             X-Signal-ZK-Auth  (required)
               location: header
               Presentation of a ZK backup auth credential acquired from /v1/archives/auth, encoded in standard padded base64
@@ -2907,7 +2939,10 @@ def resp_v2_directory_auth(flow: HTTPFlow):
 @api.route("/v1/donation/redeem-receipt", rtype=RouteType.REQUEST)
 def req_v1_donation_redeem_receipt(flow: HTTPFlow):
     """
-
+            Redeem receipt
+            Redeem a receipt acquired from /v1/subscription/{subscriberId}/receipt_credentials to add a badge to the
+    account. After successful redemption, profile responses will include the corresponding badge (if configured as
+    visible) until the expiration time on the receipt.
 
          Parameters:
 
@@ -2926,10 +2961,17 @@ def req_v1_donation_redeem_receipt(flow: HTTPFlow):
 @api.route("/v1/donation/redeem-receipt", rtype=RouteType.RESPONSE)
 def resp_v1_donation_redeem_receipt(flow: HTTPFlow):
     """
-
+            Redeem receipt
+            Redeem a receipt acquired from /v1/subscription/{subscriberId}/receipt_credentials to add a badge to the
+    account. After successful redemption, profile responses will include the corresponding badge (if configured as
+    visible) until the expiration time on the receipt.
 
          Responses:
-            default - default response
+            200 - The receipt was redeemed
+            400 - The provided presentation or receipt was invalid, or the receipt was already redeemed for a different account. A
+    specific error message suitable for logging will be included as text/plain body
+
+            429 - Rate limited.
 
          Security:
             authenticatedAccount - basic
